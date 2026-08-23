@@ -37,15 +37,13 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
           key={product.id}
           className="bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100 group"
         >
-          {/* Изображение */}
           <div className="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center text-5xl sm:text-6xl md:text-7xl group-hover:scale-105 transition-transform duration-300">
             {product.image}
           </div>
           
-          {/* Информация */}
           <div className="p-2 sm:p-3 md:p-4">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] sm:text-xs text-blue-600 font-medium uppercase tracking-wider truncate max-w-[60px] sm:max-w-full">
+              <span className="text-[10px] sm:text-xs text-red-600 font-medium uppercase tracking-wider truncate max-w-[60px] sm:max-w-full">
                 {product.category}
               </span>
               <span className="text-[10px] sm:text-xs text-yellow-500 flex-shrink-0">
@@ -63,7 +61,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               </span>
               <button
                 onClick={() => onAddToCart && onAddToCart(product)}
-                className="bg-blue-600 text-white p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl hover:bg-blue-700 transition-all hover:scale-105 text-xs sm:text-sm"
+                className="bg-red-600 text-white p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl hover:bg-red-700 transition-all hover:scale-105 text-xs sm:text-sm"
               >
                 <span className="hidden sm:inline">{getButtonText()}</span>
                 <span className="sm:hidden">🛒</span>
