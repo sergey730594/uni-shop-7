@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import logoImage from '../assets/Logo-grant.png';
 
 const LANGUAGES = [
   { code: 'ka', label: 'ქართული', flag: '🇬🇪' },
@@ -142,8 +143,12 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             <a href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#ff0000] rounded-xl flex items-center justify-center shadow-md">
-                <span className="text-white font-bold text-sm sm:text-xl">G</span>
+              <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full overflow-hidden shadow-md flex-shrink-0">
+                <img 
+                  src={logoImage} 
+                  alt="Grant Bakery" 
+                  className="w-full h-full object-cover"
+                />
               </div>
               <span className="font-bold text-lg sm:text-2xl text-gray-800 hidden xs:block">
                 Grant Bakery
