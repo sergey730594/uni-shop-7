@@ -51,11 +51,11 @@ const products = [
 
 // ==================== ФОНОВЫЕ ИЗОБРАЖЕНИЯ ДЛЯ HERO ====================
 const heroBackgrounds = [
-  'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=800&h=400&fit=crop&q=80', // Торт
-  'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=800&h=400&fit=crop&q=80', // Выпечка
-  'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=800&h=400&fit=crop&q=80', // Десерт
-  'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=400&fit=crop&q=80', // Торт с ягодами
-  'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=800&h=400&fit=crop&q=80', // Макаруны
+  'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=800&h=400&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=800&h=400&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=800&h=400&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=400&fit=crop&q=80',
+  'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=800&h=400&fit=crop&q=80',
 ];
 
 // ==================== ГЛАВНАЯ СТРАНИЦА ====================
@@ -67,18 +67,17 @@ function HomePage() {
 
   // Состояние для фона Hero
   const [bgImage, setBgImage] = useState('');
-  const [direction, setDirection] = useState({ x: 1, y: 1 });
+  const [animationClass, setAnimationClass] = useState('');
 
   useEffect(() => {
-    // Выбираем случайное изображение при загрузке
+    // Выбираем случайное изображение
     const randomIndex = Math.floor(Math.random() * heroBackgrounds.length);
     setBgImage(heroBackgrounds[randomIndex]);
-
-    // Случайное направление
-    setDirection({
-      x: Math.random() > 0.5 ? 1 : -1,
-      y: Math.random() > 0.5 ? 1 : -1,
-    });
+    
+    // Случайный класс анимации из 5 вариантов
+    const classes = ['float-bg-1', 'float-bg-2', 'float-bg-3', 'float-bg-4', 'float-bg-5'];
+    const randomClass = classes[Math.floor(Math.random() * classes.length)];
+    setAnimationClass(randomClass);
   }, []);
 
   const handleAddToCart = () => {
@@ -147,40 +146,39 @@ function HomePage() {
       />
 
       <main className="flex-1">
-        {/* ГЕРОЙ СЕКЦИЯ - КРАСНЫЙ + АНИМИРОВАННЫЙ ФОН */}
-        <section className="relative bg-[#ff0000] text-white overflow-hidden min-h-[200px] sm:min-h-[250px] md:min-h-[280px]">
-          {/* Анимированный фон */}
+        {/* ГЕРОЙ СЕКЦИЯ - БЛЕДНЫЙ ФОН + АНИМАЦИЯ */}
+        <section className="relative bg-[#f5e6e6] text-gray-800 overflow-hidden min-h-[180px] sm:min-h-[220px] md:min-h-[260px]">
+          {/* Анимированный фон с прозрачностью 15% */}
           <div
-            className="absolute inset-0 opacity-40"
+            className={`absolute inset-0 opacity-15 ${animationClass}`}
             style={{
               backgroundImage: `url(${bgImage})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              animation: `floatBg ${15 + Math.random() * 10}s ease-in-out infinite alternate`,
             }}
           />
           
-          {/* Затемнение для читаемости текста */}
-          <div className="absolute inset-0 bg-[#ff0000]/50" />
+          {/* Легкое затемнение для читаемости */}
+          <div className="absolute inset-0 bg-[#f5e6e6]/40" />
 
           {/* Контент */}
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-10">
             <div className="text-center max-w-3xl mx-auto">
-              <div className="inline-block bg-white/20 backdrop-blur-sm rounded-full px-3 sm:px-4 py-0.5 text-[10px] sm:text-xs font-medium mb-2 sm:mb-3">
+              <div className="inline-block bg-[#ff0000]/10 backdrop-blur-sm rounded-full px-3 sm:px-4 py-0.5 text-[10px] sm:text-xs font-medium mb-2 sm:mb-3 text-[#990000]">
                 {t.badge}
               </div>
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-relaxed sm:leading-relaxed md:leading-relaxed mb-2 sm:mb-3">
+              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-relaxed sm:leading-relaxed md:leading-relaxed mb-2 sm:mb-3 text-gray-800">
                 {t.title} <br className="sm:hidden" />
-                <span className="text-red-200">{t.titleHighlight}</span>
+                <span className="text-[#cc0000]">{t.titleHighlight}</span>
               </h1>
-              <p className="text-sm sm:text-base md:text-lg text-red-100 mb-4 sm:mb-5 max-w-2xl mx-auto leading-relaxed">
+              <p className="text-sm sm:text-base md:text-lg text-gray-600 mb-4 sm:mb-5 max-w-2xl mx-auto leading-relaxed">
                 {t.subtitle}
               </p>
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center">
-                <button className="bg-white text-[#ff0000] px-5 sm:px-6 py-1.5 sm:py-2 rounded-xl font-semibold hover:shadow-lg hover:bg-red-50 transition-all text-xs sm:text-sm">
+                <button className="bg-[#ff0000] text-white px-5 sm:px-6 py-1.5 sm:py-2 rounded-xl font-semibold hover:bg-[#cc0000] transition-all text-xs sm:text-sm shadow-md hover:shadow-lg">
                   {t.button}
                 </button>
-                <button className="bg-[#ff0000]/70 backdrop-blur-sm text-white px-5 sm:px-6 py-1.5 sm:py-2 rounded-xl font-semibold hover:bg-[#ff0000]/80 transition-all text-xs sm:text-sm border border-white/30">
+                <button className="bg-gray-200 text-gray-700 px-5 sm:px-6 py-1.5 sm:py-2 rounded-xl font-semibold hover:bg-gray-300 transition-all text-xs sm:text-sm">
                   {t.button2}
                 </button>
               </div>
