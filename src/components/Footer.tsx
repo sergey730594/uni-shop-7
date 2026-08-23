@@ -1,4 +1,5 @@
 import React from 'react';
+import logoImage from '../assets/Logo-grant.png';
 
 // ==================== ИКОНКИ ====================
 const LocationIcon = () => (
@@ -122,9 +123,13 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
           
           {/* ====== ЛЕВАЯ КОЛОНКА ====== */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-[#ff0000] to-[#cc0000] rounded-xl flex items-center justify-center shadow-md">
-                <span className="text-white font-bold text-lg">G</span>
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-full overflow-hidden shadow-md flex-shrink-0">
+                <img 
+                  src={logoImage} 
+                  alt="Grant Bakery" 
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div>
                 <span className="font-bold text-xl text-gray-800">Grant Bakery</span>
