@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext } from 'react';
+import React, { useState, createContext, useContext, useEffect } from 'react';
 import { Header } from './components/Header';
 import { ProductGrid } from './components/ProductGrid';
 import { Footer } from './components/Footer';
@@ -49,6 +49,15 @@ const products = [
   { id: 8, name: 'Корзиночки', price: 1800, category: 'Пирожные', image: '🧺', rating: 4.4 },
 ];
 
+// ==================== ФОНОВЫЕ ИЗОБРАЖЕНИЯ ДЛЯ HERO ====================
+const heroBackgrounds = [
+  'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=800&h=400&fit=crop&q=80', // Торт
+  'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=800&h=400&fit=crop&q=80', // Выпечка
+  'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=800&h=400&fit=crop&q=80', // Десерт
+  'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=400&fit=crop&q=80', // Торт с ягодами
+  'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=800&h=400&fit=crop&q=80', // Макаруны
+];
+
 // ==================== ГЛАВНАЯ СТРАНИЦА ====================
 function HomePage() {
   const [cartCount, setCartCount] = useState(0);
@@ -56,11 +65,27 @@ function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { language, setLanguage } = useLanguage();
 
+  // Состояние для фона Hero
+  const [bgImage, setBgImage] = useState('');
+  const [direction, setDirection] = useState({ x: 1, y: 1 });
+
+  useEffect(() => {
+    // Выбираем случайное изображение при загрузке
+    const randomIndex = Math.floor(Math.random() * heroBackgrounds.length);
+    setBgImage(heroBackgrounds[randomIndex]);
+
+    // Случайное направление
+    setDirection({
+      x: Math.random() > 0.5 ? 1 : -1,
+      y: Math.random() > 0.5 ? 1 : -1,
+    });
+  }, []);
+
   const handleAddToCart = () => {
     setCartCount(prev => prev + 1);
   };
 
-  // ==================== ТЕКСТЫ НА ВСЕХ ЯЗЫКАХ ====================
+  // ==================== ТЕКСТЫ ====================
   const texts = {
     ka: {
       badge: '🧁 საკონდიტრო',
@@ -122,25 +147,40 @@ function HomePage() {
       />
 
       <main className="flex-1">
-        {/* ГЕРОЙ СЕКЦИЯ - КРАСНЫЙ */}
-        <section className="bg-gradient-to-br from-red-600 via-red-700 to-red-800 text-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24">
+        {/* ГЕРОЙ СЕКЦИЯ - КРАСНЫЙ + АНИМИРОВАННЫЙ ФОН */}
+        <section className="relative bg-[#ff0000] text-white overflow-hidden min-h-[200px] sm:min-h-[250px] md:min-h-[280px]">
+          {/* Анимированный фон */}
+          <div
+            className="absolute inset-0 opacity-40"
+            style={{
+              backgroundImage: `url(${bgImage})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              animation: `floatBg ${15 + Math.random() * 10}s ease-in-out infinite alternate`,
+            }}
+          />
+          
+          {/* Затемнение для читаемости текста */}
+          <div className="absolute inset-0 bg-[#ff0000]/50" />
+
+          {/* Контент */}
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-10">
             <div className="text-center max-w-3xl mx-auto">
-              <div className="inline-block bg-white/20 backdrop-blur-sm rounded-full px-3 sm:px-4 py-1 text-xs sm:text-sm font-medium mb-3 sm:mb-4">
+              <div className="inline-block bg-white/20 backdrop-blur-sm rounded-full px-3 sm:px-4 py-0.5 text-[10px] sm:text-xs font-medium mb-2 sm:mb-3">
                 {t.badge}
               </div>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4">
+              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-relaxed sm:leading-relaxed md:leading-relaxed mb-2 sm:mb-3">
                 {t.title} <br className="sm:hidden" />
                 <span className="text-red-200">{t.titleHighlight}</span>
               </h1>
-              <p className="text-base sm:text-lg md:text-xl text-red-100 mb-6 sm:mb-8 max-w-2xl mx-auto">
+              <p className="text-sm sm:text-base md:text-lg text-red-100 mb-4 sm:mb-5 max-w-2xl mx-auto leading-relaxed">
                 {t.subtitle}
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                <button className="bg-white text-red-600 px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl font-semibold hover:shadow-lg hover:bg-red-50 transition-all text-sm sm:text-base">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center">
+                <button className="bg-white text-[#ff0000] px-5 sm:px-6 py-1.5 sm:py-2 rounded-xl font-semibold hover:shadow-lg hover:bg-red-50 transition-all text-xs sm:text-sm">
                   {t.button}
                 </button>
-                <button className="bg-red-700/50 backdrop-blur-sm text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl font-semibold hover:bg-red-700/70 transition-all text-sm sm:text-base">
+                <button className="bg-[#ff0000]/70 backdrop-blur-sm text-white px-5 sm:px-6 py-1.5 sm:py-2 rounded-xl font-semibold hover:bg-[#ff0000]/80 transition-all text-xs sm:text-sm border border-white/30">
                   {t.button2}
                 </button>
               </div>
@@ -160,7 +200,7 @@ function HomePage() {
                                   'tatlı'} 
               </p>
             </div>
-            <button className="text-red-600 font-medium hover:text-red-700 transition text-sm sm:text-base">
+            <button className="text-[#ff0000] font-medium hover:text-[#cc0000] transition text-sm sm:text-base">
               {t.viewAll}
             </button>
           </div>

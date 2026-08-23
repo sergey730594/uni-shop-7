@@ -31,6 +31,52 @@
   animation: fadeIn 0.15s ease-out;
 }
 
+/* ===== АНИМАЦИЯ ФОНА HERO ===== */
+@keyframes floatBg1 {
+  0% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-30px, 20px) scale(1.05); }
+  50% { transform: translate(20px, -15px) scale(0.95); }
+  75% { transform: translate(-15px, -25px) scale(1.08); }
+  100% { transform: translate(10px, 10px) scale(1); }
+}
+
+@keyframes floatBg2 {
+  0% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(40px, -10px) scale(1.08); }
+  50% { transform: translate(-20px, 25px) scale(0.95); }
+  75% { transform: translate(25px, 15px) scale(1.05); }
+  100% { transform: translate(-10px, -10px) scale(1); }
+}
+
+@keyframes floatBg3 {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-25px, -20px) scale(1.06); }
+  66% { transform: translate(35px, 10px) scale(0.97); }
+  100% { transform: translate(-10px, 15px) scale(1.03); }
+}
+
+@keyframes floatBg4 {
+  0% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(15px, -30px) scale(1.1); }
+  50% { transform: translate(-35px, 15px) scale(0.93); }
+  75% { transform: translate(20px, 25px) scale(1.07); }
+  100% { transform: translate(-5px, -5px) scale(1); }
+}
+
+@keyframes floatBg5 {
+  0% { transform: translate(0, 0) scale(1); }
+  30% { transform: translate(-40px, 20px) scale(1.04); }
+  60% { transform: translate(25px, -25px) scale(0.96); }
+  100% { transform: translate(15px, 10px) scale(1.02); }
+}
+
+/* Случайное применение разных анимаций через JS */
+.float-bg-1 { animation: floatBg1 18s ease-in-out infinite alternate; }
+.float-bg-2 { animation: floatBg2 22s ease-in-out infinite alternate; }
+.float-bg-3 { animation: floatBg3 20s ease-in-out infinite alternate; }
+.float-bg-4 { animation: floatBg4 25s ease-in-out infinite alternate; }
+.float-bg-5 { animation: floatBg5 16s ease-in-out infinite alternate; }
+
 @layer utilities {
   .xs\:block {
     display: none;
@@ -40,4 +86,14 @@
       display: block;
     }
   }
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

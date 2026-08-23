@@ -32,6 +32,12 @@ const ChevronDownIcon = ({ className = '' }) => (
   </svg>
 );
 
+const HomeIcon = () => (
+  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1m-2 0h2" />
+  </svg>
+);
+
 interface HeaderProps {
   onSearch?: (query: string) => void;
   onCartOpen?: () => void;
@@ -105,14 +111,14 @@ export const Header: React.FC<HeaderProps> = ({
               <MenuIcon />
             </button>
 
-            <div className="flex items-center gap-2">
+            <a href="/" className="flex items-center gap-2">
               <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#ff0000] rounded-xl flex items-center justify-center shadow-md">
                 <span className="text-white font-bold text-sm sm:text-xl">G</span>
               </div>
               <span className="font-bold text-lg sm:text-2xl text-gray-800 hidden xs:block">
                 Grant Bakery
               </span>
-            </div>
+            </a>
           </div>
 
           {/* Поиск */}
@@ -183,15 +189,19 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      {/* Красная строка меню */}
+      {/* Красная строка меню с иконкой домика */}
       <div className="bg-[#ff0000] border-t border-[#cc0000]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex items-center justify-center sm:justify-start gap-4 sm:gap-6 md:gap-8 py-2.5 sm:py-3 overflow-x-auto hide-scrollbar">
+            {/* Иконка домика — ссылка на главную */}
+            <a href="/" className="text-white hover:text-white/80 transition-colors flex-shrink-0">
+              <HomeIcon />
+            </a>
             {items.map((item, index) => (
               <a
                 key={index}
                 href="#"
-                className="text-white text-xs sm:text-sm font-medium whitespace-nowrap hover:text-white/80 transition-colors tracking-wide"
+                className="text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:text-white/80 transition-colors tracking-wide uppercase"
               >
                 {item}
               </a>
