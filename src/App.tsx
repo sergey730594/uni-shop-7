@@ -86,7 +86,7 @@ function HomePage() {
   // ==================== ТЕКСТЫ ====================
   const texts = {
     ka: {
-      badge: '🧁 საკონდიტრო',
+      badge: 'საკონდიტრო',
       title: 'ტორტის შეკვეთა',
       titleHighlight: 'Grant Bakery"-ში',
       subtitle: 'ონლაინ შეკვეთა, მიტანის სერვისით',
