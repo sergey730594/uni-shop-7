@@ -111,6 +111,14 @@ export const Header: React.FC<HeaderProps> = ({
               <MenuIcon />
             </button>
 
+            <button
+            onClick={onMenuOpen}  // ← это открывает мобильное меню
+            className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors lg:hidden"
+            aria-label="Меню"
+            >
+            <MenuIcon />
+            </button>
+
             <a href="/" className="flex items-center gap-2">
               <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#ff0000] rounded-xl flex items-center justify-center shadow-md">
                 <span className="text-white font-bold text-sm sm:text-xl">G</span>
