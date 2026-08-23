@@ -107,7 +107,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
         {/* Нижняя часть */}
         <div className="border-t border-gray-200 p-4">
           <p className="text-xs text-gray-500 text-center">
-            © 2024 Grant Bakery
+            © 2026 Grant Bakery
           </p>
         </div>
       </div>
