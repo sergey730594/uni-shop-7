@@ -47,9 +47,7 @@ function App() {
       {/* Товары */}
       <section className="max-w-7xl mx-auto px-4 py-12">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">
-            Популярные товары
-          </h2>
+          <h2 className="text-2xl font-bold text-gray-800">Популярные товары</h2>
           <button className="text-blue-600 font-medium hover:text-blue-700">
             Смотреть все →
           </button>
@@ -57,10 +55,7 @@ function App() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {[1, 2, 3, 4].map((item) => (
-            <div
-              key={item}
-              className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition border border-gray-100"
-            >
+            <div key={item} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition border border-gray-100">
               <div className="aspect-square bg-gray-100 flex items-center justify-center">
                 <span className="text-6xl">📦</span>
               </div>
@@ -68,9 +63,7 @@ function App() {
                 <h3 className="font-semibold text-gray-800">Товар {item}</h3>
                 <p className="text-gray-500 text-sm">Категория</p>
                 <div className="flex justify-between items-center mt-3">
-                  <span className="font-bold text-lg text-gray-900">
-                    9 999 ₽
-                  </span>
+                  <span className="font-bold text-lg text-gray-900">9 999 ₽</span>
                   <button className="bg-blue-600 text-white p-2.5 rounded-xl hover:bg-blue-700 transition">
                     <span className="text-sm">🛒</span>
                   </button>
@@ -82,7 +75,7 @@ function App() {
 
         {/* Тестовая кнопка */}
         <div className="mt-12 text-center">
-          <button
+          <button 
             onClick={() => setCount(count + 1)}
             className="bg-gray-200 px-6 py-3 rounded-xl hover:bg-gray-300 transition"
           >
