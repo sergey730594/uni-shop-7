@@ -8,7 +8,6 @@ interface MobileMenuProps {
 }
 
 export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, language }) => {
-  // Блокируем прокрутку при открытом меню
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -22,40 +21,40 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
 
   const menuItems = {
     ka: [
-      { name: 'მთავარი', href: '/' },
-      { name: 'ტორტები', href: '/cakes' },
-      { name: 'შიგთავსი', href: '/fillings' },
-      { name: 'აქსესუარები', href: '/accessories' },
-      { name: 'ყვავილები', href: '/flowers' },
-      { name: 'გადახდა-მიტანა', href: '/delivery' },
-      { name: 'კონტაქტი', href: '/contact' },
+      { name: '🏠 მთავარი', href: '/' },
+      { name: '🍰 ტორტები', href: '/cakes' },
+      { name: '🧁 შიგთავსი', href: '/fillings' },
+      { name: '🎂 აქსესუარები', href: '/accessories' },
+      { name: '🌷 ყვავილები', href: '/flowers' },
+      { name: '🚚 გადახდა-მიტანა', href: '/delivery' },
+      { name: '📞 კონტაქტი', href: '/contact' },
     ],
     en: [
-      { name: 'Home', href: '/' },
-      { name: 'Cakes', href: '/cakes' },
-      { name: 'Fillings', href: '/fillings' },
-      { name: 'Accessories', href: '/accessories' },
-      { name: 'Flowers', href: '/flowers' },
-      { name: 'Payment-Delivery', href: '/delivery' },
-      { name: 'Contact', href: '/contact' },
+      { name: '🏠 Home', href: '/' },
+      { name: '🍰 Cakes', href: '/cakes' },
+      { name: '🧁 Fillings', href: '/fillings' },
+      { name: '🎂 Accessories', href: '/accessories' },
+      { name: '🌷 Flowers', href: '/flowers' },
+      { name: '🚚 Payment-Delivery', href: '/delivery' },
+      { name: '📞 Contact', href: '/contact' },
     ],
     ru: [
-      { name: 'Главная', href: '/' },
-      { name: 'Торты', href: '/cakes' },
-      { name: 'Начинки', href: '/fillings' },
-      { name: 'Аксессуары', href: '/accessories' },
-      { name: 'Цветы', href: '/flowers' },
-      { name: 'Оплата-Доставка', href: '/delivery' },
-      { name: 'Контакты', href: '/contact' },
+      { name: '🏠 Главная', href: '/' },
+      { name: '🍰 Торты', href: '/cakes' },
+      { name: '🧁 Начинки', href: '/fillings' },
+      { name: '🎂 Аксессуары', href: '/accessories' },
+      { name: '🌷 Цветы', href: '/flowers' },
+      { name: '🚚 Оплата-Доставка', href: '/delivery' },
+      { name: '📞 Контакты', href: '/contact' },
     ],
     tr: [
-      { name: 'Ana Sayfa', href: '/' },
-      { name: 'Pastalar', href: '/cakes' },
-      { name: 'Dolgular', href: '/fillings' },
-      { name: 'Aksesuarlar', href: '/accessories' },
-      { name: 'Çiçekler', href: '/flowers' },
-      { name: 'Ödeme-Teslimat', href: '/delivery' },
-      { name: 'İletişim', href: '/contact' },
+      { name: '🏠 Ana Sayfa', href: '/' },
+      { name: '🍰 Pastalar', href: '/cakes' },
+      { name: '🧁 Dolgular', href: '/fillings' },
+      { name: '🎂 Aksesuarlar', href: '/accessories' },
+      { name: '🌷 Çiçekler', href: '/flowers' },
+      { name: '🚚 Ödeme-Teslimat', href: '/delivery' },
+      { name: '📞 İletişim', href: '/contact' },
     ],
   };
 
@@ -99,10 +98,8 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
               className="flex items-center gap-3 px-6 py-3.5 text-gray-700 hover:bg-red-50 hover:text-[#ff0000] transition-colors border-b border-gray-50"
               onClick={onClose}
             >
-              {item.name === 'მთავარი' || item.name === 'Home' || item.name === 'Главная' || item.name === 'Ana Sayfa' ? (
-                <Home className="w-4 h-4" />
-              ) : null}
-              <span className="font-medium text-sm">{item.name}</span>
+              <span className="text-lg">{item.name.split(' ')[0]}</span>
+              <span className="font-medium text-sm">{item.name.split(' ').slice(1).join(' ')}</span>
             </a>
           ))}
         </nav>
