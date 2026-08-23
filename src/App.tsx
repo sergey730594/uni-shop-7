@@ -150,7 +150,7 @@ function HomePage() {
         <section className="relative bg-[#f5e6e6] text-gray-800 overflow-hidden min-h-[180px] sm:min-h-[220px] md:min-h-[260px]">
           {/* Анимированный фон с прозрачностью 15% */}
           <div
-            className={`absolute inset-0 opacity-15 ${animationClass}`}
+            className={`absolute inset-0 opacity-30 ${animationClass}`}
             style={{
               backgroundImage: `url(${bgImage})`,
               backgroundSize: 'cover',
