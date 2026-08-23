@@ -178,30 +178,33 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
             </div>
           </div>
 
-          {/* ====== ПРАВАЯ КОЛОНКА - КАРТА (МЕНЬШЕЙ ВЫСОТЫ) ====== */}
-          <div className="space-y-3">
-            <h3 className="font-semibold text-gray-800 text-lg text-center md:text-left">
-              {t.location}
-            </h3>
-            
-            <div className="relative bg-gray-100 rounded-xl overflow-hidden h-40 sm:h-48 md:h-52 w-full">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2977.843213442141!2d44.7952504!3d41.7151377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40440cd7e64a625d%3A0x61f0841cae1e6de!2sTbilisi%2C%20Georgia!5e0!3m2!1sen!2s!4v1700000000000"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Grant Bakery location"
-                className="absolute inset-0"
-              />
-            </div>
-            
-            <p className="text-sm text-gray-500 text-center">
-              📍 {t.address}
-            </p>
-          </div>
+          // Найдите в Footer.tsx блок с картой и измените высоту:
+
+{/* ====== ПРАВАЯ КОЛОНКА - КАРТА (УМЕНЬШЕННАЯ) ====== */}
+<div className="space-y-3">
+  <h3 className="font-semibold text-gray-800 text-lg text-center md:text-left">
+    {t.location}
+  </h3>
+  
+  {/* Высота уменьшена на треть: h-48 → h-32, h-52 → h-36 */}
+  <div className="relative bg-gray-100 rounded-xl overflow-hidden h-32 sm:h-36 md:h-40 w-full">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2977.843213442141!2d44.7952504!3d41.7151377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40440cd7e64a625d%3A0x61f0841cae1e6de!2sTbilisi%2C%20Georgia!5e0!3m2!1sen!2s!4v1700000000000"
+      width="100%"
+      height="100%"
+      style={{ border: 0 }}
+      allowFullScreen
+      loading="lazy"
+      referrerPolicy="no-referrer-when-downgrade"
+      title="Grant Bakery location"
+      className="absolute inset-0"
+    />
+  </div>
+  
+  <p className="text-sm text-gray-500 text-center">
+    📍 {t.address}
+  </p>
+</div>
         </div>
 
         {/* ====== КОПИРАЙТ ====== */}
