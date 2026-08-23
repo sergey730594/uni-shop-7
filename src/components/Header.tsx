@@ -86,7 +86,7 @@ export const Header: React.FC<HeaderProps> = ({
     return placeholders[language as keyof typeof placeholders] || placeholders.en;
   };
 
-  // Меню навигации
+  // Меню навигации (только для десктопа)
   const menuItems = {
     ka: ['ტორტები', 'შიგთავსი', 'აქსესუარები', 'ყვავილები', 'გადახდა-მიტანა', 'კონტაქტი'],
     en: ['Cakes', 'Fillings', 'Accessories', 'Flowers', 'Payment-Delivery', 'Contact'],
@@ -103,7 +103,6 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Левая часть */}
           <div className="flex items-center gap-2 sm:gap-4">
-            {/* ===== ОДИН ГАМБУРГЕР ===== */}
             <button
               onClick={onMenuOpen}
               className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors lg:hidden"
@@ -190,10 +189,10 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      {/* Красная строка меню с иконкой домика */}
-      <div className="bg-[#ff0000] border-t border-[#cc0000]">
+      {/* ===== ГОРИЗОНТАЛЬНОЕ МЕНЮ — ТОЛЬКО НА ДЕСКТОПЕ ===== */}
+      <div className="hidden lg:block bg-[#ff0000] border-t border-[#cc0000]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="flex items-center justify-center sm:justify-start gap-4 sm:gap-6 md:gap-8 py-2.5 sm:py-3 overflow-x-auto hide-scrollbar">
+          <nav className="flex items-center justify-start gap-4 sm:gap-6 md:gap-8 py-2.5 sm:py-3 overflow-x-auto hide-scrollbar">
             <a href="/" className="text-white hover:text-white/80 transition-colors flex-shrink-0">
               <HomeIcon />
             </a>
