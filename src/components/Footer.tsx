@@ -27,7 +27,6 @@ const GlobeIcon = () => (
 );
 
 // ==================== ИКОНКИ СОЦСЕТЕЙ ====================
-// Viber с явным цветом
 const ViberIcon = () => (
   <svg className="w-6 h-6" fill="white" viewBox="0 0 24 24">
     <path d="M20.616 9.268c.133-.552-.205-1.088-.757-1.222-.552-.133-1.088.205-1.222.757l-.757 3.132c-.131.543.203 1.088.746 1.219.543.131 1.088-.203 1.219-.746l.771-3.14zM12.491 4.865c-.544-.126-1.088.208-1.214.752l-.757 3.132c-.126.544.208 1.088.752 1.214.544.126 1.088-.208 1.214-.752l.757-3.132c.126-.544-.208-1.088-.752-1.214zM16.247 17.239c-.544-.126-1.088.208-1.214.752l-.757 3.132c-.126.544.208 1.088.752 1.214.544.126 1.088-.208 1.214-.752l.757-3.132c.126-.544-.208-1.088-.752-1.214zM8.735 12.031c-.544-.126-1.088.208-1.214.752l-.757 3.132c-.126.544.208 1.088.752 1.214.544.126 1.088-.208 1.214-.752l.757-3.132c.126-.544-.208-1.088-.752-1.214z"/>
@@ -124,7 +123,7 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
           {/* ====== ЛЕВАЯ КОЛОНКА ====== */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center shadow-md">
+              <div className="w-10 h-10 bg-gradient-to-br from-[#ff0000] to-[#cc0000] rounded-xl flex items-center justify-center shadow-md">
                 <span className="text-white font-bold text-lg">G</span>
               </div>
               <div>
@@ -140,26 +139,26 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
               </div>
               <div className="flex items-center gap-2 text-gray-600">
                 <PhoneIcon />
-                <a href={`tel:${t.phone.replace(/\s/g, '')}`} className="hover:text-red-600 transition">
+                <a href={`tel:${t.phone.replace(/\s/g, '')}`} className="hover:text-[#ff0000] transition">
                   {t.phone}
                 </a>
               </div>
               <div className="flex items-center gap-2 text-gray-600">
                 <EmailIcon />
-                <a href={`mailto:${t.email}`} className="hover:text-red-600 transition">
+                <a href={`mailto:${t.email}`} className="hover:text-[#ff0000] transition">
                   {t.email}
                 </a>
               </div>
               <div className="flex items-center gap-2 text-gray-600">
                 <GlobeIcon />
-                <a href="#" className="hover:text-red-600 transition">
+                <a href="#" className="hover:text-[#ff0000] transition">
                   {t.website}
                 </a>
               </div>
             </div>
           </div>
 
-          {/* ====== СРЕДНЯЯ КОЛОНКА - ИКОНКИ ПО ВЕРХНЕМУ КРАЮ ====== */}
+          {/* ====== СРЕДНЯЯ КОЛОНКА - ИКОНКИ СОЦСЕТЕЙ ====== */}
           <div className="flex flex-col items-center md:items-start space-y-4">
             <p className="text-sm font-medium text-gray-700">{t.followUs}</p>
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
@@ -178,39 +177,37 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
             </div>
           </div>
 
-          // Найдите в Footer.tsx блок с картой и измените высоту:
-
-{/* ====== ПРАВАЯ КОЛОНКА - КАРТА (УМЕНЬШЕННАЯ) ====== */}
-<div className="space-y-3">
-  <h3 className="font-semibold text-gray-800 text-lg text-center md:text-left">
-    {t.location}
-  </h3>
-  
-  {/* Высота уменьшена на треть: h-48 → h-32, h-52 → h-36 */}
-  <div className="relative bg-gray-100 rounded-xl overflow-hidden h-32 sm:h-36 md:h-40 w-full">
-    <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2977.843213442141!2d44.7952504!3d41.7151377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40440cd7e64a625d%3A0x61f0841cae1e6de!2sTbilisi%2C%20Georgia!5e0!3m2!1sen!2s!4v1700000000000"
-      width="100%"
-      height="100%"
-      style={{ border: 0 }}
-      allowFullScreen
-      loading="lazy"
-      referrerPolicy="no-referrer-when-downgrade"
-      title="Grant Bakery location"
-      className="absolute inset-0"
-    />
-  </div>
-  
-  <p className="text-sm text-gray-500 text-center">
-    📍 {t.address}
-  </p>
-</div>
+          {/* ====== ПРАВАЯ КОЛОНКА - КАРТА (УМЕНЬШЕННАЯ) ====== */}
+          <div className="space-y-3">
+            <h3 className="font-semibold text-gray-800 text-lg text-center md:text-left">
+              {t.location}
+            </h3>
+            
+            {/* ВЫСОТА УМЕНЬШЕНА НА ТРЕТЬ: h-48→h-32, h-56→h-36, h-64→h-40 */}
+            <div className="relative bg-gray-100 rounded-xl overflow-hidden h-32 sm:h-36 md:h-40 w-full">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2977.843213442141!2d44.7952504!3d41.7151377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40440cd7e64a625d%3A0x61f0841cae1e6de!2sTbilisi%2C%20Georgia!5e0!3m2!1sen!2s!4v1700000000000"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Grant Bakery location"
+                className="absolute inset-0"
+              />
+            </div>
+            
+            <p className="text-sm text-gray-500 text-center">
+              📍 {t.address}
+            </p>
+          </div>
         </div>
 
         {/* ====== КОПИРАЙТ ====== */}
         <div className="border-t border-gray-200 mt-8 pt-6 text-center">
           <p className="text-sm text-gray-500">
-            © 2026 Grant Bakery. {t.rights}
+            © 2024 Grant Bakery. {t.rights}
           </p>
         </div>
       </div>
