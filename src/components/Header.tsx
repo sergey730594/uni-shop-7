@@ -53,6 +53,7 @@ export const Header: React.FC<HeaderProps> = ({
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [isCakesOpen, setIsCakesOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -144,7 +145,30 @@ export const Header: React.FC<HeaderProps> = ({
     });
   };
 
-  // Меню навигации с иконками + Sale
+  const cakeCategories = {
+    ka: [
+      'კორპორატიული', 'საქორწილო', 'საბავშვო ტორტები', 'ფოტო ტორტები',
+      'მანქანა ტორტები', 'სპორტული ტორტები', 'გულის ტორტები', 'მარცეპანის ტორტი',
+      'ნათლობის ტორტები', 'მრგვალი ტორტები', 'უფროსებისთვის', 'ოთხკუთხა ტორტები', 'საახალწლო ტორტები'
+    ],
+    en: [
+      'Corporate', 'Wedding', 'Kids Cakes', 'Photo Cakes',
+      'Car Cakes', 'Sports Cakes', 'Heart Cakes', 'Marzipan Cake',
+      'Baptism Cakes', 'Round Cakes', 'For Adults', 'Square Cakes', 'New Year Cakes'
+    ],
+    ru: [
+      'Корпоративные', 'Свадебные', 'Детские торты', 'Фото торты',
+      'Торты-машины', 'Спортивные торты', 'Торты-сердца', 'Марципановый торт',
+      'Торты на крестины', 'Круглые торты', 'Для взрослых', 'Квадратные торты', 'Новогодние торты'
+    ],
+    tr: [
+      'Kurumsal', 'Düğün', 'Çocuk Pastaları', 'Fotoğraflı Pastalar',
+      'Araba Pastaları', 'Spor Pastaları', 'Kalp Pastaları', 'Badem Ezmesi Pastası',
+      'Vaftiz Pastaları', 'Yuvarlak Pastalar', 'Yetişkinler İçin', 'Kare Pastalar', 'Yılbaşı Pastaları'
+    ],
+  };
+
+  // Меню навигации
   const menuItems = {
     ka: [
       { icon: '🏠', name: 'მთავარი', href: '/' },
@@ -196,18 +220,15 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="bg-[#ffe5e5] border-y border-[#ff0000]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-6 sm:h-7 text-[10px] sm:text-xs text-black">
-            {/* Левая часть - дата и время */}
             <div className="flex items-center gap-2 whitespace-nowrap">
               <span>{getFormattedDate()}</span>
               <span className="font-mono">{getFormattedTime()}</span>
             </div>
             
-            {/* Центр - адрес */}
             <div className="hidden md:block text-center whitespace-nowrap">
               {getAddress()}
             </div>
             
-            {/* Правая часть - телефон */}
             <div className="whitespace-nowrap">
               {getPhoneLabel()}/WhatsApp/Viber:{' '}
               <a href="tel:+995593756700" className="hover:text-[#ff0000] transition-colors font-medium">
@@ -221,7 +242,6 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Верхняя строка: лого, поиск, языки, корзина */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
-          {/* Левая часть */}
           <div className="flex items-center gap-2 sm:gap-4">
             <button
               onClick={onMenuOpen}
@@ -245,7 +265,6 @@ export const Header: React.FC<HeaderProps> = ({
             </a>
           </div>
 
-          {/* Поиск */}
           <form onSubmit={handleSearch} className="flex-1 max-w-md mx-2 sm:mx-4">
             <div className="relative">
               <SearchIcon />
@@ -259,7 +278,6 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </form>
 
-          {/* Правая часть */}
           <div className="flex items-center gap-1 sm:gap-3">
             <div className="relative" ref={langRef}>
               <button
@@ -316,17 +334,59 @@ export const Header: React.FC<HeaderProps> = ({
       {/* ===== ГОРИЗОНТАЛЬНОЕ МЕНЮ — ТОЛЬКО НА ДЕСКТОПЕ ===== */}
       <div className="hidden lg:block bg-[#ff0000] border-t border-[#cc0000]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="flex items-center justify-start gap-1 sm:gap-2 md:gap-3 py-2.5 sm:py-3 overflow-x-auto hide-scrollbar">
-            {items.map((item, index) => (
-              <a
-                key={index}
-                href={item.href}
-                className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:bg-white/20 transition-colors tracking-wide px-3 py-1 rounded-full"
-              >
-                <span className="text-base sm:text-lg">{item.icon}</span>
-                <span>{item.name}</span>
-              </a>
-            ))}
+          <nav className="flex items-center justify-start gap-1 sm:gap-2 md:gap-3 py-2.5 sm:py-3 overflow-x-auto hide-scrollbar relative">
+            {items.map((item, index) => {
+              const isCakeItem = item.name === 'ტორტები' || item.name === 'Cakes' || item.name === 'Торты' || item.name === 'Pastalar';
+              
+              if (isCakeItem) {
+                return (
+                  <div 
+                    key={index} 
+                    className="relative"
+                    onMouseEnter={() => setIsCakesOpen(true)} 
+                    onMouseLeave={() => setIsCakesOpen(false)}
+                  >
+                    <a
+                      href={item.href}
+                      className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:bg-white/20 transition-colors tracking-wide px-3 py-1 rounded-full cursor-pointer"
+                    >
+                      <span className="text-base sm:text-lg">{item.icon}</span>
+                      <span>{item.name}</span>
+                      <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </a>
+                    
+                    {isCakesOpen && (
+                      <div className="absolute top-full left-0 mt-1 bg-white rounded-xl shadow-2xl border border-gray-200 p-4 z-50 min-w-[550px]">
+                        <div className="grid grid-cols-3 gap-1">
+                          {cakeCategories[language as keyof typeof cakeCategories].map((cat, catIndex) => (
+                            <a
+                              key={catIndex}
+                              href={`/cakes/${cat.toLowerCase().replace(/\s+/g, '-')}`}
+                              className="text-xs text-gray-700 hover:text-[#ff0000] hover:bg-red-50 px-3 py-2 rounded-lg transition-colors whitespace-nowrap"
+                            >
+                              {cat}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+              
+              return (
+                <a
+                  key={index}
+                  href={item.href}
+                  className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:bg-white/20 transition-colors tracking-wide px-3 py-1 rounded-full"
+                >
+                  <span className="text-base sm:text-lg">{item.icon}</span>
+                  <span>{item.name}</span>
+                </a>
+              );
+            })}
           </nav>
         </div>
       </div>
