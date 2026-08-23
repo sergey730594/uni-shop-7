@@ -1,7 +1,6 @@
 import React from 'react';
-import { useLanguage } from '../App';
 
-// ==================== ИКОНКИ SVG ====================
+// ==================== ИКОНКИ ====================
 const LocationIcon = () => (
   <svg className="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -27,7 +26,7 @@ const GlobeIcon = () => (
   </svg>
 );
 
-// ==================== ИКОНКИ СОЦСЕТЕЙ ====================
+// Соцсети
 const ViberIcon = () => (
   <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
     <path d="M20.616 9.268c.133-.552-.205-1.088-.757-1.222-.552-.133-1.088.205-1.222.757l-.757 3.132c-.131.543.203 1.088.746 1.219.543.131 1.088-.203 1.219-.746l.771-3.14zM12.491 4.865c-.544-.126-1.088.208-1.214.752l-.757 3.132c-.126.544.208 1.088.752 1.214.544.126 1.088-.208 1.214-.752l.757-3.132c.126-.544-.208-1.088-.752-1.214zM16.247 17.239c-.544-.126-1.088.208-1.214.752l-.757 3.132c-.126.544.208 1.088.752 1.214.544.126 1.088-.208 1.214-.752l.757-3.132c.126-.544-.208-1.088-.752-1.214zM8.735 12.031c-.544-.126-1.088.208-1.214.752l-.757 3.132c-.126.544.208 1.088.752 1.214.544.126 1.088-.208 1.214-.752l.757-3.132c.126-.544-.208-1.088-.752-1.214z"/>
@@ -58,13 +57,6 @@ const YouTubeIcon = () => (
   </svg>
 );
 
-const MapPinIcon = () => (
-  <svg className="w-5 h-5 text-red-500 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-  </svg>
-);
-
-// ==================== КОМПОНЕНТ ====================
 interface FooterProps {
   language?: string;
 }
@@ -72,49 +64,41 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
   const texts = {
     ka: {
-      description: 'თანამედროვე ტექნოლოგიები და ხარისხიანი მომსახურება',
+      description: 'ხელნაკეთი ტორტები და დესერტები',
       address: 'თბილისი, საქართველო',
       phone: '+995 555 000 000',
       email: 'info@grant.ge',
       website: 'www.grant.ge',
-      viber: 'Viber',
-      whatsapp: 'WhatsApp',
       followUs: 'გამოგვყევით',
       contacts: 'კონტაქტები',
       rights: 'ყველა უფლება დაცულია',
     },
     en: {
-      description: 'Modern technology and quality service',
+      description: 'Homemade cakes and desserts',
       address: 'Tbilisi, Georgia',
       phone: '+995 555 000 000',
       email: 'info@grant.ge',
       website: 'www.grant.ge',
-      viber: 'Viber',
-      whatsapp: 'WhatsApp',
       followUs: 'Follow us',
       contacts: 'Contacts',
       rights: 'All rights reserved',
     },
     ru: {
-      description: 'Современные технологии и качественный сервис',
+      description: 'Домашние торты и десерты',
       address: 'Тбилиси, Грузия',
       phone: '+995 555 000 000',
       email: 'info@grant.ge',
       website: 'www.grant.ge',
-      viber: 'Viber',
-      whatsapp: 'WhatsApp',
       followUs: 'Подпишитесь',
       contacts: 'Контакты',
       rights: 'Все права защищены',
     },
     tr: {
-      description: 'Modern teknoloji ve kaliteli hizmet',
+      description: 'Ev yapımı pastalar ve tatlılar',
       address: 'Tiflis, Gürcistan',
       phone: '+995 555 000 000',
       email: 'info@grant.ge',
       website: 'www.grant.ge',
-      viber: 'Viber',
-      whatsapp: 'WhatsApp',
       followUs: 'Bizi takip edin',
       contacts: 'İletişim',
       rights: 'Tüm hakları saklıdır',
@@ -123,38 +107,12 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
 
   const t = texts[language as keyof typeof texts] || texts.ka;
 
-  // ==================== СОЦСЕТИ ====================
   const socialLinks = [
-    { 
-      name: 'Viber', 
-      icon: <ViberIcon />, 
-      url: '#', 
-      color: 'text-blue-500 hover:text-blue-600' 
-    },
-    { 
-      name: 'WhatsApp', 
-      icon: <WhatsAppIcon />, 
-      url: '#', 
-      color: 'text-green-500 hover:text-green-600' 
-    },
-    { 
-      name: 'Instagram', 
-      icon: <InstagramIcon />, 
-      url: '#', 
-      color: 'text-pink-600 hover:text-pink-700' 
-    },
-    { 
-      name: 'Facebook', 
-      icon: <FacebookIcon />, 
-      url: '#', 
-      color: 'text-blue-600 hover:text-blue-700' 
-    },
-    { 
-      name: 'YouTube', 
-      icon: <YouTubeIcon />, 
-      url: '#', 
-      color: 'text-red-600 hover:text-red-700' 
-    },
+    { name: 'Viber', icon: <ViberIcon />, url: '#', color: 'text-blue-500 hover:text-blue-600' },
+    { name: 'WhatsApp', icon: <WhatsAppIcon />, url: '#', color: 'text-green-500 hover:text-green-600' },
+    { name: 'Instagram', icon: <InstagramIcon />, url: '#', color: 'text-pink-600 hover:text-pink-700' },
+    { name: 'Facebook', icon: <FacebookIcon />, url: '#', color: 'text-blue-600 hover:text-blue-700' },
+    { name: 'YouTube', icon: <YouTubeIcon />, url: '#', color: 'text-red-600 hover:text-red-700' },
   ];
 
   return (
@@ -162,14 +120,14 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           
-          {/* ====== ЛЕВАЯ КОЛОНКА ====== */}
+          {/* ЛЕВАЯ КОЛОНКА */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl flex items-center justify-center shadow-md">
+              <div className="w-10 h-10 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center shadow-md">
                 <span className="text-white font-bold text-lg">G</span>
               </div>
               <div>
-                <span className="font-bold text-xl text-gray-800">Grant.ge</span>
+                <span className="font-bold text-xl text-gray-800">Grant Bakery</span>
                 <p className="text-sm text-gray-500">{t.description}</p>
               </div>
             </div>
@@ -177,30 +135,30 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2 text-gray-600">
                 <LocationIcon />
-                <span>{t.address}</span>
+                <span>📍 {t.address}</span>
               </div>
               <div className="flex items-center gap-2 text-gray-600">
                 <PhoneIcon />
-                <a href={`tel:${t.phone.replace(/\s/g, '')}`} className="hover:text-blue-600 transition">
+                <a href={`tel:${t.phone.replace(/\s/g, '')}`} className="hover:text-red-600 transition">
                   {t.phone}
                 </a>
               </div>
               <div className="flex items-center gap-2 text-gray-600">
                 <EmailIcon />
-                <a href={`mailto:${t.email}`} className="hover:text-blue-600 transition">
+                <a href={`mailto:${t.email}`} className="hover:text-red-600 transition">
                   {t.email}
                 </a>
               </div>
               <div className="flex items-center gap-2 text-gray-600">
                 <GlobeIcon />
-                <a href="#" className="hover:text-blue-600 transition">
+                <a href="#" className="hover:text-red-600 transition">
                   {t.website}
                 </a>
               </div>
             </div>
           </div>
 
-          {/* ====== СРЕДНЯЯ КОЛОНКА ====== */}
+          {/* СРЕДНЯЯ КОЛОНКА */}
           <div className="space-y-4">
             <h3 className="font-semibold text-gray-800 text-lg">{t.contacts}</h3>
             
@@ -230,7 +188,6 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
               </div>
             </div>
 
-            {/* Реквизиты */}
             <div className="border-t border-gray-200 pt-4">
               <p className="text-sm text-gray-500">
                 <span className="font-medium text-gray-700">ИНН:</span> 123456789
@@ -240,7 +197,6 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
               </p>
             </div>
 
-            {/* ====== СОЦИАЛЬНЫЕ СЕТИ ====== */}
             <div>
               <p className="text-sm font-medium text-gray-700 mb-3">{t.followUs}</p>
               <div className="flex flex-wrap items-center gap-3 sm:gap-4">
@@ -260,28 +216,22 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
             </div>
           </div>
 
-          {/* ====== ПРАВАЯ КОЛОНКА (КАРТА) ====== */}
+          {/* ПРАВАЯ КОЛОНКА - КАРТА */}
           <div className="space-y-3">
             <h3 className="font-semibold text-gray-800 text-lg">Мы на карте</h3>
             
             <div className="relative bg-gray-100 rounded-xl overflow-hidden h-48 sm:h-56 md:h-64 w-full">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23819.141045980034!2d44.7428305!3d41.7099814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40440cd7e64a625d%3A0x61f0841cae1e6de!2sTbilisi%2C%20Georgia!5e0!3m2!1sen!2s!4v1700000000000"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2977.843213442141!2d44.7952504!3d41.7151377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40440cd7e64a625d%3A0x61f0841cae1e6de!2sTbilisi%2C%20Georgia!5e0!3m2!1sen!2s!4v1700000000000"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Grant.ge location"
+                title="Grant Bakery location"
                 className="absolute inset-0"
               />
-              
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="bg-white rounded-full p-2 shadow-lg animate-bounce">
-                  <MapPinIcon />
-                </div>
-              </div>
             </div>
             
             <p className="text-sm text-gray-500 text-center">
@@ -290,10 +240,10 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
           </div>
         </div>
 
-        {/* ====== КОПИРАЙТ ====== */}
+        {/* КОПИРАЙТ */}
         <div className="border-t border-gray-200 mt-8 pt-6 text-center">
           <p className="text-sm text-gray-500">
-            © 2024 Grant.ge. {t.rights}
+            © 2024 Grant Bakery. {t.rights}
           </p>
         </div>
       </div>
