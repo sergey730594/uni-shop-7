@@ -22,8 +22,8 @@ const SearchIcon = () => (
 );
 
 const ShoppingBagIcon = () => (
-  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-[#ff0000]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
   </svg>
 );
 
@@ -52,6 +52,7 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentTime, setCurrentTime] = useState(new Date());
   const langRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -64,6 +65,13 @@ export const Header: React.FC<HeaderProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (onSearch) onSearch(searchQuery);
@@ -73,12 +81,67 @@ export const Header: React.FC<HeaderProps> = ({
 
   const getPlaceholder = () => {
     const placeholders = {
-      ka: 'მოძებნეთ დესერტები...',
-      en: 'Search desserts...',
-      ru: 'Поиск десертов...',
-      tr: 'Tatlıları ara...',
+      ka: 'მოძებნეთ ტორტები...',
+      en: 'Search cakes...',
+      ru: 'Поиск тортов...',
+      tr: 'Pastaları ara...',
     };
     return placeholders[language as keyof typeof placeholders] || placeholders.en;
+  };
+
+  const getLocale = () => {
+    const locales = {
+      ka: 'ka-GE',
+      en: 'en-US',
+      ru: 'ru-RU',
+      tr: 'tr-TR',
+    };
+    return locales[language as keyof typeof locales] || 'ka-GE';
+  };
+
+  const getAddress = () => {
+    const addresses = {
+      ka: 'თბილისი, ნოდარ დუმბაძის გამზ. №4',
+      en: 'Tbilisi, Nodar Dumbadze Ave. №4',
+      ru: 'г. Тбилиси, просп. Нодара Думбадзе №4',
+      tr: 'Tiflis, Nodar Dumbadze Cad. №4',
+    };
+    return addresses[language as keyof typeof addresses] || addresses.ka;
+  };
+
+  const getPhoneLabel = () => {
+    const labels = {
+      ka: 'ტელ.',
+      en: 'Tel.',
+      ru: 'Тел.',
+      tr: 'Tel.',
+    };
+    return labels[language as keyof typeof labels] || labels.ka;
+  };
+
+  const getFormattedDate = () => {
+    const months = {
+      ka: ['იანვარი', 'თებერვალი', 'მარტი', 'აპრილი', 'მაისი', 'ივნისი', 'ივლისი', 'აგვისტო', 'სექტემბერი', 'ოქტომბერი', 'ნოემბერი', 'დეკემბერი'],
+      en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      ru: ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'],
+      tr: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+    };
+    
+    const monthNames = months[language as keyof typeof months] || months.ka;
+    const day = currentTime.getDate();
+    const month = monthNames[currentTime.getMonth()];
+    const year = currentTime.getFullYear();
+    
+    return `${day} ${month} ${year}`;
+  };
+
+  const getFormattedTime = () => {
+    return currentTime.toLocaleTimeString(getLocale(), { 
+      hour: '2-digit', 
+      minute: '2-digit', 
+      second: '2-digit', 
+      hour12: false 
+    });
   };
 
   // Меню навигации с иконками + Sale
@@ -129,6 +192,32 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+      {/* ===== ВЕРХНЯЯ ТОНКАЯ ЛИНИЯ ===== */}
+      <div className="bg-[#ffe5e5] border-y border-[#ff0000]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-6 sm:h-7 text-[10px] sm:text-xs text-black">
+            {/* Левая часть - дата и время */}
+            <div className="flex items-center gap-2 whitespace-nowrap">
+              <span>{getFormattedDate()}</span>
+              <span className="font-mono">{getFormattedTime()}</span>
+            </div>
+            
+            {/* Центр - адрес */}
+            <div className="hidden md:block text-center whitespace-nowrap">
+              {getAddress()}
+            </div>
+            
+            {/* Правая часть - телефон */}
+            <div className="whitespace-nowrap">
+              {getPhoneLabel()}/WhatsApp/Viber:{' '}
+              <a href="tel:+995593756700" className="hover:text-[#ff0000] transition-colors font-medium">
+                +995 593 756 700
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Верхняя строка: лого, поиск, языки, корзина */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
@@ -227,16 +316,12 @@ export const Header: React.FC<HeaderProps> = ({
       {/* ===== ГОРИЗОНТАЛЬНОЕ МЕНЮ — ТОЛЬКО НА ДЕСКТОПЕ ===== */}
       <div className="hidden lg:block bg-[#ff0000] border-t border-[#cc0000]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="flex items-center justify-start gap-3 sm:gap-5 md:gap-7 py-2.5 sm:py-3 overflow-x-auto hide-scrollbar">
+          <nav className="flex items-center justify-start gap-1 sm:gap-2 md:gap-3 py-2.5 sm:py-3 overflow-x-auto hide-scrollbar">
             {items.map((item, index) => (
               <a
                 key={index}
                 href={item.href}
-                className={`flex items-center gap-1.5 text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:text-white/80 transition-colors tracking-wide ${
-                  item.name === 'ფასდაკლება' || item.name === 'Sale' || item.name === 'Скидки' || item.name === 'İndirim'
-                    ? 'bg-white/20 px-3 py-1 rounded-full'
-                    : ''
-                }`}
+                className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:bg-white/20 transition-colors tracking-wide px-3 py-1 rounded-full"
               >
                 <span className="text-base sm:text-lg">{item.icon}</span>
                 <span>{item.name}</span>

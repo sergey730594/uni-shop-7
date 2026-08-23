@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { X } from 'lucide-react';
+import logoImage from '../assets/Logo-grant.png';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -76,8 +77,12 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
       <div className="fixed top-0 left-0 h-full w-72 bg-white shadow-2xl z-50 lg:hidden animate-slide-in flex flex-col">
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-[#ff0000] rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">G</span>
+            <div className="w-10 h-10 rounded-full overflow-hidden shadow-md flex-shrink-0">
+              <img 
+                src={logoImage} 
+                alt="Grant Bakery" 
+                className="w-full h-full object-cover"
+              />
             </div>
             <span className="font-bold text-gray-800">Grant Bakery</span>
           </div>
@@ -110,7 +115,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
 
         <div className="border-t border-gray-200 p-4">
           <p className="text-xs text-gray-500 text-center">
-            © 2024 Grant Bakery
+            © 2026 Grant Bakery
           </p>
         </div>
       </div>

@@ -92,7 +92,7 @@ function HomePage() {
       subtitle: 'ონლაინ შეკვეთა, მიტანის სერვისით',
       button: 'შეკვეთა ახლავე',
       button2: 'გაიგე მეტი',
-      popular: '🔥 პოპულარული დესერტები',
+      popular: '🔥 პოპულარული ტორტები',
       viewAll: 'ყველას ნახვა →',
       cart: 'კალათა',
     },
@@ -103,7 +103,7 @@ function HomePage() {
       subtitle: 'Online ordering with delivery service',
       button: 'Order Now',
       button2: 'Learn More',
-      popular: '🔥 Popular Desserts',
+      popular: '🔥 Popular Cakes',
       viewAll: 'View All →',
       cart: 'Cart',
     },
@@ -114,7 +114,7 @@ function HomePage() {
       subtitle: 'Онлайн-заказ с доставкой',
       button: 'Заказать сейчас',
       button2: 'Узнать больше',
-      popular: '🔥 Популярные десерты',
+      popular: '🔥 Популярные торты',
       viewAll: 'Смотреть все →',
       cart: 'Корзина',
     },
@@ -125,7 +125,7 @@ function HomePage() {
       subtitle: 'Teslimat hizmeti ile çevrimiçi sipariş',
       button: 'Şimdi Sipariş Ver',
       button2: 'Daha Fazla',
-      popular: '🔥 Popüler Tatlılar',
+      popular: '🔥 Popüler Pastalar',
       viewAll: 'Hepsini Gör →',
       cart: 'Sepet',
     },
@@ -195,10 +195,10 @@ function HomePage() {
             <div>
               <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800">{t.popular}</h2>
               <p className="text-xs sm:text-sm text-gray-500 hidden sm:block mt-1">
-                {products.length} {language === 'ka' ? 'დესერტი' : 
-                                  language === 'en' ? 'desserts' : 
-                                  language === 'ru' ? 'десертов' : 
-                                  'tatlı'} 
+                {products.length} {language === 'ka' ? 'ტორტი' : 
+                                  language === 'en' ? 'cakes' : 
+                                  language === 'ru' ? 'тортов' : 
+                                  'pasta'} 
               </p>
             </div>
             <button className="text-[#ff0000] font-medium hover:text-[#cc0000] transition text-sm sm:text-base">
