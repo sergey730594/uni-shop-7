@@ -39,18 +39,14 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
 // ==================== ТОВАРЫ ====================
 const products = [
-  { id: 1, name: 'iPhone 15 Pro', price: 99900, category: 'Electronics', image: '📱', rating: 4.8 },
-  { id: 2, name: 'MacBook Pro 14"', price: 199900, category: 'Computers', image: '💻', rating: 4.9 },
-  { id: 3, name: 'AirPods Pro 2', price: 24900, category: 'Audio', image: '🎧', rating: 4.7 },
-  { id: 4, name: 'iPad Air', price: 69900, category: 'Tablets', image: '📱', rating: 4.6 },
-  { id: 5, name: 'Samsung Galaxy S24', price: 89900, category: 'Electronics', image: '📱', rating: 4.8 },
-  { id: 6, name: 'Dyson V15', price: 59900, category: 'Home', image: '🧹', rating: 4.5 },
-  { id: 7, name: 'Sony WH-1000XM5', price: 34900, category: 'Audio', image: '🎧', rating: 4.9 },
-  { id: 8, name: 'Apple Watch Ultra', price: 79900, category: 'Wearables', image: '⌚', rating: 4.7 },
-  { id: 9, name: 'DJI Mini 4 Pro', price: 99900, category: 'Drones', image: '🚁', rating: 4.8 },
-  { id: 10, name: 'Kindle Paperwhite', price: 14900, category: 'Books', image: '📚', rating: 4.6 },
-  { id: 11, name: 'Xiaomi Robot Vacuum', price: 39900, category: 'Home', image: '🤖', rating: 4.4 },
-  { id: 12, name: 'GoPro Hero 12', price: 44900, category: 'Cameras', image: '📷', rating: 4.7 },
+  { id: 1, name: 'Наполеон', price: 3500, category: 'Торты', image: '🎂', rating: 4.9 },
+  { id: 2, name: 'Медовик', price: 3200, category: 'Торты', image: '🍯', rating: 4.8 },
+  { id: 3, name: 'Прага', price: 3800, category: 'Торты', image: '🍫', rating: 4.7 },
+  { id: 4, name: 'Красный бархат', price: 4200, category: 'Торты', image: '❤️', rating: 4.9 },
+  { id: 5, name: 'Чизкейк', price: 2800, category: 'Пирожные', image: '🧀', rating: 4.6 },
+  { id: 6, name: 'Эклеры', price: 1500, category: 'Пирожные', image: '🥐', rating: 4.5 },
+  { id: 7, name: 'Макаруны', price: 2000, category: 'Пирожные', image: '🍬', rating: 4.7 },
+  { id: 8, name: 'Корзиночки', price: 1800, category: 'Пирожные', image: '🧺', rating: 4.4 },
 ];
 
 // ==================== ГЛАВНАЯ СТРАНИЦА ====================
@@ -67,46 +63,46 @@ function HomePage() {
   // ==================== ТЕКСТЫ НА ВСЕХ ЯЗЫКАХ ====================
   const texts = {
     ka: {
-      badge: '🔥 ახალი კოლექცია 2024',
-      title: 'კეთილი იყოს თქვენი მობრძანება',
-      titleHighlight: 'Grant.ge-ში',
-      subtitle: 'თანამედროვე ტექნოლოგიები, ხარისხიანი მასალები და საუკეთესო ფასები',
-      button: 'იყიდე ახლავე',
+      badge: '🧁 საკონდიტრო',
+      title: 'ტორტის შეკვეთა',
+      titleHighlight: 'Grant Bakery"-ში',
+      subtitle: 'ონლაინ შეკვეთა, მიტანის სერვისით',
+      button: 'შეკვეთა ახლავე',
       button2: 'გაიგე მეტი',
-      popular: '🔥 პოპულარული პროდუქტები',
+      popular: '🔥 პოპულარული დესერტები',
       viewAll: 'ყველას ნახვა →',
       cart: 'კალათა',
     },
     en: {
-      badge: '🔥 New Collection 2024',
-      title: 'Welcome to',
-      titleHighlight: 'Grant.ge',
-      subtitle: 'Modern technology, quality materials, and the best prices',
-      button: 'Shop Now',
+      badge: '🧁 Bakery',
+      title: 'Order a Cake',
+      titleHighlight: 'at Grant Bakery',
+      subtitle: 'Online ordering with delivery service',
+      button: 'Order Now',
       button2: 'Learn More',
-      popular: '🔥 Popular Products',
+      popular: '🔥 Popular Desserts',
       viewAll: 'View All →',
       cart: 'Cart',
     },
     ru: {
-      badge: '🔥 Новая коллекция 2024',
-      title: 'Добро пожаловать в',
-      titleHighlight: 'Grant.ge',
-      subtitle: 'Современные технологии, качественные материалы и лучшие цены',
-      button: 'Купить сейчас',
+      badge: '🧁 Кондитерская',
+      title: 'Заказ торта',
+      titleHighlight: 'в Grant Bakery',
+      subtitle: 'Онлайн-заказ с доставкой',
+      button: 'Заказать сейчас',
       button2: 'Узнать больше',
-      popular: '🔥 Популярные товары',
+      popular: '🔥 Популярные десерты',
       viewAll: 'Смотреть все →',
       cart: 'Корзина',
     },
     tr: {
-      badge: '🔥 Yeni Koleksiyon 2024',
-      title: 'Hoş Geldiniz',
-      titleHighlight: 'Grant.ge',
-      subtitle: 'Modern teknoloji, kaliteli malzemeler ve en iyi fiyatlar',
-      button: 'Şimdi Alışveriş Yap',
+      badge: '🧁 Pastane',
+      title: 'Pasta Siparişi',
+      titleHighlight: 'Grant Bakery\'de',
+      subtitle: 'Teslimat hizmeti ile çevrimiçi sipariş',
+      button: 'Şimdi Sipariş Ver',
       button2: 'Daha Fazla',
-      popular: '🔥 Popüler Ürünler',
+      popular: '🔥 Popüler Tatlılar',
       viewAll: 'Hepsini Gör →',
       cart: 'Sepet',
     },
@@ -117,7 +113,6 @@ function HomePage() {
   // ==================== RENDER ====================
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* ШАПКА */}
       <Header
         language={language}
         onLanguageChange={setLanguage}
@@ -126,10 +121,9 @@ function HomePage() {
         cartCount={cartCount}
       />
 
-      {/* ОСНОВНОЙ КОНТЕНТ */}
       <main className="flex-1">
-        {/* ГЕРОЙ СЕКЦИЯ */}
-        <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white">
+        {/* ГЕРОЙ СЕКЦИЯ - КРАСНЫЙ */}
+        <section className="bg-gradient-to-br from-red-600 via-red-700 to-red-800 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24">
             <div className="text-center max-w-3xl mx-auto">
               <div className="inline-block bg-white/20 backdrop-blur-sm rounded-full px-3 sm:px-4 py-1 text-xs sm:text-sm font-medium mb-3 sm:mb-4">
@@ -137,16 +131,16 @@ function HomePage() {
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4">
                 {t.title} <br className="sm:hidden" />
-                <span className="text-blue-200">{t.titleHighlight}</span>
+                <span className="text-red-200">{t.titleHighlight}</span>
               </h1>
-              <p className="text-base sm:text-lg md:text-xl text-blue-100 mb-6 sm:mb-8 max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg md:text-xl text-red-100 mb-6 sm:mb-8 max-w-2xl mx-auto">
                 {t.subtitle}
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                <button className="bg-white text-blue-600 px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl font-semibold hover:shadow-lg hover:bg-blue-50 transition-all text-sm sm:text-base">
+                <button className="bg-white text-red-600 px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl font-semibold hover:shadow-lg hover:bg-red-50 transition-all text-sm sm:text-base">
                   {t.button}
                 </button>
-                <button className="bg-blue-700/50 backdrop-blur-sm text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl font-semibold hover:bg-blue-700/70 transition-all text-sm sm:text-base">
+                <button className="bg-red-700/50 backdrop-blur-sm text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-xl font-semibold hover:bg-red-700/70 transition-all text-sm sm:text-base">
                   {t.button2}
                 </button>
               </div>
@@ -160,13 +154,13 @@ function HomePage() {
             <div>
               <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800">{t.popular}</h2>
               <p className="text-xs sm:text-sm text-gray-500 hidden sm:block mt-1">
-                {products.length} {language === 'ka' ? 'პროდუქტი' : 
-                                  language === 'en' ? 'products' : 
-                                  language === 'ru' ? 'товаров' : 
-                                  'ürün'} 
+                {products.length} {language === 'ka' ? 'დესერტი' : 
+                                  language === 'en' ? 'desserts' : 
+                                  language === 'ru' ? 'десертов' : 
+                                  'tatlı'} 
               </p>
             </div>
-            <button className="text-blue-600 font-medium hover:text-blue-700 transition text-sm sm:text-base">
+            <button className="text-red-600 font-medium hover:text-red-700 transition text-sm sm:text-base">
               {t.viewAll}
             </button>
           </div>
@@ -179,7 +173,6 @@ function HomePage() {
         </section>
       </main>
 
-      {/* ПОДВАЛ */}
       <Footer language={language} />
     </div>
   );
