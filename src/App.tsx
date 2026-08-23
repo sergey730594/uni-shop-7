@@ -2,6 +2,7 @@ import React, { useState, createContext, useContext, useEffect } from 'react';
 import { Header } from './components/Header';
 import { ProductGrid } from './components/ProductGrid';
 import { Footer } from './components/Footer';
+import { MobileMenu } from './components/MobileMenu';
 import './index.css';
 
 // ==================== КОНТЕКСТ ЯЗЫКА ====================
@@ -70,11 +71,9 @@ function HomePage() {
   const [animationClass, setAnimationClass] = useState('');
 
   useEffect(() => {
-    // Выбираем случайное изображение
     const randomIndex = Math.floor(Math.random() * heroBackgrounds.length);
     setBgImage(heroBackgrounds[randomIndex]);
     
-    // Случайный класс анимации из 5 вариантов
     const classes = ['float-bg-1', 'float-bg-2', 'float-bg-3', 'float-bg-4', 'float-bg-5'];
     const randomClass = classes[Math.floor(Math.random() * classes.length)];
     setAnimationClass(randomClass);
@@ -141,16 +140,22 @@ function HomePage() {
         language={language}
         onLanguageChange={setLanguage}
         onCartOpen={() => setIsCartOpen(true)}
-        onMenuOpen={() => setIsMenuOpen(!isMenuOpen)}
+        onMenuOpen={() => setIsMenuOpen(true)}
         cartCount={cartCount}
       />
 
+      {/* Мобильное меню */}
+      <MobileMenu
+        isOpen={isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+        language={language}
+      />
+
       <main className="flex-1">
-        {/* ГЕРОЙ СЕКЦИЯ - БЛЕДНЫЙ ФОН + АНИМАЦИЯ */}
+        {/* ГЕРОЙ СЕКЦИЯ */}
         <section className="relative bg-[#f5e6e6] text-gray-800 overflow-hidden min-h-[180px] sm:min-h-[220px] md:min-h-[260px]">
-          {/* Анимированный фон с прозрачностью 15% */}
           <div
-            className={`absolute inset-0 opacity-40 ${animationClass}`}
+            className={`absolute inset-0 opacity-15 ${animationClass}`}
             style={{
               backgroundImage: `url(${bgImage})`,
               backgroundSize: 'cover',
@@ -158,10 +163,8 @@ function HomePage() {
             }}
           />
           
-          {/* Легкое затемнение для читаемости */}
           <div className="absolute inset-0 bg-[#f5e6e6]/40" />
 
-          {/* Контент */}
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-10">
             <div className="text-center max-w-3xl mx-auto">
               <div className="inline-block bg-[#ff0000]/10 backdrop-blur-sm rounded-full px-3 sm:px-4 py-0.5 text-[10px] sm:text-xs font-medium mb-2 sm:mb-3 text-[#990000]">
