@@ -80,7 +80,7 @@ export const Header: React.FC<HeaderProps> = ({
     return placeholders[language as keyof typeof placeholders] || placeholders.en;
   };
 
-  // Меню навигации с иконками
+  // Меню навигации с иконками + Sale
   const menuItems = {
     ka: [
       { icon: '🏠', name: 'მთავარი', href: '/' },
@@ -88,6 +88,7 @@ export const Header: React.FC<HeaderProps> = ({
       { icon: '🧁', name: 'შიგთავსი', href: '/fillings' },
       { icon: '🎂', name: 'აქსესუარები', href: '/accessories' },
       { icon: '🌷', name: 'ყვავილები', href: '/flowers' },
+      { icon: '🏷️', name: 'ფასდაკლება', href: '/sale' },
       { icon: '🚚', name: 'გადახდა-მიტანა', href: '/delivery' },
       { icon: '📞', name: 'კონტაქტი', href: '/contact' },
     ],
@@ -97,6 +98,7 @@ export const Header: React.FC<HeaderProps> = ({
       { icon: '🧁', name: 'Fillings', href: '/fillings' },
       { icon: '🎂', name: 'Accessories', href: '/accessories' },
       { icon: '🌷', name: 'Flowers', href: '/flowers' },
+      { icon: '🏷️', name: 'Sale', href: '/sale' },
       { icon: '🚚', name: 'Payment-Delivery', href: '/delivery' },
       { icon: '📞', name: 'Contact', href: '/contact' },
     ],
@@ -106,6 +108,7 @@ export const Header: React.FC<HeaderProps> = ({
       { icon: '🧁', name: 'Начинки', href: '/fillings' },
       { icon: '🎂', name: 'Аксессуары', href: '/accessories' },
       { icon: '🌷', name: 'Цветы', href: '/flowers' },
+      { icon: '🏷️', name: 'Скидки', href: '/sale' },
       { icon: '🚚', name: 'Оплата-Доставка', href: '/delivery' },
       { icon: '📞', name: 'Контакты', href: '/contact' },
     ],
@@ -115,6 +118,7 @@ export const Header: React.FC<HeaderProps> = ({
       { icon: '🧁', name: 'Dolgular', href: '/fillings' },
       { icon: '🎂', name: 'Aksesuarlar', href: '/accessories' },
       { icon: '🌷', name: 'Çiçekler', href: '/flowers' },
+      { icon: '🏷️', name: 'İndirim', href: '/sale' },
       { icon: '🚚', name: 'Ödeme-Teslimat', href: '/delivery' },
       { icon: '📞', name: 'İletişim', href: '/contact' },
     ],
@@ -223,7 +227,11 @@ export const Header: React.FC<HeaderProps> = ({
               <a
                 key={index}
                 href={item.href}
-                className="flex items-center gap-1.5 text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:text-white/80 transition-colors tracking-wide"
+                className={`flex items-center gap-1.5 text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:text-white/80 transition-colors tracking-wide ${
+                  item.name === 'ფასდაკლება' || item.name === 'Sale' || item.name === 'Скидки' || item.name === 'İndirim'
+                    ? 'bg-white/20 px-3 py-1 rounded-full'
+                    : ''
+                }`}
               >
                 <span className="text-base sm:text-lg">{item.icon}</span>
                 <span>{item.name}</span>
