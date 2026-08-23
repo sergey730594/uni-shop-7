@@ -22,10 +22,10 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
 }) => {
   const getButtonText = () => {
     const texts = {
-      ka: 'დამატება',
-      en: 'Add',
+      ka: 'კალათაში',
+      en: 'Add to cart',
       ru: 'В корзину',
-      tr: 'Sepete Ekle',
+      tr: 'Sepete ekle',
     };
     return texts[language as keyof typeof texts] || texts.en;
   };
@@ -61,10 +61,9 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               </span>
               <button
                 onClick={() => onAddToCart && onAddToCart(product)}
-                className="bg-red-600 text-white p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl hover:bg-red-700 transition-all hover:scale-105 text-xs sm:text-sm"
+                className="bg-[#ff0000] text-white px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg sm:rounded-xl hover:bg-[#cc0000] transition-all hover:scale-105 text-[10px] sm:text-xs font-medium whitespace-nowrap"
               >
-                <span className="hidden sm:inline">{getButtonText()}</span>
-                <span className="sm:hidden">🛒</span>
+                {getButtonText()}
               </button>
             </div>
           </div>
