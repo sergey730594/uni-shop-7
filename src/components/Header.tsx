@@ -332,9 +332,9 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* ===== ГОРИЗОНТАЛЬНОЕ МЕНЮ — ТОЛЬКО НА ДЕСКТОПЕ ===== */}
-      <div className="hidden lg:block bg-[#ff0000] border-t border-[#cc0000]">
+      <div className="hidden lg:block bg-[#ff0000] border-t border-[#cc0000] relative z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="flex items-center justify-start gap-1 sm:gap-2 md:gap-3 py-2.5 sm:py-3 overflow-x-auto hide-scrollbar relative">
+          <nav className="flex items-center justify-start gap-1 sm:gap-2 md:gap-3 py-2.5 sm:py-3 overflow-visible hide-scrollbar relative z-50">
             {items.map((item, index) => {
               const isCakeItem = item.name === 'ტორტები' || item.name === 'Cakes' || item.name === 'Торты' || item.name === 'Pastalar';
               
@@ -358,7 +358,7 @@ export const Header: React.FC<HeaderProps> = ({
                     </a>
                     
                     {isCakesOpen && (
-                      <div className="absolute top-full left-0 mt-1 bg-white rounded-xl shadow-2xl border border-gray-200 p-4 z-50 min-w-[550px]">
+                      <div className="absolute top-full left-0 mt-1 bg-white rounded-xl shadow-2xl border border-gray-200 p-4 z-[9999] min-w-[550px]">
                         <div className="grid grid-cols-3 gap-1">
                           {cakeCategories[language as keyof typeof cakeCategories].map((cat, catIndex) => (
                             <a
