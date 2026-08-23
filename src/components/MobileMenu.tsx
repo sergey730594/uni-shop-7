@@ -26,6 +26,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
       { icon: '🧁', name: 'შიგთავსი', href: '/fillings' },
       { icon: '🎂', name: 'აქსესუარები', href: '/accessories' },
       { icon: '🌷', name: 'ყვავილები', href: '/flowers' },
+      { icon: '🏷️', name: 'ფასდაკლება', href: '/sale' },
       { icon: '🚚', name: 'გადახდა-მიტანა', href: '/delivery' },
       { icon: '📞', name: 'კონტაქტი', href: '/contact' },
     ],
@@ -35,6 +36,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
       { icon: '🧁', name: 'Fillings', href: '/fillings' },
       { icon: '🎂', name: 'Accessories', href: '/accessories' },
       { icon: '🌷', name: 'Flowers', href: '/flowers' },
+      { icon: '🏷️', name: 'Sale', href: '/sale' },
       { icon: '🚚', name: 'Payment-Delivery', href: '/delivery' },
       { icon: '📞', name: 'Contact', href: '/contact' },
     ],
@@ -44,6 +46,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
       { icon: '🧁', name: 'Начинки', href: '/fillings' },
       { icon: '🎂', name: 'Аксессуары', href: '/accessories' },
       { icon: '🌷', name: 'Цветы', href: '/flowers' },
+      { icon: '🏷️', name: 'Скидки', href: '/sale' },
       { icon: '🚚', name: 'Оплата-Доставка', href: '/delivery' },
       { icon: '📞', name: 'Контакты', href: '/contact' },
     ],
@@ -53,6 +56,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
       { icon: '🧁', name: 'Dolgular', href: '/fillings' },
       { icon: '🎂', name: 'Aksesuarlar', href: '/accessories' },
       { icon: '🌷', name: 'Çiçekler', href: '/flowers' },
+      { icon: '🏷️', name: 'İndirim', href: '/sale' },
       { icon: '🚚', name: 'Ödeme-Teslimat', href: '/delivery' },
       { icon: '📞', name: 'İletişim', href: '/contact' },
     ],
@@ -91,7 +95,11 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
             <a
               key={index}
               href={item.href}
-              className="flex items-center gap-3 px-6 py-3.5 text-gray-700 hover:bg-red-50 hover:text-[#ff0000] transition-colors border-b border-gray-50"
+              className={`flex items-center gap-3 px-6 py-3.5 transition-colors border-b border-gray-50 ${
+                item.name === 'ფასდაკლება' || item.name === 'Sale' || item.name === 'Скидки' || item.name === 'İndirim'
+                  ? 'bg-red-50 text-[#ff0000] font-bold'
+                  : 'text-gray-700 hover:bg-red-50 hover:text-[#ff0000]'
+              }`}
               onClick={onClose}
             >
               <span className="text-xl">{item.icon}</span>
