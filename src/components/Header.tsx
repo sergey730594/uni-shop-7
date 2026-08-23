@@ -80,8 +80,19 @@ export const Header: React.FC<HeaderProps> = ({
     return placeholders[language as keyof typeof placeholders] || placeholders.en;
   };
 
+  // Меню навигации
+  const menuItems = {
+    ka: ['ტორტები', 'შიგთავსი', 'აქსესუარები', 'ყვავილები', 'გადახდა-მიტანა', 'კონტაქტი'],
+    en: ['Cakes', 'Fillings', 'Accessories', 'Flowers', 'Payment-Delivery', 'Contact'],
+    ru: ['Торты', 'Начинки', 'Аксессуары', 'Цветы', 'Оплата-Доставка', 'Контакты'],
+    tr: ['Pastalar', 'Dolgular', 'Aksesuarlar', 'Çiçekler', 'Ödeme-Teslimat', 'İletişim'],
+  };
+
+  const items = menuItems[language as keyof typeof menuItems] || menuItems.ka;
+
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+      {/* Верхняя строка: лого, поиск, языки, корзина */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Левая часть */}
@@ -95,7 +106,7 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-red-600 to-red-700 rounded-xl flex items-center justify-center shadow-md">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-[#ff0000] rounded-xl flex items-center justify-center shadow-md">
                 <span className="text-white font-bold text-sm sm:text-xl">G</span>
               </div>
               <span className="font-bold text-lg sm:text-2xl text-gray-800 hidden xs:block">
@@ -113,7 +124,7 @@ export const Header: React.FC<HeaderProps> = ({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={getPlaceholder()}
-                className="w-full pl-9 pr-4 py-1.5 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-sm bg-gray-50 hover:bg-white transition-colors"
+                className="w-full pl-9 pr-4 py-1.5 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ff0000] focus:border-transparent text-sm bg-gray-50 hover:bg-white transition-colors"
               />
             </div>
           </form>
@@ -142,13 +153,13 @@ export const Header: React.FC<HeaderProps> = ({
                         setIsLangOpen(false);
                       }}
                       className={`w-full text-left px-3 sm:px-4 py-2 hover:bg-gray-50 transition-colors flex items-center gap-3 ${
-                        language === lang.code ? 'bg-red-50 text-red-600' : 'text-gray-700'
+                        language === lang.code ? 'bg-red-50 text-[#ff0000]' : 'text-gray-700'
                       }`}
                     >
                       <span className="text-xl">{lang.flag}</span>
                       <span className="text-sm font-medium">{lang.label}</span>
                       {language === lang.code && (
-                        <span className="ml-auto text-red-600">✓</span>
+                        <span className="ml-auto text-[#ff0000]">✓</span>
                       )}
                     </button>
                   ))}
@@ -163,12 +174,29 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <ShoppingBagIcon />
               {cartCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-[10px] sm:text-xs min-w-[18px] h-[18px] sm:min-w-[20px] sm:h-[20px] rounded-full flex items-center justify-center font-bold px-1">
+                <span className="absolute -top-0.5 -right-0.5 bg-[#ff0000] text-white text-[10px] sm:text-xs min-w-[18px] h-[18px] sm:min-w-[20px] sm:h-[20px] rounded-full flex items-center justify-center font-bold px-1">
                   {cartCount > 99 ? '99+' : cartCount}
                 </span>
               )}
             </button>
           </div>
+        </div>
+      </div>
+
+      {/* Красная строка меню */}
+      <div className="bg-[#ff0000] border-t border-[#cc0000]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <nav className="flex items-center justify-center sm:justify-start gap-4 sm:gap-6 md:gap-8 py-2.5 sm:py-3 overflow-x-auto hide-scrollbar">
+            {items.map((item, index) => (
+              <a
+                key={index}
+                href="#"
+                className="text-white text-xs sm:text-sm font-medium whitespace-nowrap hover:text-white/80 transition-colors tracking-wide"
+              >
+                {item}
+              </a>
+            ))}
+          </nav>
         </div>
       </div>
     </header>
