@@ -32,12 +32,6 @@ const ChevronDownIcon = ({ className = '' }) => (
   </svg>
 );
 
-const HomeIcon = () => (
-  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0a1 1 0 01-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 01-1 1m-2 0h2" />
-  </svg>
-);
-
 interface HeaderProps {
   onSearch?: (query: string) => void;
   onCartOpen?: () => void;
@@ -86,12 +80,44 @@ export const Header: React.FC<HeaderProps> = ({
     return placeholders[language as keyof typeof placeholders] || placeholders.en;
   };
 
-  // Меню навигации (только для десктопа)
+  // Меню навигации с иконками
   const menuItems = {
-    ka: ['ტორტები', 'შიგთავსი', 'აქსესუარები', 'ყვავილები', 'გადახდა-მიტანა', 'კონტაქტი'],
-    en: ['Cakes', 'Fillings', 'Accessories', 'Flowers', 'Payment-Delivery', 'Contact'],
-    ru: ['Торты', 'Начинки', 'Аксессуары', 'Цветы', 'Оплата-Доставка', 'Контакты'],
-    tr: ['Pastalar', 'Dolgular', 'Aksesuarlar', 'Çiçekler', 'Ödeme-Teslimat', 'İletişim'],
+    ka: [
+      { icon: '🏠', name: 'მთავარი', href: '/' },
+      { icon: '🍰', name: 'ტორტები', href: '/cakes' },
+      { icon: '🧁', name: 'შიგთავსი', href: '/fillings' },
+      { icon: '🎂', name: 'აქსესუარები', href: '/accessories' },
+      { icon: '🌷', name: 'ყვავილები', href: '/flowers' },
+      { icon: '🚚', name: 'გადახდა-მიტანა', href: '/delivery' },
+      { icon: '📞', name: 'კონტაქტი', href: '/contact' },
+    ],
+    en: [
+      { icon: '🏠', name: 'Home', href: '/' },
+      { icon: '🍰', name: 'Cakes', href: '/cakes' },
+      { icon: '🧁', name: 'Fillings', href: '/fillings' },
+      { icon: '🎂', name: 'Accessories', href: '/accessories' },
+      { icon: '🌷', name: 'Flowers', href: '/flowers' },
+      { icon: '🚚', name: 'Payment-Delivery', href: '/delivery' },
+      { icon: '📞', name: 'Contact', href: '/contact' },
+    ],
+    ru: [
+      { icon: '🏠', name: 'Главная', href: '/' },
+      { icon: '🍰', name: 'Торты', href: '/cakes' },
+      { icon: '🧁', name: 'Начинки', href: '/fillings' },
+      { icon: '🎂', name: 'Аксессуары', href: '/accessories' },
+      { icon: '🌷', name: 'Цветы', href: '/flowers' },
+      { icon: '🚚', name: 'Оплата-Доставка', href: '/delivery' },
+      { icon: '📞', name: 'Контакты', href: '/contact' },
+    ],
+    tr: [
+      { icon: '🏠', name: 'Ana Sayfa', href: '/' },
+      { icon: '🍰', name: 'Pastalar', href: '/cakes' },
+      { icon: '🧁', name: 'Dolgular', href: '/fillings' },
+      { icon: '🎂', name: 'Aksesuarlar', href: '/accessories' },
+      { icon: '🌷', name: 'Çiçekler', href: '/flowers' },
+      { icon: '🚚', name: 'Ödeme-Teslimat', href: '/delivery' },
+      { icon: '📞', name: 'İletişim', href: '/contact' },
+    ],
   };
 
   const items = menuItems[language as keyof typeof menuItems] || menuItems.ka;
@@ -192,17 +218,15 @@ export const Header: React.FC<HeaderProps> = ({
       {/* ===== ГОРИЗОНТАЛЬНОЕ МЕНЮ — ТОЛЬКО НА ДЕСКТОПЕ ===== */}
       <div className="hidden lg:block bg-[#ff0000] border-t border-[#cc0000]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="flex items-center justify-start gap-4 sm:gap-6 md:gap-8 py-2.5 sm:py-3 overflow-x-auto hide-scrollbar">
-            <a href="/" className="text-white hover:text-white/80 transition-colors flex-shrink-0">
-              <HomeIcon />
-            </a>
+          <nav className="flex items-center justify-start gap-3 sm:gap-5 md:gap-7 py-2.5 sm:py-3 overflow-x-auto hide-scrollbar">
             {items.map((item, index) => (
               <a
                 key={index}
-                href="#"
-                className="text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:text-white/80 transition-colors tracking-wide uppercase"
+                href={item.href}
+                className="flex items-center gap-1.5 text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:text-white/80 transition-colors tracking-wide"
               >
-                {item}
+                <span className="text-base sm:text-lg">{item.icon}</span>
+                <span>{item.name}</span>
               </a>
             ))}
           </nav>
