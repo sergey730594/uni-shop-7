@@ -155,7 +155,7 @@ function HomePage() {
         {/* ГЕРОЙ СЕКЦИЯ */}
         <section className="relative bg-[#f5e6e6] text-gray-800 overflow-hidden min-h-[180px] sm:min-h-[220px] md:min-h-[260px]">
           <div
-            className={`absolute inset-0 opacity-15 ${animationClass}`}
+            className={`absolute inset-0 opacity-25 ${animationClass}`}
             style={{
               backgroundImage: `url(${bgImage})`,
               backgroundSize: 'cover',
