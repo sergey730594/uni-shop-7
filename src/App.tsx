@@ -1,9 +1,10 @@
 import React, { useState, createContext, useContext } from 'react';
 import { Header } from './components/Header';
 import { ProductGrid } from './components/ProductGrid';
+import { Footer } from './components/Footer';
 import './index.css';
 
-// Контекст языка
+// ==================== КОНТЕКСТ ЯЗЫКА ====================
 interface LanguageContextType {
   language: string;
   setLanguage: (lang: string) => void;
@@ -36,7 +37,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   );
 };
 
-// Товары
+// ==================== ТОВАРЫ ====================
 const products = [
   { id: 1, name: 'iPhone 15 Pro', price: 99900, category: 'Electronics', image: '📱', rating: 4.8 },
   { id: 2, name: 'MacBook Pro 14"', price: 199900, category: 'Computers', image: '💻', rating: 4.9 },
@@ -52,6 +53,7 @@ const products = [
   { id: 12, name: 'GoPro Hero 12', price: 44900, category: 'Cameras', image: '📷', rating: 4.7 },
 ];
 
+// ==================== ГЛАВНАЯ СТРАНИЦА ====================
 function HomePage() {
   const [cartCount, setCartCount] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -62,6 +64,7 @@ function HomePage() {
     setCartCount(prev => prev + 1);
   };
 
+  // ==================== ТЕКСТЫ НА ВСЕХ ЯЗЫКАХ ====================
   const texts = {
     ka: {
       badge: '🔥 ახალი კოლექცია 2024',
@@ -111,8 +114,10 @@ function HomePage() {
 
   const t = texts[language as keyof typeof texts] || texts.ka;
 
+  // ==================== RENDER ====================
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      {/* ШАПКА */}
       <Header
         language={language}
         onLanguageChange={setLanguage}
@@ -121,8 +126,9 @@ function HomePage() {
         cartCount={cartCount}
       />
 
-      <main>
-        {/* Герой секция */}
+      {/* ОСНОВНОЙ КОНТЕНТ */}
+      <main className="flex-1">
+        {/* ГЕРОЙ СЕКЦИЯ */}
         <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24">
             <div className="text-center max-w-3xl mx-auto">
@@ -148,7 +154,7 @@ function HomePage() {
           </div>
         </section>
 
-        {/* Товары */}
+        {/* ТОВАРЫ */}
         <section className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12">
           <div className="flex justify-between items-center mb-4 sm:mb-6 md:mb-8">
             <div>
@@ -173,29 +179,13 @@ function HomePage() {
         </section>
       </main>
 
-      {/* Подвал */}
-      <footer className="bg-white border-t border-gray-200 mt-8 sm:mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xs sm:text-sm">G</span>
-              </div>
-              <span className="font-bold text-gray-800 text-sm sm:text-base">Grant.ge</span>
-            </div>
-            <p className="text-gray-500 text-xs sm:text-sm">
-              © 2024 Grant.ge. {language === 'ka' ? 'ყველა უფლება დაცულია' : 
-                               language === 'en' ? 'All rights reserved' :
-                               language === 'ru' ? 'Все права защищены' :
-                               'Tüm hakları saklıdır'}
-            </p>
-          </div>
-        </div>
-      </footer>
+      {/* ПОДВАЛ */}
+      <Footer language={language} />
     </div>
   );
 }
 
+// ==================== APP ====================
 function App() {
   return (
     <LanguageProvider>
