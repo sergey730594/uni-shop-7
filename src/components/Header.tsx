@@ -358,13 +358,13 @@ export const Header: React.FC<HeaderProps> = ({
                     </a>
                     
                     {isCakesOpen && (
-                      <div className="absolute top-full left-0 mt-1 bg-white rounded-xl shadow-2xl border border-gray-200 p-4 z-[9999] min-w-[550px]">
+                      <div className="absolute top-full left-0 bg-white rounded-xl shadow-2xl border border-gray-200 p-4 z-[9999] min-w-[550px]">
                         <div className="grid grid-cols-3 gap-1">
                           {cakeCategories[language as keyof typeof cakeCategories].map((cat, catIndex) => (
                             <a
                               key={catIndex}
                               href={`/cakes/${cat.toLowerCase().replace(/\s+/g, '-')}`}
-                              className="text-xs text-gray-700 hover:text-[#ff0000] hover:bg-red-50 px-3 py-2 rounded-lg transition-colors whitespace-nowrap"
+                              className="text-xs font-bold text-gray-700 hover:text-[#ff0000] hover:bg-red-50 px-3 py-2 rounded-lg transition-colors whitespace-nowrap"
                             >
                               {cat}
                             </a>
