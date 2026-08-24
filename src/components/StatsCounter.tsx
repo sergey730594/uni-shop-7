@@ -41,24 +41,24 @@ export const StatsCounter: React.FC<StatsCounterProps> = ({ language = 'ka' }) =
     ka: {
       stats: [
         { value: '15+', label: 'წლიანი გამოცდილება' },
-        { value: '5000+', label: 'მომზადებული ტორტი' },
-        { value: '3000+', label: 'კმაყოფილი მომხმარებელი' },
+        { value: '12000+', label: 'მომზადებული ტორტი' },
+        { value: '5000+', label: 'კმაყოფილი მომხმარებელი' },
         { value: '4.9', label: 'საშუალო რეიტინგი' },
       ],
     },
     en: {
       stats: [
         { value: '15+', label: 'Years of experience' },
-        { value: '5000+', label: 'Cakes made' },
-        { value: '3000+', label: 'Happy customers' },
+        { value: '12000+', label: 'Cakes made' },
+        { value: '5000+', label: 'Happy customers' },
         { value: '4.9', label: 'Average rating' },
       ],
     },
     ru: {
       stats: [
         { value: '15+', label: 'Лет опыта' },
-        { value: '5000+', label: 'Приготовленных тортов' },
-        { value: '3000+', label: 'Довольных клиентов' },
+        { value: '12000+', label: 'Приготовленных тортов' },
+        { value: '5000+', label: 'Довольных клиентов' },
         { value: '4.9', label: 'Средний рейтинг' },
       ],
     },
