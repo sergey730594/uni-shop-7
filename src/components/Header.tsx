@@ -387,14 +387,11 @@ export const Header: React.FC<HeaderProps> = ({
                     onMouseLeave={() => setIsCakesOpen(false)}
                   >
                     <Link
-                      to={item.href}
-                      className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:bg-white/20 transition-colors tracking-wide px-3 py-1 rounded-full cursor-pointer"
-                    >
-                      <span className="text-base sm:text-lg">{item.icon}</span>
-                      <span>{item.name}</span>
-                      <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
+                    key={catIndex}
+                    to={`/${language}/cakes/${cat.slug}`}
+                    className="text-xs font-bold text-gray-700 hover:text-[#ff0000] hover:bg-red-50 px-3 py-2 rounded-lg transition-colors whitespace-nowrap"
+                  >
+                    {cat.name}
                     </Link>
                     
                     {isCakesOpen && (
@@ -418,12 +415,12 @@ export const Header: React.FC<HeaderProps> = ({
               
               return (
                 <Link
-                  key={index}
-                  to={item.href}
-                  className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:bg-white/20 transition-colors tracking-wide px-3 py-1 rounded-full"
+                key={index}
+                to={`/${language}${item.href === '/' ? '' : item.href}`}
+                className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:bg-white/20 transition-colors tracking-wide px-3 py-1 rounded-full"
                 >
-                  <span className="text-base sm:text-lg">{item.icon}</span>
-                  <span>{item.name}</span>
+                <span className="text-base sm:text-lg">{item.icon}</span>
+                <span>{item.name}</span>
                 </Link>
               );
             })}
