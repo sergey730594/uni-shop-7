@@ -256,7 +256,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-      {/* ===== ВЕРХНЯЯ ТОНКАЯ ЛИНИЯ ===== */}
+      {/* ВЕРХНЯЯ ТОНКАЯ ЛИНИЯ */}
       <div className="bg-[#ffe5e5] border-y border-[#ff0000]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-6 sm:h-7 text-[10px] sm:text-xs text-black overflow-x-auto hide-scrollbar">
@@ -264,11 +264,9 @@ export const Header: React.FC<HeaderProps> = ({
               <span>{getFormattedDate()}</span>
               <span className="font-mono">{getFormattedTime()}</span>
             </div>
-            
             <div className="hidden md:block text-center whitespace-nowrap">
               {getAddress()}
             </div>
-            
             <div className="whitespace-nowrap">
               {getPhoneLabel()}/WhatsApp/Viber:{' '}
               <a href="tel:+995593756700" className="hover:text-[#ff0000] transition-colors font-medium">
@@ -279,7 +277,7 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      {/* Верхняя строка: лого, поиск, языки, корзина */}
+      {/* ЛОГО, ПОИСК, ЯЗЫКИ, КОРЗИНА */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
           <div className="flex items-center gap-2 sm:gap-4">
@@ -291,7 +289,7 @@ export const Header: React.FC<HeaderProps> = ({
               <MenuIcon />
             </button>
 
-            <Link to="/" className="flex items-center gap-2">
+            <Link to={`/${language}`} className="flex items-center gap-2">
               <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full overflow-hidden shadow-md flex-shrink-0">
                 <img 
                   src={logoImage} 
@@ -371,7 +369,7 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      {/* ===== ГОРИЗОНТАЛЬНОЕ МЕНЮ — ТОЛЬКО НА ДЕСКТОПЕ ===== */}
+      {/* ГОРИЗОНТАЛЬНОЕ МЕНЮ */}
       <div className="hidden lg:block bg-[#ff0000] border-t border-[#cc0000] relative z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex items-center justify-start gap-1 sm:gap-2 md:gap-3 py-2.5 sm:py-3 overflow-visible hide-scrollbar relative z-40">
@@ -387,11 +385,14 @@ export const Header: React.FC<HeaderProps> = ({
                     onMouseLeave={() => setIsCakesOpen(false)}
                   >
                     <Link
-                    key={catIndex}
-                    to={`/${language}/cakes/${cat.slug}`}
-                    className="text-xs font-bold text-gray-700 hover:text-[#ff0000] hover:bg-red-50 px-3 py-2 rounded-lg transition-colors whitespace-nowrap"
-                  >
-                    {cat.name}
+                      to={`/${language}${item.href === '/' ? '' : item.href}`}
+                      className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:bg-white/20 transition-colors tracking-wide px-3 py-1 rounded-full cursor-pointer"
+                    >
+                      <span className="text-base sm:text-lg">{item.icon}</span>
+                      <span>{item.name}</span>
+                      <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
                     </Link>
                     
                     {isCakesOpen && (
@@ -400,7 +401,7 @@ export const Header: React.FC<HeaderProps> = ({
                           {cakeCategories[language as keyof typeof cakeCategories].map((cat, catIndex) => (
                             <Link
                               key={catIndex}
-                              to={`/cakes/${cat.slug}`}
+                              to={`/${language}/cakes/${cat.slug}`}
                               className="text-xs font-bold text-gray-700 hover:text-[#ff0000] hover:bg-red-50 px-3 py-2 rounded-lg transition-colors whitespace-nowrap"
                             >
                               {cat.name}
@@ -415,12 +416,12 @@ export const Header: React.FC<HeaderProps> = ({
               
               return (
                 <Link
-                key={index}
-                to={`/${language}${item.href === '/' ? '' : item.href}`}
-                className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:bg-white/20 transition-colors tracking-wide px-3 py-1 rounded-full"
+                  key={index}
+                  to={`/${language}${item.href === '/' ? '' : item.href}`}
+                  className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:bg-white/20 transition-colors tracking-wide px-3 py-1 rounded-full"
                 >
-                <span className="text-base sm:text-lg">{item.icon}</span>
-                <span>{item.name}</span>
+                  <span className="text-base sm:text-lg">{item.icon}</span>
+                  <span>{item.name}</span>
                 </Link>
               );
             })}
