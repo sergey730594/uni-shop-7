@@ -390,39 +390,38 @@ export const Header: React.FC<HeaderProps> = ({
             </Link>
           </div>
 
-          {/* Поиск с выпадающими результатами */}
-          {/* Поиск с выпадающими результатами */}
-<div className="flex-1 max-w-md mx-2 sm:mx-4 relative" ref={searchRef}>
-  <div className="relative">
-    <input
-      type="text"
-      value={searchQuery}
-      onChange={(e) => { setSearchQuery(e.target.value); setIsSearchOpen(true); }}
-      onFocus={() => setIsSearchOpen(true)}
-      placeholder={getPlaceholder()}
-      className="w-full px-4 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm bg-gray-50 focus:bg-white focus:outline-none focus:border-[#ff0000] transition-colors"
-    />
-  </div>
+          {/* Поиск */}
+          <div className="flex-1 max-w-md mx-2 sm:mx-4 relative" ref={searchRef}>
+            <div className="relative">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => { setSearchQuery(e.target.value); setIsSearchOpen(true); }}
+                onFocus={() => setIsSearchOpen(true)}
+                placeholder={getPlaceholder()}
+                className="w-full px-4 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm bg-gray-50 focus:bg-white focus:outline-none focus:border-[#ff0000] transition-colors"
+              />
+            </div>
 
-  {isSearchOpen && searchQuery.trim() && filteredResults.length > 0 && (
-    <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-[9999]">
-      {filteredResults.map(product => (
-        <Link
-          key={product.id}
-          to={`/${language}/cakes`}
-          onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
-          className="flex items-center gap-3 px-3 py-2 hover:bg-red-50 transition-colors"
-        >
-          <img src={product.photo} alt={product.name} className="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
-          <div className="flex-1 min-w-0">
-            <p className="text-xs font-medium text-gray-800 truncate">{product.name}</p>
-            <p className="text-[10px] text-gray-500">₾{product.price}</p>
+            {isSearchOpen && searchQuery.trim() && filteredResults.length > 0 && (
+              <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-[9999]">
+                {filteredResults.map(product => (
+                  <Link
+                    key={product.id}
+                    to={`/${language}/cakes`}
+                    onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
+                    className="flex items-center gap-3 px-3 py-2 hover:bg-red-50 transition-colors"
+                  >
+                    <img src={product.photo} alt={product.name} className="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-medium text-gray-800 truncate">{product.name}</p>
+                      <p className="text-[10px] text-gray-500">₾{product.price}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
-        </Link>
-      ))}
-    </div>
-  )}
-</div>
 
           {/* Языки и корзина */}
           <div className="flex items-center gap-1 sm:gap-3">
@@ -466,7 +465,11 @@ export const Header: React.FC<HeaderProps> = ({
               if (isCakeItem) {
                 return (
                   <div key={index} className="relative" onMouseEnter={() => setIsCakesOpen(true)} onMouseLeave={() => setIsCakesOpen(false)}>
-                    <Link to={`/${language}${item.href === '/' ? '' : item.href}`} className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-full hover:bg-white/20">
+                    <Link 
+                      to={`/${language}${item.href === '/' ? '' : item.href}`} 
+                      onClick={() => setIsCakesOpen(false)}
+                      className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-full hover:bg-white/20"
+                    >
                       {menuIcons[item.icon]}
                       <span>{item.name}</span>
                       <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
@@ -475,7 +478,12 @@ export const Header: React.FC<HeaderProps> = ({
                       <div className="absolute top-full left-0 bg-white rounded-xl shadow-2xl border p-4 z-[9999] min-w-[300px] sm:min-w-[450px] lg:min-w-[550px]">
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
                           {(cakeCategories[language as keyof typeof cakeCategories] || cakeCategories.ka).map((cat, catIndex) => (
-                            <Link key={catIndex} to={`/${language}/cakes/${cat.slug}`} className="text-xs font-bold text-gray-700 hover:text-[#ff0000] hover:bg-red-50 px-3 py-2 rounded-lg whitespace-nowrap">
+                            <Link 
+                              key={catIndex} 
+                              to={`/${language}/cakes/${cat.slug}`} 
+                              onClick={() => setIsCakesOpen(false)}
+                              className="text-xs font-bold text-gray-700 hover:text-[#ff0000] hover:bg-red-50 px-3 py-2 rounded-lg whitespace-nowrap"
+                            >
                               {cat.name}
                             </Link>
                           ))}
