@@ -65,8 +65,8 @@ export const StatsCounter: React.FC<StatsCounterProps> = ({ language = 'ka' }) =
     tr: {
       stats: [
         { value: '15+', label: 'Yıllık deneyim' },
-        { value: '5000+', label: 'Yapılan pasta' },
-        { value: '3000+', label: 'Mutlu müşteri' },
+        { value: '12000+', label: 'Yapılan pasta' },
+        { value: '5000+', label: 'Mutlu müşteri' },
         { value: '4.9', label: 'Ortalama puan' },
       ],
     },
