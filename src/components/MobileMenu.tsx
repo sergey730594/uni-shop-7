@@ -202,7 +202,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
         onClick={onClose}
       />
       
-      <div className="fixed top-0 left-0 h-full w-80 bg-white shadow-2xl z-50 lg:hidden animate-slide-in flex flex-col">
+      <div className="fixed top-0 left-0 h-full w-80 bg-white shadow-2xl z-50 lg:hidden animate-slide-in-left flex flex-col">
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-full overflow-hidden shadow-md flex-shrink-0">
