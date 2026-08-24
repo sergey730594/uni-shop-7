@@ -12,6 +12,9 @@ import { PromoBanner } from './components/PromoBanner';
 import { Testimonials } from './components/Testimonials';
 import { StatsCounter } from './components/StatsCounter';
 import { InstagramFeed } from './components/InstagramFeed';
+import { ProductModal } from './components/ProductModal';
+import { CartModal } from './components/CartModal';
+import { CartProvider, useCart } from './context/CartContext';
 import './index.css';
 
 // ==================== КОНТЕКСТ ЯЗЫКА ====================
@@ -49,14 +52,70 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
 // ==================== ТОВАРЫ ====================
 const products = [
-  { id: 1, name: 'Наполеон', price: 3500, category: 'cakes', image: '🎂', rating: 4.9 },
-  { id: 2, name: 'Медовик', price: 3200, category: 'cakes', image: '🍯', rating: 4.8 },
-  { id: 3, name: 'Прага', price: 3800, category: 'cakes', image: '🍫', rating: 4.7 },
-  { id: 4, name: 'Красный бархат', price: 4200, category: 'cakes', image: '❤️', rating: 4.9 },
-  { id: 5, name: 'Чизкейк', price: 2800, category: 'desserts', image: '🧀', rating: 4.6 },
-  { id: 6, name: 'Эклеры', price: 1500, category: 'desserts', image: '🥐', rating: 4.5 },
-  { id: 7, name: 'Макаруны', price: 2000, category: 'desserts', image: '🍬', rating: 4.7 },
-  { id: 8, name: 'Корзиночки', price: 1800, category: 'desserts', image: '🧺', rating: 4.4 },
+  {
+    id: 1,
+    name: 'Наполеон',
+    photos: [
+      'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=800&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=800&h=600&fit=crop&q=80',
+    ],
+    price20: 3000,
+    price30: 3500,
+    price40: 4000,
+    fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
+    category: 'cakes',
+    subcategory: 'classic',
+    description: 'Классический торт Наполеон с нежным кремом',
+    rating: 4.9,
+  },
+  {
+    id: 2,
+    name: 'Медовик',
+    photos: [
+      'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=800&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=600&fit=crop&q=80',
+    ],
+    price20: 2700,
+    price30: 3200,
+    price40: 3700,
+    fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
+    category: 'cakes',
+    subcategory: 'classic',
+    description: 'Медовый торт с сметанным кремом',
+    rating: 4.8,
+  },
+  {
+    id: 3,
+    name: 'Прага',
+    photos: [
+      'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=800&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=800&h=600&fit=crop&q=80',
+    ],
+    price20: 3300,
+    price30: 3800,
+    price40: 4300,
+    fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
+    category: 'cakes',
+    subcategory: 'classic',
+    description: 'Шоколадный торт Прага',
+    rating: 4.7,
+  },
+  {
+    id: 4,
+    name: 'Красный бархат',
+    photos: [
+      'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=600&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=800&h=600&fit=crop&q=80',
+    ],
+    price20: 3700,
+    price30: 4200,
+    price40: 4700,
+    fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
+    category: 'cakes',
+    subcategory: 'classic',
+    description: 'Красный бархат с кремом чиз',
+    rating: 4.9,
+  },
 ];
 
 // ==================== ФОНОВЫЕ ИЗОБРАЖЕНИЯ ДЛЯ HERO ====================
@@ -68,9 +127,11 @@ const heroBackgrounds = [
 
 // ==================== ГЛАВНАЯ СТРАНИЦА ====================
 function HomePage() {
-  const [cartCount, setCartCount] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const { language, setLanguage } = useLanguage();
+  const { items } = useCart();
   const navigate = useNavigate();
   const { lang } = useParams();
 
@@ -92,10 +153,6 @@ function HomePage() {
     setAnimationClass(randomClass);
   }, []);
 
-  const handleAddToCart = () => {
-    setCartCount(prev => prev + 1);
-  };
-
   const handleLanguageChange = (newLang: string) => {
     setLanguage(newLang);
     navigate(`/${newLang}`);
@@ -113,7 +170,7 @@ function HomePage() {
       viewAll: 'ყველას ნახვა →',
     },
     en: {
-      badge: 'Bakery',
+      badge: '🧁 Bakery',
       title: 'Order a Cake',
       titleHighlight: 'at Grant Bakery',
       subtitle: 'Online ordering with delivery service',
@@ -123,7 +180,7 @@ function HomePage() {
       viewAll: 'View All →',
     },
     ru: {
-      badge: 'Кондитерская',
+      badge: '🧁 Кондитерская',
       title: 'Заказ торта',
       titleHighlight: 'в Grant Bakery',
       subtitle: 'Онлайн-заказ с доставкой',
@@ -133,7 +190,7 @@ function HomePage() {
       viewAll: 'Смотреть все →',
     },
     tr: {
-      badge: 'Pastane',
+      badge: '🧁 Pastane',
       title: 'Pasta Siparişi',
       titleHighlight: 'Grant Bakery\'de',
       subtitle: 'Teslimat hizmeti ile çevrimiçi sipariş',
@@ -152,7 +209,8 @@ function HomePage() {
         language={language}
         onLanguageChange={handleLanguageChange}
         onMenuOpen={() => setIsMenuOpen(true)}
-        cartCount={cartCount}
+        onCartOpen={() => setIsCartOpen(true)}
+        cartCount={items.length}
       />
 
       <MobileMenu
@@ -162,7 +220,7 @@ function HomePage() {
       />
 
       <main className="flex-1">
-        {/* HERO СЕКЦИЯ */}
+        {/* HERO */}
         <section className="relative bg-[#f5e6e6] text-gray-800 overflow-hidden min-h-[180px] sm:min-h-[220px] md:min-h-[260px]">
           <div
             className={`absolute inset-0 opacity-15 ${animationClass}`}
@@ -172,9 +230,7 @@ function HomePage() {
               backgroundPosition: 'center',
             }}
           />
-          
           <div className="absolute inset-0 bg-[#f5e6e6]/40" />
-
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-10">
             <div className="text-center max-w-3xl mx-auto">
               <div className="inline-block bg-[#ff0000]/10 backdrop-blur-sm rounded-full px-3 sm:px-4 py-0.5 text-[10px] sm:text-xs font-medium mb-2 sm:mb-3 text-[#990000]">
@@ -210,44 +266,61 @@ function HomePage() {
                 </svg>
                 {t.popular}
               </h2>
-              <p className="text-xs sm:text-sm text-gray-500 hidden sm:block mt-1">
-                {products.length} {language === 'ka' ? 'ტორტი' : language === 'en' ? 'cakes' : language === 'ru' ? 'тортов' : 'pasta'} 
-              </p>
             </div>
             <Link to={`/${language}/cakes`} className="text-[#ff0000] font-medium hover:text-[#cc0000] transition text-sm sm:text-base">
               {t.viewAll}
             </Link>
           </div>
 
-          <ProductGrid
-            products={products}
-            onAddToCart={handleAddToCart}
-            language={language}
-          />
+          {/* Сетка товаров */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+            {products.map(product => (
+              <div
+                key={product.id}
+                onClick={() => setSelectedProduct(product)}
+                className="bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all cursor-pointer group"
+              >
+                <div className="aspect-square overflow-hidden">
+                  <img
+                    src={product.photos[0]}
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-2 sm:p-3">
+                  <h3 className="font-medium text-xs sm:text-sm text-gray-800 truncate">{product.name}</h3>
+                  <p className="text-[#ff0000] font-bold text-sm sm:text-base mt-1">₾{product.price30}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
-        {/* ПОЧЕМУ МЫ */}
         <WhyUs language={language} />
-
-        {/* КАК ЗАКАЗАТЬ */}
         <HowToOrder language={language} />
-
-        {/* БАННЕР-АКЦИЯ */}
         <PromoBanner language={language} />
-
-        {/* ОТЗЫВЫ */}
         <Testimonials language={language} />
-
-        {/* СЧЁТЧИКИ */}
         <StatsCounter language={language} />
-
-        {/* INSTAGRAM ЛЕНТА */}
         <InstagramFeed language={language} />
       </main>
 
       <Footer language={language} />
       <WhatsAppButton />
       <ScrollToTopButton />
+
+      {/* Модальные окна */}
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          language={language}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
+      <CartModal
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        language={language}
+      />
     </div>
   );
 }
@@ -257,6 +330,9 @@ function CategoryPage() {
   const { category, subcategory } = useParams();
   const { language, setLanguage } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const { items } = useCart();
   const navigate = useNavigate();
   const { lang } = useParams();
 
@@ -274,135 +350,32 @@ function CategoryPage() {
   };
 
   const categoryNames: Record<string, Record<string, string>> = {
-    cakes: {
-      ka: 'ტორტები',
-      en: 'Cakes',
-      ru: 'Торты',
-      tr: 'Pastalar',
-    },
-    fillings: {
-      ka: 'შიგთავსი',
-      en: 'Fillings',
-      ru: 'Начинки',
-      tr: 'Dolgular',
-    },
-    accessories: {
-      ka: 'აქსესუარები',
-      en: 'Accessories',
-      ru: 'Аксессуары',
-      tr: 'Aksesuarlar',
-    },
-    flowers: {
-      ka: 'ყვავილები',
-      en: 'Flowers',
-      ru: 'Цветы',
-      tr: 'Çiçekler',
-    },
-    sale: {
-      ka: 'ფასდაკლება',
-      en: 'Sale',
-      ru: 'Скидки',
-      tr: 'İndirim',
-    },
-    delivery: {
-      ka: 'გადახდა-მიტანა',
-      en: 'Payment-Delivery',
-      ru: 'Оплата-Доставка',
-      tr: 'Ödeme-Teslimat',
-    },
-    contact: {
-      ka: 'კონტაქტი',
-      en: 'Contact',
-      ru: 'Контакты',
-      tr: 'İletişim',
-    },
+    cakes: { ka: 'ტორტები', en: 'Cakes', ru: 'Торты', tr: 'Pastalar' },
+    fillings: { ka: 'შიგთავსი', en: 'Fillings', ru: 'Начинки', tr: 'Dolgular' },
+    accessories: { ka: 'აქსესუარები', en: 'Accessories', ru: 'Аксессуары', tr: 'Aksesuarlar' },
+    flowers: { ka: 'ყვავილები', en: 'Flowers', ru: 'Цветы', tr: 'Çiçekler' },
+    sale: { ka: 'ფასდაკლება', en: 'Sale', ru: 'Скидки', tr: 'İndirim' },
+    delivery: { ka: 'გადახდა-მიტანა', en: 'Payment-Delivery', ru: 'Оплата-Доставка', tr: 'Ödeme-Teslimat' },
+    contact: { ka: 'კონტაქტი', en: 'Contact', ru: 'Контакты', tr: 'İletişim' },
   };
 
-  // Подкатегории тортов
   const subcategoryNames: Record<string, Record<string, string>> = {
-    corporate: {
-      ka: 'კორპორატიული',
-      en: 'Corporate',
-      ru: 'Корпоративные',
-      tr: 'Kurumsal',
-    },
-    wedding: {
-      ka: 'საქორწილო',
-      en: 'Wedding',
-      ru: 'Свадебные',
-      tr: 'Düğün',
-    },
-    kids: {
-      ka: 'საბავშვო ტორტები',
-      en: 'Kids Cakes',
-      ru: 'Детские торты',
-      tr: 'Çocuk Pastaları',
-    },
-    photo: {
-      ka: 'ფოტო ტორტები',
-      en: 'Photo Cakes',
-      ru: 'Фото торты',
-      tr: 'Fotoğraflı Pastalar',
-    },
-    car: {
-      ka: 'მანქანა ტორტები',
-      en: 'Car Cakes',
-      ru: 'Торты-машины',
-      tr: 'Araba Pastaları',
-    },
-    sports: {
-      ka: 'სპორტული ტორტები',
-      en: 'Sports Cakes',
-      ru: 'Спортивные торты',
-      tr: 'Spor Pastaları',
-    },
-    heart: {
-      ka: 'გულის ტორტები',
-      en: 'Heart Cakes',
-      ru: 'Торты-сердца',
-      tr: 'Kalp Pastaları',
-    },
-    marzipan: {
-      ka: 'მარცეპანის ტორტი',
-      en: 'Marzipan Cake',
-      ru: 'Марципановый торт',
-      tr: 'Badem Ezmesi Pastası',
-    },
-    baptism: {
-      ka: 'ნათლობის ტორტები',
-      en: 'Baptism Cakes',
-      ru: 'Торты на крестины',
-      tr: 'Vaftiz Pastaları',
-    },
-    round: {
-      ka: 'მრგვალი ტორტები',
-      en: 'Round Cakes',
-      ru: 'Круглые торты',
-      tr: 'Yuvarlak Pastalar',
-    },
-    adults: {
-      ka: 'უფროსებისთვის',
-      en: 'For Adults',
-      ru: 'Для взрослых',
-      tr: 'Yetişkinler İçin',
-    },
-    square: {
-      ka: 'ოთხკუთხა ტორტები',
-      en: 'Square Cakes',
-      ru: 'Квадратные торты',
-      tr: 'Kare Pastalar',
-    },
-    'new-year': {
-      ka: 'საახალწლო ტორტები',
-      en: 'New Year Cakes',
-      ru: 'Новогодние торты',
-      tr: 'Yılbaşı Pastaları',
-    },
+    corporate: { ka: 'კორპორატიული', en: 'Corporate', ru: 'Корпоративные', tr: 'Kurumsal' },
+    wedding: { ka: 'საქორწილო', en: 'Wedding', ru: 'Свадебные', tr: 'Düğün' },
+    kids: { ka: 'საბავშვო ტორტები', en: 'Kids Cakes', ru: 'Детские торты', tr: 'Çocuk Pastaları' },
+    photo: { ka: 'ფოტო ტორტები', en: 'Photo Cakes', ru: 'Фото торты', tr: 'Fotoğraflı Pastalar' },
+    car: { ka: 'მანქანა ტორტები', en: 'Car Cakes', ru: 'Торты-машины', tr: 'Araba Pastaları' },
+    sports: { ka: 'სპორტული ტორტები', en: 'Sports Cakes', ru: 'Спортивные торты', tr: 'Spor Pastaları' },
+    heart: { ka: 'გულის ტორტები', en: 'Heart Cakes', ru: 'Торты-сердца', tr: 'Kalp Pastaları' },
+    marzipan: { ka: 'მარცეპანის ტორტი', en: 'Marzipan Cake', ru: 'Марципановый торт', tr: 'Badem Ezmesi Pastası' },
+    baptism: { ka: 'ნათლობის ტორტები', en: 'Baptism Cakes', ru: 'Торты на крестины', tr: 'Vaftiz Pastaları' },
+    round: { ka: 'მრგვალი ტორტები', en: 'Round Cakes', ru: 'Круглые торты', tr: 'Yuvarlak Pastalar' },
+    adults: { ka: 'უფროსებისთვის', en: 'For Adults', ru: 'Для взрослых', tr: 'Yetişkinler İçin' },
+    square: { ka: 'ოთხკუთხა ტორტები', en: 'Square Cakes', ru: 'Квадратные торты', tr: 'Kare Pastalar' },
+    'new-year': { ka: 'საახალწლო ტორტები', en: 'New Year Cakes', ru: 'Новогодние торты', tr: 'Yılbaşı Pastaları' },
   };
 
-  // Определяем заголовок
   let pageTitle = '';
-  
   if (subcategory) {
     pageTitle = subcategoryNames[subcategory]?.[language] || subcategory;
   } else if (category) {
@@ -413,7 +386,6 @@ function CategoryPage() {
 
   const filteredProducts = products.filter(p => {
     if (category === 'cakes') return p.category === 'cakes';
-    if (category === 'desserts') return p.category === 'desserts';
     return false;
   });
 
@@ -423,6 +395,8 @@ function CategoryPage() {
         language={language}
         onLanguageChange={handleLanguageChange}
         onMenuOpen={() => setIsMenuOpen(true)}
+        onCartOpen={() => setIsCartOpen(true)}
+        cartCount={items.length}
       />
 
       <MobileMenu
@@ -436,7 +410,27 @@ function CategoryPage() {
           {pageTitle}
         </h1>
         {filteredProducts.length > 0 ? (
-          <ProductGrid products={filteredProducts} onAddToCart={() => {}} language={language} />
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+            {filteredProducts.map(product => (
+              <div
+                key={product.id}
+                onClick={() => setSelectedProduct(product)}
+                className="bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all cursor-pointer group"
+              >
+                <div className="aspect-square overflow-hidden">
+                  <img
+                    src={product.photos[0]}
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div className="p-2 sm:p-3">
+                  <h3 className="font-medium text-xs sm:text-sm text-gray-800 truncate">{product.name}</h3>
+                  <p className="text-[#ff0000] font-bold text-sm sm:text-base mt-1">₾{product.price30}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         ) : (
           <p className="text-gray-500 text-center py-10">
             {language === 'ka' ? 'მალე დაემატება' : language === 'en' ? 'Coming soon' : language === 'ru' ? 'Скоро' : 'Yakında'}
@@ -447,6 +441,19 @@ function CategoryPage() {
       <Footer language={language} />
       <WhatsAppButton />
       <ScrollToTopButton />
+
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          language={language}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
+      <CartModal
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        language={language}
+      />
     </div>
   );
 }
@@ -455,12 +462,14 @@ function CategoryPage() {
 function App() {
   return (
     <LanguageProvider>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/:lang" element={<HomePage />} />
-        <Route path="/:lang/:category" element={<CategoryPage />} />
-        <Route path="/:lang/cakes/:subcategory" element={<CategoryPage />} />
-      </Routes>
+      <CartProvider>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/:lang" element={<HomePage />} />
+          <Route path="/:lang/:category" element={<CategoryPage />} />
+          <Route path="/:lang/cakes/:subcategory" element={<CategoryPage />} />
+        </Routes>
+      </CartProvider>
     </LanguageProvider>
   );
 }
