@@ -177,14 +177,21 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
             ))}
           </div>
           <label className="block text-[10px] font-medium text-gray-700 mb-1">{t.filling}</label>
-          <select 
-  value={selectedFilling} 
-  onChange={(e) => setSelectedFilling(e.target.value)} 
-  className="w-full px-2 py-1.5 border border-gray-300 rounded-lg text-xs mb-3 max-w-full overflow-hidden text-ellipsis"
-  style={{ width: '100%', maxWidth: '100%' }}
->
-  {product.fillings.map(filling => <option key={filling} value={filling}>{filling}</option>)}
-</select>
+<div className="flex flex-wrap gap-1.5 mb-3">
+  {product.fillings.map(filling => (
+    <button
+      key={filling}
+      onClick={() => setSelectedFilling(filling)}
+      className={`px-3 py-1 rounded-full text-[10px] font-bold transition-all flex-shrink-0 ${
+        selectedFilling === filling
+          ? 'bg-[#ff0000] text-white'
+          : 'bg-gray-100 text-gray-600 hover:bg-red-50'
+      }`}
+    >
+      {filling}
+    </button>
+  ))}
+</div>
           <label className="block text-[10px] font-medium text-gray-700 mb-1">{t.cakeText}</label>
           <textarea
             value={cakeText}
