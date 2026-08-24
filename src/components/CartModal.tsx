@@ -101,7 +101,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
   return (
     <div className="fixed inset-0 z-[9999] overflow-hidden">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
-      <div className="fixed right-0 top-0 h-screen w-full max-w-md bg-white shadow-2xl flex flex-col">
+      <div className="fixed right-0 top-0 h-screen w-full max-w-md bg-white shadow-2xl flex flex-col animate-slide-in-right">
         <div className="flex items-center justify-between px-5 py-3 border-b flex-shrink-0">
           <h2 className="text-lg font-bold">{t.title}</h2>
           <button onClick={onClose} className="p-2"><X className="w-5 h-5" /></button>
