@@ -35,47 +35,71 @@ const ChevronDownIcon = ({ className = '' }) => (
 );
 
 // SVG флаги
+// SVG флаги с волной
 const FlagGE = () => (
-  <svg className="w-5 h-5 sm:w-6 sm:h-6 rounded-sm" viewBox="0 0 24 24">
-    <rect width="24" height="24" fill="#fff"/>
+  <svg className="w-7 h-5 sm:w-8 sm:h-6 rounded-md shadow-md" viewBox="0 0 28 20">
+    <defs>
+      <linearGradient id="geGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#fff"/>
+        <stop offset="100%" stopColor="#f0f0f0"/>
+      </linearGradient>
+    </defs>
+    <path d="M0 2 C 7 0, 21 0, 28 2 L 28 18 C 21 20, 7 20, 0 18 Z" fill="url(#geGrad)"/>
     {/* Красный крест */}
-    <rect width="24" height="5" y="9.5" fill="#DA291C"/>
-    <rect width="5" height="24" x="9.5" fill="#DA291C"/>
+    <path d="M0 6 C 7 5, 21 5, 28 6 L 28 14 C 21 15, 7 15, 0 14 Z" fill="#DA291C"/>
+    <path d="M9 0 C 8 7, 8 13, 9 20 C 11 20, 17 20, 19 20 C 18 13, 18 7, 19 0 C 17 0, 11 0, 9 0 Z" fill="#DA291C"/>
     {/* 4 красных квадрата */}
-    <rect width="4" height="4" x="2" y="2" fill="#DA291C"/>
-    <rect width="4" height="4" x="18" y="2" fill="#DA291C"/>
-    <rect width="4" height="4" x="2" y="18" fill="#DA291C"/>
-    <rect width="4" height="4" x="18" y="18" fill="#DA291C"/>
+    <rect x="3" y="2" width="3" height="3" fill="#DA291C" rx="0.5"/>
+    <rect x="22" y="2" width="3" height="3" fill="#DA291C" rx="0.5"/>
+    <rect x="3" y="15" width="3" height="3" fill="#DA291C" rx="0.5"/>
+    <rect x="22" y="15" width="3" height="3" fill="#DA291C" rx="0.5"/>
   </svg>
 );
 
 const FlagGB = () => (
-  <svg className="w-5 h-5 sm:w-6 sm:h-6 rounded-sm" viewBox="0 0 24 24">
-    <rect width="24" height="24" fill="#012169"/>
-    <path d="M0 0l24 24M24 0L0 24" stroke="#fff" strokeWidth="3"/>
-    <path d="M0 0l24 24M24 0L0 24" stroke="#C8102E" strokeWidth="1.5"/>
-    <path d="M12 0v24M0 12h24" stroke="#fff" strokeWidth="6"/>
-    <path d="M12 0v24M0 12h24" stroke="#C8102E" strokeWidth="3"/>
+  <svg className="w-7 h-5 sm:w-8 sm:h-6 rounded-md shadow-md" viewBox="0 0 28 20">
+    <defs>
+      <linearGradient id="gbGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#012169"/>
+        <stop offset="100%" stopColor="#001a4d"/>
+      </linearGradient>
+    </defs>
+    <path d="M0 2 C 7 0, 21 0, 28 2 L 28 18 C 21 20, 7 20, 0 18 Z" fill="url(#gbGrad)"/>
+    {/* Белые диагонали */}
+    <path d="M0 2 L 28 18 M 28 2 L 0 18" stroke="#fff" strokeWidth="3.5" opacity="0.9"/>
+    {/* Красные диагонали */}
+    <path d="M0 2 L 28 18 M 28 2 L 0 18" stroke="#C8102E" strokeWidth="1.5" opacity="0.8"/>
+    {/* Белый крест */}
+    <path d="M14 0 L 14 20 M 0 10 L 28 10" stroke="#fff" strokeWidth="6" opacity="0.9"/>
+    {/* Красный крест */}
+    <path d="M14 0 L 14 20 M 0 10 L 28 10" stroke="#C8102E" strokeWidth="3" opacity="0.8"/>
   </svg>
 );
 
 const FlagRU = () => (
-  <svg className="w-5 h-5 sm:w-6 sm:h-6 rounded-sm" viewBox="0 0 24 24">
-    <rect width="24" height="8" fill="#fff"/>
-    <rect width="24" height="8" y="8" fill="#0039A6"/>
-    <rect width="24" height="8" y="16" fill="#D52B1E"/>
+  <svg className="w-7 h-5 sm:w-8 sm:h-6 rounded-md shadow-md" viewBox="0 0 28 20">
+    <path d="M0 2 C 7 0, 21 0, 28 2 L 28 6 C 21 8, 7 8, 0 6 Z" fill="#fff"/>
+    <path d="M0 6 C 7 8, 21 8, 28 6 L 28 14 C 21 12, 7 12, 0 14 Z" fill="#0039A6"/>
+    <path d="M0 14 C 7 12, 21 12, 28 14 L 28 18 C 21 20, 7 20, 0 18 Z" fill="#D52B1E"/>
   </svg>
 );
 
 const FlagTR = () => (
-  <svg className="w-5 h-5 sm:w-6 sm:h-6 rounded-sm" viewBox="0 0 24 24">
-    <rect width="24" height="24" fill="#E30A17"/>
-    <circle cx="8" cy="12" r="5" fill="#fff"/>
-    <circle cx="9" cy="12" r="4" fill="#E30A17"/>
-    <path d="M14 8l1 1 1-1-1 3 2-2-1 3h-2l-1 3-1-3h-2l-1-3 2 2-1-3 1 1z" fill="#fff"/>
+  <svg className="w-7 h-5 sm:w-8 sm:h-6 rounded-md shadow-md" viewBox="0 0 28 20">
+    <defs>
+      <linearGradient id="trGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#E30A17"/>
+        <stop offset="100%" stopColor="#c00812"/>
+      </linearGradient>
+    </defs>
+    <path d="M0 2 C 7 0, 21 0, 28 2 L 28 18 C 21 20, 7 20, 0 18 Z" fill="url(#trGrad)"/>
+    {/* Белый полумесяц */}
+    <circle cx="9" cy="10" r="5" fill="#fff"/>
+    <circle cx="10.5" cy="10" r="4" fill="url(#trGrad)"/>
+    {/* Звезда */}
+    <polygon points="16,4 17.2,7.5 21,8 18,10.5 19,14 16,12 13,14 14,10.5 11,8 14.8,7.5" fill="#fff"/>
   </svg>
 );
-
 const flagComponents: Record<string, React.ReactNode> = {
   ka: <FlagGE />,
   en: <FlagGB />,
