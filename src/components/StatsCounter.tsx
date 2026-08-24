@@ -9,7 +9,7 @@ export const StatsCounter: React.FC<StatsCounterProps> = ({ language = 'ka' }) =
     ka: {
       stats: [
         { value: '15+', label: 'წლიანი გამოცდილება', icon: '🎂' },
-        { value: '5000+', label: 'მომზადებული ტორტი', icon: '🍰' },
+        { value: '20000+', label: 'მომზადებული ტორტი', icon: '🍰' },
         { value: '3000+', label: 'კმაყოფილი მომხმარებელი', icon: '😊' },
         { value: '4.9', label: 'საშუალო რეიტინგი', icon: '⭐' },
       ],
@@ -17,7 +17,7 @@ export const StatsCounter: React.FC<StatsCounterProps> = ({ language = 'ka' }) =
     en: {
       stats: [
         { value: '15+', label: 'Years of experience', icon: '🎂' },
-        { value: '5000+', label: 'Cakes made', icon: '🍰' },
+        { value: '20000+', label: 'Cakes made', icon: '🍰' },
         { value: '3000+', label: 'Happy customers', icon: '😊' },
         { value: '4.9', label: 'Average rating', icon: '⭐' },
       ],
@@ -25,7 +25,7 @@ export const StatsCounter: React.FC<StatsCounterProps> = ({ language = 'ka' }) =
     ru: {
       stats: [
         { value: '15+', label: 'Лет опыта', icon: '🎂' },
-        { value: '5000+', label: 'Приготовленных тортов', icon: '🍰' },
+        { value: '20000+', label: 'Приготовленных тортов', icon: '🍰' },
         { value: '3000+', label: 'Довольных клиентов', icon: '😊' },
         { value: '4.9', label: 'Средний рейтинг', icon: '⭐' },
       ],
@@ -33,7 +33,7 @@ export const StatsCounter: React.FC<StatsCounterProps> = ({ language = 'ka' }) =
     tr: {
       stats: [
         { value: '15+', label: 'Yıllık deneyim', icon: '🎂' },
-        { value: '5000+', label: 'Yapılan pasta', icon: '🍰' },
+        { value: '20000+', label: 'Yapılan pasta', icon: '🍰' },
         { value: '3000+', label: 'Mutlu müşteri', icon: '😊' },
         { value: '4.9', label: 'Ortalama puan', icon: '⭐' },
       ],
