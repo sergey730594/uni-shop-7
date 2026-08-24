@@ -46,9 +46,9 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
   const t = texts[language as keyof typeof texts] || texts.ka;
 
   const sizes = [
-    { value: '20', label: `20 ${t.pieces}`, price: product.price20 },
-    { value: '30', label: `30 ${t.pieces}`, price: product.price30 },
-    { value: '40', label: `40 ${t.pieces}`, price: product.price40 },
+    { value: '20', label: '20', price: product.price20 },
+    { value: '30', label: '30', price: product.price30 },
+    { value: '40', label: '40', price: product.price40 },
   ];
 
   const selectedPrice = sizes.find(s => s.value === selectedSize)?.price || product.price30;
@@ -58,7 +58,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
       id: product.id,
       name: product.name,
       photo: product.photos[currentPhoto] || '',
-      size: sizes.find(s => s.value === selectedSize)?.label || '',
+      size: `${selectedSize} ${t.pieces}`,
       filling: selectedFilling,
       cakeText: cakeText,
       price: selectedPrice,
@@ -68,12 +68,12 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
   };
 
   return (
-    <div className="fixed inset-0 z-[10000] flex items-center justify-center overflow-hidden">
+    <div className="fixed inset-0 z-[10000] overflow-hidden">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
 
-      <div className="relative bg-white w-full max-w-sm sm:max-w-md h-full sm:h-auto sm:max-h-full flex flex-col shadow-2xl overflow-hidden sm:rounded-2xl">
+      <div className="fixed inset-0 sm:inset-auto sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 bg-white w-full sm:w-[420px] sm:max-h-[95vh] sm:rounded-2xl flex flex-col shadow-2xl overflow-hidden">
         {/* Фото */}
-        <div className="relative bg-gray-100 aspect-[4/3] sm:aspect-square flex-shrink-0">
+        <div className="relative bg-gray-100 aspect-[4/3] flex-shrink-0">
           <img
             src={product.photos[currentPhoto] || ''}
             alt={product.name}
@@ -114,28 +114,27 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
           )}
         </div>
 
-        {/* Содержимое — всё помещается */}
-        <div className="flex-1 p-3 sm:p-4 overflow-y-auto">
+        {/* Содержимое */}
+        <div className="flex-1 overflow-y-auto p-4">
           <h2 className="text-base sm:text-lg font-bold text-gray-800 mb-1">{product.name}</h2>
           {product.description && (
             <p className="text-xs text-gray-500 mb-2">{product.description}</p>
           )}
 
-          {/* Размер */}
+          {/* Размер — компактные кнопки */}
           <label className="block text-xs font-medium text-gray-700 mb-1">{t.size}</label>
-          <div className="grid grid-cols-3 gap-2 mb-2">
+          <div className="flex gap-2 mb-2">
             {sizes.map(size => (
               <button
                 key={size.value}
                 onClick={() => setSelectedSize(size.value)}
-                className={`px-2 py-1.5 rounded-xl border text-xs font-medium transition-all ${
+                className={`flex-1 py-1.5 rounded-xl border text-xs font-bold transition-all ${
                   selectedSize === size.value
                     ? 'bg-[#ff0000] text-white border-[#ff0000]'
-                    : 'bg-white text-gray-700 border-gray-300'
+                    : 'bg-white text-gray-700 border-gray-300 hover:border-[#ff0000]'
                 }`}
               >
                 {size.label}
-                <span className="block text-[10px] opacity-80">₾{size.price}</span>
               </button>
             ))}
           </div>
@@ -158,17 +157,17 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
             value={cakeText}
             onChange={(e) => setCakeText(e.target.value)}
             rows={2}
-            className="w-full px-3 py-1.5 border border-gray-300 rounded-xl text-xs mb-1 focus:outline-none focus:ring-2 focus:ring-[#ff0000] resize-none"
+            className="w-full px-3 py-1.5 border border-gray-300 rounded-xl text-xs mb-2 focus:outline-none focus:ring-2 focus:ring-[#ff0000] resize-none"
           />
         </div>
 
         {/* Кнопка — прилипает к низу */}
-        <div className="flex-shrink-0 p-3 sm:p-4 border-t border-gray-200 bg-white">
+        <div className="flex-shrink-0 p-4 border-t border-gray-200 bg-white">
           <button
             onClick={handleAddToCart}
-            className="w-full bg-[#ff0000] hover:bg-[#cc0000] text-white font-bold py-2.5 sm:py-3 rounded-xl flex items-center justify-center gap-2 text-sm shadow-lg"
+            className="w-full bg-[#ff0000] hover:bg-[#cc0000] text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-sm shadow-lg"
           >
-            <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
+            <ShoppingCart className="w-4 h-4" />
             {t.addToCart} — ₾{selectedPrice}
           </button>
         </div>
