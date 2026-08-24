@@ -5,10 +5,10 @@ export interface CartItem {
   id: number;
   name: string;
   photo: string;
-  size: string;        // "20 кусков", "30 кусков", "40 кусков"
-  filling: string;     // Начинка
-  cakeText: string;    // Текст на торте
-  price: number;       // Итоговая цена
+  size: string;
+  filling: string;
+  cakeText: string;
+  price: number;
   quantity: number;
 }
 
@@ -27,7 +27,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const addToCart = (item: CartItem) => {
     setItems(prev => {
-      // Проверяем, есть ли такой же товар
       const existingIndex = prev.findIndex(
         i => i.id === item.id && i.size === item.size && i.filling === item.filling
       );
