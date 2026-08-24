@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Trash2, Mail, Phone, Truck, Store, Calendar, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useCart } from '../CartContext';
 
@@ -15,6 +15,18 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
   const [showTimeSlots, setShowTimeSlots] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [form, setForm] = useState({ name: '', phone: '', extraPhone: '', date: '', time: '', address: '', comment: '' });
+
+  // Блокировка прокрутки
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   const texts = {
     ka: {
@@ -159,7 +171,6 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
                 <input type="text" value={form.address} onChange={e => setForm({...form, address: e.target.value})} placeholder={t.address} className="w-full px-3 py-2 border rounded-lg text-sm" />
               )}
 
-              {/* Enter заблокирован */}
               <textarea
                 value={form.comment}
                 onChange={(e) => setForm({ ...form, comment: e.target.value.slice(0, 300) })}
