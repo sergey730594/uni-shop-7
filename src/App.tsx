@@ -113,7 +113,7 @@ function HomePage() {
       viewAll: 'ყველას ნახვა →',
     },
     en: {
-      badge: '🧁 Bakery',
+      badge: 'Bakery',
       title: 'Order a Cake',
       titleHighlight: 'at Grant Bakery',
       subtitle: 'Online ordering with delivery service',
@@ -123,7 +123,7 @@ function HomePage() {
       viewAll: 'View All →',
     },
     ru: {
-      badge: '🧁 Кондитерская',
+      badge: 'Кондитерская',
       title: 'Заказ торта',
       titleHighlight: 'в Grant Bakery',
       subtitle: 'Онлайн-заказ с доставкой',
@@ -133,7 +133,7 @@ function HomePage() {
       viewAll: 'Смотреть все →',
     },
     tr: {
-      badge: '🧁 Pastane',
+      badge: 'Pastane',
       title: 'Pasta Siparişi',
       titleHighlight: 'Grant Bakery\'de',
       subtitle: 'Teslimat hizmeti ile çevrimiçi sipariş',
