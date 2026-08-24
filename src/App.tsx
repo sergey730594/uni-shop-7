@@ -324,7 +324,8 @@ function CategoryPage() {
 
       <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10 w-full">
         <div className="flex items-center justify-between mb-4 sm:mb-6 flex-wrap gap-2">
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">{pageTitle}</h1>
+        <h1 className="text-lg sm:text-2xl font-bold text-gray-800">{pageTitle}</h1>
+
           
           <select
             value={priceFilter}
