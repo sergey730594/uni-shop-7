@@ -77,7 +77,8 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
   for (let d = 1; d <= daysInMonth; d++) calendarDays.push(d);
 
   const handleSelectDate = (day: number) => {
-    setForm({ ...form, date: `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}` });
+    const formattedDate = `${String(day).padStart(2, '0')}.${String(month + 1).padStart(2, '0')}.${year}`;
+    setForm({ ...form, date: formattedDate });
     setShowCalendar(false);
   };
 
@@ -148,7 +149,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
                   </div>
                   <div className="grid grid-cols-7 gap-0.5">
                     {calendarDays.map((day, i) => day ? (
-                      <button key={i} onClick={() => handleSelectDate(day)} className={`h-6 rounded text-[9px] ${form.date.endsWith(String(day).padStart(2, '0')) ? 'bg-[#ff0000] text-white' : 'hover:bg-red-50'}`}>{day}</button>
+                      <button key={i} onClick={() => handleSelectDate(day)} className={`h-6 rounded text-[9px] ${form.date.startsWith(String(day).padStart(2, '0')) ? 'bg-[#ff0000] text-white' : 'hover:bg-red-50'}`}>{day}</button>
                     ) : <div key={i} />)}
                   </div>
                 </div>
