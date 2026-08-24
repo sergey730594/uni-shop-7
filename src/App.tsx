@@ -41,14 +41,14 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
 // ==================== ТОВАРЫ ====================
 const products = [
-  { id: 1, name: 'Наполеон', price: 3500, category: 'Торты', image: '🎂', rating: 4.9 },
-  { id: 2, name: 'Медовик', price: 3200, category: 'Торты', image: '🍯', rating: 4.8 },
-  { id: 3, name: 'Прага', price: 3800, category: 'Торты', image: '🍫', rating: 4.7 },
-  { id: 4, name: 'Красный бархат', price: 4200, category: 'Торты', image: '❤️', rating: 4.9 },
-  { id: 5, name: 'Чизкейк', price: 2800, category: 'Пирожные', image: '🧀', rating: 4.6 },
-  { id: 6, name: 'Эклеры', price: 1500, category: 'Пирожные', image: '🥐', rating: 4.5 },
-  { id: 7, name: 'Макаруны', price: 2000, category: 'Пирожные', image: '🍬', rating: 4.7 },
-  { id: 8, name: 'Корзиночки', price: 1800, category: 'Пирожные', image: '🧺', rating: 4.4 },
+  { id: 1, name: 'Наполеон', price: 3500, category: 'cakes', image: '🎂', rating: 4.9 },
+  { id: 2, name: 'Медовик', price: 3200, category: 'cakes', image: '🍯', rating: 4.8 },
+  { id: 3, name: 'Прага', price: 3800, category: 'cakes', image: '🍫', rating: 4.7 },
+  { id: 4, name: 'Красный бархат', price: 4200, category: 'cakes', image: '❤️', rating: 4.9 },
+  { id: 5, name: 'Чизкейк', price: 2800, category: 'desserts', image: '🧀', rating: 4.6 },
+  { id: 6, name: 'Эклеры', price: 1500, category: 'desserts', image: '🥐', rating: 4.5 },
+  { id: 7, name: 'Макаруны', price: 2000, category: 'desserts', image: '🍬', rating: 4.7 },
+  { id: 8, name: 'Корзиночки', price: 1800, category: 'desserts', image: '🧺', rating: 4.4 },
 ];
 
 // ==================== ФОНОВЫЕ ИЗОБРАЖЕНИЯ ДЛЯ HERO ====================
@@ -206,7 +206,8 @@ function HomePage() {
 // ==================== СТРАНИЦА КАТЕГОРИИ ====================
 function CategoryPage() {
   const { category } = useParams();
-  const { language } = useLanguage();
+  const { language, setLanguage } = useLanguage();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const categoryNames: Record<string, Record<string, string>> = {
     cakes: {
@@ -239,21 +240,42 @@ function CategoryPage() {
       ru: 'Скидки',
       tr: 'İndirim',
     },
+    delivery: {
+      ka: 'გადახდა-მიტანა',
+      en: 'Payment-Delivery',
+      ru: 'Оплата-Доставка',
+      tr: 'Ödeme-Teslimat',
+    },
+    contact: {
+      ka: 'კონტაქტი',
+      en: 'Contact',
+      ru: 'Контакты',
+      tr: 'İletişim',
+    },
   };
 
   const categoryName = categoryNames[category || '']?.[language] || category || 'Category';
+  
   const filteredProducts = products.filter(p => {
-    if (category === 'cakes') return p.category === 'Торты';
-    if (category === 'fillings') return false;
-    if (category === 'accessories') return false;
-    if (category === 'flowers') return false;
-    if (category === 'sale') return false;
-    return true;
+    if (category === 'cakes') return p.category === 'cakes';
+    if (category === 'desserts') return p.category === 'desserts';
+    return false;
   });
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header language={language} />
+      <Header
+        language={language}
+        onLanguageChange={setLanguage}
+        onMenuOpen={() => setIsMenuOpen(true)}
+      />
+
+      <MobileMenu
+        isOpen={isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+        language={language}
+      />
+
       <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10 w-full">
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-4 sm:mb-6">
           {categoryName}
