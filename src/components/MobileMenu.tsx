@@ -168,7 +168,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
                 <div key={index}>
                   <button
                     onClick={() => setIsCakesOpen(!isCakesOpen)}
-                    className={`w-full flex items-center justify-between gap-3 px-6 py-3.5 transition-colors border-b border-gray-50 text-gray-700 hover:bg-red-50 hover:text-[#ff0000]`}
+                    className="w-full flex items-center justify-between gap-3 px-6 py-3.5 transition-colors border-b border-gray-50 text-gray-700 hover:bg-red-50 hover:text-[#ff0000]"
                   >
                     <span className="flex items-center gap-3">
                       <span className="text-xl">{item.icon}</span>
@@ -182,7 +182,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
                       {cakeCategories[language as keyof typeof cakeCategories].map((cat, catIndex) => (
                         <Link
                           key={catIndex}
-                          to={`/cakes/${cat.slug}`}
+                          to={`/${language}/cakes/${cat.slug}`}
                           className="flex items-center gap-3 px-8 py-2.5 text-xs font-bold text-gray-600 hover:text-[#ff0000] hover:bg-red-50 transition-colors"
                           onClick={onClose}
                         >
@@ -198,7 +198,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
             return (
               <Link
                 key={index}
-                to={item.href}
+                to={`/${language}${item.href === '/' ? '' : item.href}`}
                 className={`flex items-center gap-3 px-6 py-3.5 transition-colors border-b border-gray-50 ${
                   item.name === 'ფასდაკლება' || item.name === 'Sale' || item.name === 'Скидки' || item.name === 'İndirim'
                     ? 'bg-red-50 text-[#ff0000] font-bold'
