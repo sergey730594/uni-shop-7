@@ -103,7 +103,7 @@ const products = [
       'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=800&h=600&fit=crop&q=80',
     ],
     price20: 60, price30: 80, price40: 100,
-    fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
+    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
     category: 'cakes', description: 'Нежный чизкейк',
   },
   {
@@ -113,7 +113,7 @@ const products = [
       'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=800&h=600&fit=crop&q=80',
     ],
     price20: 40, price30: 50, price40: 60,
-    fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
+    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
     category: 'cakes', description: 'Французские эклеры',
   },
   {
@@ -123,7 +123,7 @@ const products = [
       'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=800&h=600&fit=crop&q=80',
     ],
     price20: 50, price30: 65, price40: 80,
-    fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
+    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
     category: 'cakes', description: 'Нежные макаруны',
   },
   {
@@ -133,7 +133,7 @@ const products = [
       'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=800&h=600&fit=crop&q=80',
     ],
     price20: 45, price30: 55, price40: 70,
-    fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
+    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
     category: 'cakes', description: 'Корзиночки с кремом',
   },
 ];
