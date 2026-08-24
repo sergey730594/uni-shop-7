@@ -34,6 +34,50 @@ const ChevronDownIcon = ({ className = '' }) => (
   </svg>
 );
 
+// SVG флаги
+const FlagGE = () => (
+  <svg className="w-5 h-5 sm:w-6 sm:h-6 rounded-sm" viewBox="0 0 24 24">
+    <rect width="24" height="24" fill="#fff"/>
+    <rect width="24" height="12" y="12" fill="#DA291C"/>
+    <rect width="24" height="6" y="9" fill="#DA291C"/>
+    <rect width="6" height="6" x="9" fill="#DA291C"/>
+  </svg>
+);
+
+const FlagGB = () => (
+  <svg className="w-5 h-5 sm:w-6 sm:h-6 rounded-sm" viewBox="0 0 24 24">
+    <rect width="24" height="24" fill="#012169"/>
+    <path d="M0 0l24 24M24 0L0 24" stroke="#fff" strokeWidth="3"/>
+    <path d="M0 0l24 24M24 0L0 24" stroke="#C8102E" strokeWidth="1.5"/>
+    <path d="M12 0v24M0 12h24" stroke="#fff" strokeWidth="6"/>
+    <path d="M12 0v24M0 12h24" stroke="#C8102E" strokeWidth="3"/>
+  </svg>
+);
+
+const FlagRU = () => (
+  <svg className="w-5 h-5 sm:w-6 sm:h-6 rounded-sm" viewBox="0 0 24 24">
+    <rect width="24" height="8" fill="#fff"/>
+    <rect width="24" height="8" y="8" fill="#0039A6"/>
+    <rect width="24" height="8" y="16" fill="#D52B1E"/>
+  </svg>
+);
+
+const FlagTR = () => (
+  <svg className="w-5 h-5 sm:w-6 sm:h-6 rounded-sm" viewBox="0 0 24 24">
+    <rect width="24" height="24" fill="#E30A17"/>
+    <circle cx="8" cy="12" r="5" fill="#fff"/>
+    <circle cx="9" cy="12" r="4" fill="#E30A17"/>
+    <path d="M14 8l1 1 1-1-1 3 2-2-1 3h-2l-1 3-1-3h-2l-1-3 2 2-1-3 1 1z" fill="#fff"/>
+  </svg>
+);
+
+const flagComponents: Record<string, React.ReactNode> = {
+  ka: <FlagGE />,
+  en: <FlagGB />,
+  ru: <FlagRU />,
+  tr: <FlagTR />,
+};
+
 interface HeaderProps {
   onSearch?: (query: string) => void;
   onCartOpen?: () => void;
@@ -322,7 +366,7 @@ export const Header: React.FC<HeaderProps> = ({
                 onClick={() => setIsLangOpen(!isLangOpen)}
                 className="flex items-center gap-1.5 px-2 py-1.5 hover:bg-gray-100 rounded-lg transition-colors"
               >
-                <span className="text-xl sm:text-2xl">{currentLanguage.flag}</span>
+                {flagComponents[language]}
                 <span className="hidden sm:inline text-sm font-medium text-gray-700">
                   {language.toUpperCase()}
                 </span>
@@ -342,7 +386,7 @@ export const Header: React.FC<HeaderProps> = ({
                         language === lang.code ? 'bg-red-50 text-[#ff0000]' : 'text-gray-700'
                       }`}
                     >
-                      <span className="text-xl">{lang.flag}</span>
+                      {flagComponents[lang.code]}
                       <span className="text-sm font-medium">{lang.label}</span>
                       {language === lang.code && (
                         <span className="ml-auto text-[#ff0000]">✓</span>
@@ -398,7 +442,7 @@ export const Header: React.FC<HeaderProps> = ({
                     {isCakesOpen && (
                       <div className="absolute top-full left-0 bg-white rounded-xl shadow-2xl border border-gray-200 p-4 z-[9999] min-w-[300px] sm:min-w-[450px] lg:min-w-[550px]">
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
-                          {cakeCategories[language as keyof typeof cakeCategories].map((cat, catIndex) => (
+                          {(cakeCategories[language as keyof typeof cakeCategories] || cakeCategories.ka).map((cat, catIndex) => (
                             <Link
                               key={catIndex}
                               to={`/${language}/cakes/${cat.slug}`}
