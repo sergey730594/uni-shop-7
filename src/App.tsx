@@ -327,7 +327,7 @@ function CategoryPage() {
       <div className="flex items-center justify-between mb-4 sm:mb-6 flex-wrap gap-2">
   <h1 className="text-lg sm:text-2xl font-bold text-gray-800">{pageTitle}</h1>
   
-  {category === 'cakes' || category === 'accessories' || category === 'flowers') && (
+  {category === 'cakes' || category === 'accessories' || category === 'flowers' && (
     <select
       value={priceFilter}
       onChange={(e) => setPriceFilter(e.target.value)}
