@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Trash2, Mail, Phone, Truck, Store } from 'lucide-react';
+import { X, Trash2, Mail, Phone, Truck, Store, Calendar, Clock } from 'lucide-react';
 import { useCart } from '../CartContext';
 
 interface CartModalProps {
@@ -11,6 +11,8 @@ interface CartModalProps {
 export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language }) => {
   const { items, removeFromCart, totalPrice } = useCart();
   const [deliveryType, setDeliveryType] = useState<'pickup' | 'delivery'>('pickup');
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [showTimeSlots, setShowTimeSlots] = useState(false);
   const [form, setForm] = useState({
     name: '',
     phone: '',
@@ -26,8 +28,8 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
       title: 'კალათა', empty: 'კალათა ცარიელია',
       name: 'სახელი და გვარი', phone: 'ტელეფონი', extraPhone: 'დამატებითი ტელეფონი',
       date: 'რომელ რიცხვში?', time: 'რომელ საათზე?',
-      pickup: 'თვითგატანა', delivery: 'მიტანა (+10₾)', address: 'მისამართი',
-      comment: 'კომენტარი', total: 'სულ',
+      pickup: 'თვითგატანა', delivery: 'მიტანა (+10₾)', address: 'სრული მისამართი',
+      comment: 'ტექსტი ტორტზე / კომენტარი', total: 'სულ',
       sendEmail: 'Email', sendWhatsApp: 'WhatsApp',
       required: 'შეავსეთ აუცილებელი ველები', deliveryFee: 'მიტანა',
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -36,8 +38,8 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
       title: 'Cart', empty: 'Cart is empty',
       name: 'Full name', phone: 'Phone', extraPhone: 'Additional phone',
       date: 'Date?', time: 'Time?',
-      pickup: 'Pickup', delivery: 'Delivery (+10₾)', address: 'Address',
-      comment: 'Comment', total: 'Total',
+      pickup: 'Pickup', delivery: 'Delivery (+10₾)', address: 'Full address',
+      comment: 'Text on cake / Comment', total: 'Total',
       sendEmail: 'Email', sendWhatsApp: 'WhatsApp',
       required: 'Fill required fields', deliveryFee: 'Delivery',
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -46,8 +48,8 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
       title: 'Корзина', empty: 'Корзина пуста',
       name: 'Имя и фамилия', phone: 'Телефон', extraPhone: 'Доп. телефон',
       date: 'Дата?', time: 'Время?',
-      pickup: 'Самовывоз', delivery: 'Доставка (+10₾)', address: 'Адрес',
-      comment: 'Комментарий', total: 'Итого',
+      pickup: 'Самовывоз', delivery: 'Доставка (+10₾)', address: 'Полный адрес',
+      comment: 'Текст на торте / Комментарий', total: 'Итого',
       sendEmail: 'Email', sendWhatsApp: 'WhatsApp',
       required: 'Заполните обязательные поля', deliveryFee: 'Доставка',
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -56,8 +58,8 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
       title: 'Sepet', empty: 'Sepet boş',
       name: 'Ad soyad', phone: 'Telefon', extraPhone: 'Ek telefon',
       date: 'Tarih?', time: 'Saat?',
-      pickup: 'Teslim alma', delivery: 'Teslimat (+10₾)', address: 'Adres',
-      comment: 'Yorum', total: 'Toplam',
+      pickup: 'Teslim alma', delivery: 'Teslimat (+10₾)', address: 'Tam adres',
+      comment: 'Pasta üzerine yazı / Yorum', total: 'Toplam',
       sendEmail: 'Email', sendWhatsApp: 'WhatsApp',
       required: 'Zorunlu alanları doldurun', deliveryFee: 'Teslimat',
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -88,9 +90,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
     <div className="fixed inset-0 z-[9999]">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
 
-      {/* Выезжающая панель справа */}
       <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col">
-        {/* Заголовок */}
         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200 flex-shrink-0">
           <h2 className="text-lg font-bold text-gray-800">{t.title}</h2>
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg">
@@ -98,45 +98,82 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
           </button>
         </div>
 
-        {/* Прокручиваемое содержимое */}
         <div className="flex-1 overflow-y-auto">
           {items.length === 0 ? (
             <div className="p-6 text-center text-gray-500">{t.empty}</div>
           ) : (
-            <div className="p-4 space-y-4">
+            <div className="p-4 space-y-3">
               {/* Товары */}
-              <div className="space-y-2">
-                {items.map((item, index) => (
-                  <div key={index} className="flex gap-2 bg-gray-50 rounded-xl p-2">
-                    <img src={item.photo} alt={item.name} className="w-14 h-14 rounded-lg object-cover flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-xs text-gray-800 truncate">{item.name}</p>
-                      <p className="text-[10px] text-gray-500">{item.size} • {item.filling}</p>
-                      <p className="text-xs font-bold text-[#ff0000]">₾{item.price} x{item.quantity}</p>
-                    </div>
-                    <button onClick={() => removeFromCart(item.id, item.size, item.filling)} className="p-1 text-red-500">
-                      <Trash2 className="w-4 h-4" />
-                    </button>
+              {items.map((item, index) => (
+                <div key={index} className="flex gap-2 bg-gray-50 rounded-xl p-2">
+                  <img src={item.photo} alt={item.name} className="w-14 h-14 rounded-lg object-cover" />
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-xs truncate">{item.name}</p>
+                    <p className="text-[10px] text-gray-500">{item.size} • {item.filling}</p>
+                    <p className="text-xs font-bold text-[#ff0000]">₾{item.price} x{item.quantity}</p>
                   </div>
-                ))}
-              </div>
+                  <button onClick={() => removeFromCart(item.id, item.size, item.filling)} className="text-red-500">
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
 
               {/* Форма */}
               <input type="text" value={form.name} onChange={e => setForm({...form, name: e.target.value})} placeholder={t.name} className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm" />
               <input type="tel" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} placeholder={t.phone} className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm" />
               <input type="tel" value={form.extraPhone} onChange={e => setForm({...form, extraPhone: e.target.value})} placeholder={t.extraPhone} className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm" />
-              <input type="date" value={form.date} onChange={e => setForm({...form, date: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm" />
-              <select value={form.time} onChange={e => setForm({...form, time: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm bg-white">
-                <option value="">{t.time}</option>
-                {t.timeSlots.map(slot => <option key={slot} value={slot}>{slot}</option>)}
-              </select>
 
+              {/* Дата и время — горизонтально */}
               <div className="grid grid-cols-2 gap-2">
-                <button onClick={() => setDeliveryType('pickup')} className={`px-2 py-2 rounded-xl text-xs font-medium ${deliveryType === 'pickup' ? 'bg-[#ff0000] text-white' : 'bg-gray-100'}`}>
-                  <Store className="w-3 h-3 inline mr-1" />{t.pickup}
+                <button
+                  onClick={() => { setShowCalendar(!showCalendar); setShowTimeSlots(false); }}
+                  className={`flex items-center justify-center gap-1 px-3 py-2 rounded-xl border text-xs font-medium ${form.date ? 'bg-[#ff0000] text-white border-[#ff0000]' : 'bg-white text-gray-700 border-gray-300'}`}
+                >
+                  <Calendar className="w-3 h-3" />
+                  {form.date || t.date}
                 </button>
-                <button onClick={() => setDeliveryType('delivery')} className={`px-2 py-2 rounded-xl text-xs font-medium ${deliveryType === 'delivery' ? 'bg-[#ff0000] text-white' : 'bg-gray-100'}`}>
-                  <Truck className="w-3 h-3 inline mr-1" />{t.delivery}
+                <button
+                  onClick={() => { setShowTimeSlots(!showTimeSlots); setShowCalendar(false); }}
+                  className={`flex items-center justify-center gap-1 px-3 py-2 rounded-xl border text-xs font-medium ${form.time ? 'bg-[#ff0000] text-white border-[#ff0000]' : 'bg-white text-gray-700 border-gray-300'}`}
+                >
+                  <Clock className="w-3 h-3" />
+                  {form.time || t.time}
+                </button>
+              </div>
+
+              {/* Календарь */}
+              {showCalendar && (
+                <input
+                  type="date"
+                  value={form.date}
+                  onChange={e => { setForm({...form, date: e.target.value}); setShowCalendar(false); }}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm"
+                  autoFocus
+                />
+              )}
+
+              {/* Время */}
+              {showTimeSlots && (
+                <div className="bg-gray-50 rounded-xl p-2 grid grid-cols-2 gap-1">
+                  {t.timeSlots.map(slot => (
+                    <button
+                      key={slot}
+                      onClick={() => { setForm({...form, time: slot}); setShowTimeSlots(false); }}
+                      className={`px-2 py-1.5 rounded-lg text-[10px] font-medium ${form.time === slot ? 'bg-[#ff0000] text-white' : 'bg-white text-gray-600 hover:bg-red-50'}`}
+                    >
+                      {slot}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Доставка */}
+              <div className="grid grid-cols-2 gap-2">
+                <button onClick={() => setDeliveryType('pickup')} className={`flex items-center justify-center gap-1 px-2 py-2 rounded-xl text-xs font-medium ${deliveryType === 'pickup' ? 'bg-[#ff0000] text-white' : 'bg-gray-100'}`}>
+                  <Store className="w-3 h-3" />{t.pickup}
+                </button>
+                <button onClick={() => setDeliveryType('delivery')} className={`flex items-center justify-center gap-1 px-2 py-2 rounded-xl text-xs font-medium ${deliveryType === 'delivery' ? 'bg-[#ff0000] text-white' : 'bg-gray-100'}`}>
+                  <Truck className="w-3 h-3" />{t.delivery}
                 </button>
               </div>
 
@@ -155,7 +192,6 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
                 <div className="flex justify-between font-bold text-lg border-t pt-2"><span>{t.total}</span><span className="text-[#ff0000]">₾{grandTotal}</span></div>
               </div>
 
-              {/* Кнопки */}
               <div className="grid grid-cols-2 gap-2 pb-4">
                 <button onClick={handleSendEmail} className="flex items-center justify-center gap-1 bg-[#ff0000] text-white py-2.5 rounded-xl text-xs font-bold"><Mail className="w-4 h-4" />{t.sendEmail}</button>
                 <button onClick={handleSendWhatsApp} className="flex items-center justify-center gap-1 bg-[#25D366] text-white py-2.5 rounded-xl text-xs font-bold"><Phone className="w-4 h-4" />{t.sendWhatsApp}</button>
