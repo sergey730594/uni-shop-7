@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
 
-// Тип товара в корзине
 export interface CartItem {
   id: number;
   name: string;
