@@ -75,7 +75,7 @@ export const StatsCounter: React.FC<StatsCounterProps> = ({ language = 'ka' }) =
   const t = texts[language as keyof typeof texts] || texts.ka;
 
   return (
-    <section className="bg-gradient-to-r from-[#ff0000] to-[#cc0000] py-8 sm:py-10">
+    <section className="bg-gradient-to-r from-[#fb7575] to-[#ffe5e5] py-8 sm:py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {t.stats.map((stat, index) => (
