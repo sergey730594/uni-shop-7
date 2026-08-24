@@ -1,4 +1,5 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
+import { Routes, Route, useParams, Link } from 'react-router-dom';
 import { Header } from './components/Header';
 import { ProductGrid } from './components/ProductGrid';
 import { Footer } from './components/Footer';
@@ -55,18 +56,14 @@ const heroBackgrounds = [
   'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=800&h=400&fit=crop&q=80',
   'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=800&h=400&fit=crop&q=80',
   'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=800&h=400&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=400&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=800&h=400&fit=crop&q=80',
 ];
 
 // ==================== ГЛАВНАЯ СТРАНИЦА ====================
 function HomePage() {
   const [cartCount, setCartCount] = useState(0);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { language, setLanguage } = useLanguage();
 
-  // Состояние для фона Hero
   const [bgImage, setBgImage] = useState('');
   const [animationClass, setAnimationClass] = useState('');
 
@@ -83,7 +80,6 @@ function HomePage() {
     setCartCount(prev => prev + 1);
   };
 
-  // ==================== ТЕКСТЫ ====================
   const texts = {
     ka: {
       badge: 'საკონდიტრო',
@@ -94,7 +90,6 @@ function HomePage() {
       button2: 'გაიგე მეტი',
       popular: '🔥 პოპულარული ტორტები',
       viewAll: 'ყველას ნახვა →',
-      cart: 'კალათა',
     },
     en: {
       badge: '🧁 Bakery',
@@ -105,7 +100,6 @@ function HomePage() {
       button2: 'Learn More',
       popular: '🔥 Popular Cakes',
       viewAll: 'View All →',
-      cart: 'Cart',
     },
     ru: {
       badge: '🧁 Кондитерская',
@@ -116,7 +110,6 @@ function HomePage() {
       button2: 'Узнать больше',
       popular: '🔥 Популярные торты',
       viewAll: 'Смотреть все →',
-      cart: 'Корзина',
     },
     tr: {
       badge: '🧁 Pastane',
@@ -127,24 +120,20 @@ function HomePage() {
       button2: 'Daha Fazla',
       popular: '🔥 Popüler Pastalar',
       viewAll: 'Hepsini Gör →',
-      cart: 'Sepet',
     },
   };
 
   const t = texts[language as keyof typeof texts] || texts.ka;
 
-  // ==================== RENDER ====================
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header
         language={language}
         onLanguageChange={setLanguage}
-        onCartOpen={() => setIsCartOpen(true)}
         onMenuOpen={() => setIsMenuOpen(true)}
         cartCount={cartCount}
       />
 
-      {/* Мобильное меню */}
       <MobileMenu
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
@@ -152,10 +141,9 @@ function HomePage() {
       />
 
       <main className="flex-1">
-        {/* ГЕРОЙ СЕКЦИЯ */}
         <section className="relative bg-[#f5e6e6] text-gray-800 overflow-hidden min-h-[180px] sm:min-h-[220px] md:min-h-[260px]">
           <div
-            className={`absolute inset-0 opacity-25 ${animationClass}`}
+            className={`absolute inset-0 opacity-15 ${animationClass}`}
             style={{
               backgroundImage: `url(${bgImage})`,
               backgroundSize: 'cover',
@@ -170,7 +158,7 @@ function HomePage() {
               <div className="inline-block bg-[#ff0000]/10 backdrop-blur-sm rounded-full px-3 sm:px-4 py-0.5 text-[10px] sm:text-xs font-medium mb-2 sm:mb-3 text-[#990000]">
                 {t.badge}
               </div>
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-relaxed sm:leading-relaxed md:leading-relaxed mb-2 sm:mb-3 text-gray-800">
+              <h1 className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-snug sm:leading-relaxed md:leading-relaxed mb-2 sm:mb-3 text-gray-800">
                 {t.title} <br className="sm:hidden" />
                 <span className="text-[#cc0000]">{t.titleHighlight}</span>
               </h1>
@@ -178,9 +166,9 @@ function HomePage() {
                 {t.subtitle}
               </p>
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center">
-                <button className="bg-[#ff0000] text-white px-5 sm:px-6 py-1.5 sm:py-2 rounded-xl font-semibold hover:bg-[#cc0000] transition-all text-xs sm:text-sm shadow-md hover:shadow-lg">
+                <Link to="/cakes" className="bg-[#ff0000] text-white px-5 sm:px-6 py-1.5 sm:py-2 rounded-xl font-semibold hover:bg-[#cc0000] transition-all text-xs sm:text-sm shadow-md hover:shadow-lg">
                   {t.button}
-                </button>
+                </Link>
                 <button className="bg-gray-200 text-gray-700 px-5 sm:px-6 py-1.5 sm:py-2 rounded-xl font-semibold hover:bg-gray-300 transition-all text-xs sm:text-sm">
                   {t.button2}
                 </button>
@@ -189,21 +177,17 @@ function HomePage() {
           </div>
         </section>
 
-        {/* ТОВАРЫ */}
         <section className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12">
           <div className="flex justify-between items-center mb-4 sm:mb-6 md:mb-8">
             <div>
               <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800">{t.popular}</h2>
               <p className="text-xs sm:text-sm text-gray-500 hidden sm:block mt-1">
-                {products.length} {language === 'ka' ? 'ტორტი' : 
-                                  language === 'en' ? 'cakes' : 
-                                  language === 'ru' ? 'тортов' : 
-                                  'pasta'} 
+                {products.length} {language === 'ka' ? 'ტორტი' : language === 'en' ? 'cakes' : language === 'ru' ? 'тортов' : 'pasta'} 
               </p>
             </div>
-            <button className="text-[#ff0000] font-medium hover:text-[#cc0000] transition text-sm sm:text-base">
+            <Link to="/cakes" className="text-[#ff0000] font-medium hover:text-[#cc0000] transition text-sm sm:text-base">
               {t.viewAll}
-            </button>
+            </Link>
           </div>
 
           <ProductGrid
@@ -219,11 +203,83 @@ function HomePage() {
   );
 }
 
+// ==================== СТРАНИЦА КАТЕГОРИИ ====================
+function CategoryPage() {
+  const { category } = useParams();
+  const { language } = useLanguage();
+
+  const categoryNames: Record<string, Record<string, string>> = {
+    cakes: {
+      ka: 'ტორტები',
+      en: 'Cakes',
+      ru: 'Торты',
+      tr: 'Pastalar',
+    },
+    fillings: {
+      ka: 'შიგთავსი',
+      en: 'Fillings',
+      ru: 'Начинки',
+      tr: 'Dolgular',
+    },
+    accessories: {
+      ka: 'აქსესუარები',
+      en: 'Accessories',
+      ru: 'Аксессуары',
+      tr: 'Aksesuarlar',
+    },
+    flowers: {
+      ka: 'ყვავილები',
+      en: 'Flowers',
+      ru: 'Цветы',
+      tr: 'Çiçekler',
+    },
+    sale: {
+      ka: 'ფასდაკლება',
+      en: 'Sale',
+      ru: 'Скидки',
+      tr: 'İndirim',
+    },
+  };
+
+  const categoryName = categoryNames[category || '']?.[language] || category || 'Category';
+  const filteredProducts = products.filter(p => {
+    if (category === 'cakes') return p.category === 'Торты';
+    if (category === 'fillings') return false;
+    if (category === 'accessories') return false;
+    if (category === 'flowers') return false;
+    if (category === 'sale') return false;
+    return true;
+  });
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <Header language={language} />
+      <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10 w-full">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-4 sm:mb-6">
+          {categoryName}
+        </h1>
+        {filteredProducts.length > 0 ? (
+          <ProductGrid products={filteredProducts} onAddToCart={() => {}} language={language} />
+        ) : (
+          <p className="text-gray-500 text-center py-10">
+            {language === 'ka' ? 'მალე დაემატება' : language === 'en' ? 'Coming soon' : language === 'ru' ? 'Скоро' : 'Yakında'}
+          </p>
+        )}
+      </main>
+      <Footer language={language} />
+    </div>
+  );
+}
+
 // ==================== APP ====================
 function App() {
   return (
     <LanguageProvider>
-      <HomePage />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/:category" element={<CategoryPage />} />
+        <Route path="/cakes/:subcategory" element={<CategoryPage />} />
+      </Routes>
     </LanguageProvider>
   );
 }
