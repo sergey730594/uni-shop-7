@@ -14,7 +14,7 @@ import { StatsCounter } from './components/StatsCounter';
 import { InstagramFeed } from './components/InstagramFeed';
 import { ProductModal } from './components/ProductModal';
 import { CartModal } from './components/CartModal';
-import { CartProvider, useCart } from './context/CartContext';
+import { CartProvider, useCart } from './CartContext';
 import './index.css';
 
 // ==================== КОНТЕКСТ ЯЗЫКА ====================

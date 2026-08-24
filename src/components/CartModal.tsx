@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, Trash2, Send, Mail, Phone, Truck, Store } from 'lucide-react';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../CartContext';
 
 interface CartModalProps {
   isOpen: boolean;
