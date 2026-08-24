@@ -181,16 +181,25 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
                 style={{ height: '70px', minHeight: '70px', maxHeight: '70px' }}
               />
 
-              <div className="bg-gray-50 rounded-lg p-2">
-                <div className="flex justify-between text-sm"><span>{t.total}</span><span>₾{totalPrice}</span></div>
-                {deliveryType === 'delivery' && <div className="flex justify-between text-sm"><span>{t.deliveryFee}</span><span>+₾10</span></div>}
-                <div className="flex justify-between font-bold text-lg border-t pt-1"><span>{t.total}</span><span className="text-[#ff0000]">₾{grandTotal}</span></div>
-              </div>
+<div className="bg-gray-50 rounded-lg p-2">
+  <div className="flex justify-between text-sm"><span>{t.total}</span><span>₾{totalPrice}</span></div>
+  {deliveryType === 'delivery' && <div className="flex justify-between text-sm"><span>{t.deliveryFee}</span><span>+₾10</span></div>}
+  <div className="flex justify-between font-bold text-lg border-t pt-1"><span>{t.total}</span><span className="text-[#ff0000]">₾{grandTotal}</span></div>
+</div>
 
-              <div className="grid grid-cols-2 gap-2 pb-2">
-                <button onClick={handleSendEmail} className="bg-[#ff0000] text-white py-2.5 rounded-lg text-xs font-bold"><Mail className="w-4 h-4 inline" /> {t.sendEmail}</button>
-                <button onClick={handleSendWhatsApp} className="bg-[#25D366] text-white py-2.5 rounded-lg text-xs font-bold"><Phone className="w-4 h-4 inline" /> {t.sendWhatsApp}</button>
-              </div>
+{/* Отступление и заголовок */}
+<div className="pt-3">
+  <p className="text-center text-xs font-bold text-gray-700 mb-2">
+    {language === 'ka' ? 'შეკვეთის გაგზავნა' : 
+     language === 'en' ? 'Send Order' : 
+     language === 'ru' ? 'Отправить заказ' : 
+     'Siparişi Gönder'}
+  </p>
+  <div className="grid grid-cols-2 gap-2 pb-2">
+    <button onClick={handleSendEmail} className="bg-[#ff0000] text-white py-2.5 rounded-lg text-xs font-bold"><Mail className="w-4 h-4 inline" /> {t.sendEmail}</button>
+    <button onClick={handleSendWhatsApp} className="bg-[#25D366] text-white py-2.5 rounded-lg text-xs font-bold"><Phone className="w-4 h-4 inline" /> {t.sendWhatsApp}</button>
+  </div>
+</div>
             </>
           )}
         </div>
