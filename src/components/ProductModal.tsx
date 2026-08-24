@@ -26,36 +26,20 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
 
   const texts = {
     ka: {
-      size: 'ზომა',
-      pieces: 'კუსკი',
-      filling: 'შიგთავსი',
-      cakeText: 'ტექსტი ტორტზე / შენიშვნა',
-      addToCart: 'კალათაში დამატება',
-      price: 'ფასი',
+      size: 'ზომა', pieces: 'კუსკი', filling: 'შიგთავსი',
+      cakeText: 'ტექსტი ტორტზე / შენიშვნა', addToCart: 'კალათაში დამატება',
     },
     en: {
-      size: 'Size',
-      pieces: 'pieces',
-      filling: 'Filling',
-      cakeText: 'Text on cake / Note',
-      addToCart: 'Add to Cart',
-      price: 'Price',
+      size: 'Size', pieces: 'pieces', filling: 'Filling',
+      cakeText: 'Text on cake / Note', addToCart: 'Add to Cart',
     },
     ru: {
-      size: 'Размер',
-      pieces: 'кусков',
-      filling: 'Начинка',
-      cakeText: 'Текст на торте / Примечание',
-      addToCart: 'Добавить в корзину',
-      price: 'Цена',
+      size: 'Размер', pieces: 'кусков', filling: 'Начинка',
+      cakeText: 'Текст на торте / Примечание', addToCart: 'Добавить в корзину',
     },
     tr: {
-      size: 'Boyut',
-      pieces: 'dilim',
-      filling: 'Dolgu',
-      cakeText: 'Pasta üzerine yazı / Not',
-      addToCart: 'Sepete Ekle',
-      price: 'Fiyat',
+      size: 'Boyut', pieces: 'dilim', filling: 'Dolgu',
+      cakeText: 'Pasta üzerine yazı / Not', addToCart: 'Sepete Ekle',
     },
   };
 
@@ -85,53 +69,44 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
 
   return (
     <div className="fixed inset-0 z-[10000] flex items-center justify-center p-2 sm:p-4">
-      {/* Затемнение */}
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
 
-      {/* Модальное окно */}
-      <div className="relative bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl">
-        {/* Кнопка закрытия */}
-        <button
-          onClick={onClose}
-          className="absolute top-3 left-3 z-10 p-2 bg-white/80 hover:bg-white rounded-full shadow-lg transition-colors"
-          aria-label="Закрыть"
-        >
-          <X className="w-5 h-5 text-gray-700" />
-        </button>
-
-        {/* Фото с стрелками */}
-        <div className="relative bg-gray-100 aspect-square sm:aspect-[4/3]">
+      <div className="relative bg-white rounded-2xl w-full max-w-sm sm:max-w-md max-h-[90vh] flex flex-col shadow-2xl">
+        {/* Фото — не слишком большое */}
+        <div className="relative bg-gray-100 aspect-[4/3] flex-shrink-0 rounded-t-2xl overflow-hidden">
           <img
-            src={product.photos[currentPhoto] || '/placeholder.png'}
+            src={product.photos[currentPhoto] || ''}
             alt={product.name}
             className="w-full h-full object-cover"
           />
+
+          <button
+            onClick={onClose}
+            className="absolute top-3 left-3 z-10 p-2 bg-white/80 hover:bg-white rounded-full shadow-lg"
+          >
+            <X className="w-5 h-5 text-gray-700" />
+          </button>
 
           {product.photos.length > 1 && (
             <>
               <button
                 onClick={() => setCurrentPhoto(prev => prev === 0 ? product.photos.length - 1 : prev - 1)}
-                className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 hover:bg-white rounded-full shadow-lg transition-colors"
-                aria-label="Предыдущее фото"
+                className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 rounded-full shadow-lg"
               >
-                <ChevronLeft className="w-5 h-5 text-gray-700" />
+                <ChevronLeft className="w-4 h-4 text-gray-700" />
               </button>
               <button
                 onClick={() => setCurrentPhoto(prev => prev === product.photos.length - 1 ? 0 : prev + 1)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 hover:bg-white rounded-full shadow-lg transition-colors"
-                aria-label="Следующее фото"
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 rounded-full shadow-lg"
               >
-                <ChevronRight className="w-5 h-5 text-gray-700" />
+                <ChevronRight className="w-4 h-4 text-gray-700" />
               </button>
 
-              {/* Индикатор фото */}
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
                 {product.photos.map((_, index) => (
                   <div
                     key={index}
-                    className={`w-2 h-2 rounded-full transition-colors ${
-                      index === currentPhoto ? 'bg-[#ff0000]' : 'bg-white/60'
-                    }`}
+                    className={`w-1.5 h-1.5 rounded-full ${index === currentPhoto ? 'bg-[#ff0000]' : 'bg-white/60'}`}
                   />
                 ))}
               </div>
@@ -139,80 +114,61 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
           )}
         </div>
 
-        {/* Содержимое */}
-        <div className="p-4 sm:p-6">
-          <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">
-            {product.name}
-          </h2>
+        {/* Прокручиваемое содержимое */}
+        <div className="flex-1 overflow-y-auto p-3 sm:p-4">
+          <h2 className="text-base sm:text-lg font-bold text-gray-800 mb-1">{product.name}</h2>
           {product.description && (
-            <p className="text-xs sm:text-sm text-gray-500 mb-4">
-              {product.description}
-            </p>
+            <p className="text-xs text-gray-500 mb-2">{product.description}</p>
           )}
 
           {/* Размер */}
-          <div className="mb-4">
-            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
-              {t.size}
-            </label>
-            <div className="grid grid-cols-3 gap-2">
-              {sizes.map(size => (
-                <button
-                  key={size.value}
-                  onClick={() => setSelectedSize(size.value)}
-                  className={`px-3 py-2 rounded-xl border text-xs sm:text-sm font-medium transition-all ${
-                    selectedSize === size.value
-                      ? 'bg-[#ff0000] text-white border-[#ff0000] shadow-md'
-                      : 'bg-white text-gray-700 border-gray-300 hover:border-[#ff0000]'
-                  }`}
-                >
-                  {size.label}
-                  <span className="block text-[10px] sm:text-xs opacity-80">
-                    ₾{size.price}
-                  </span>
-                </button>
-              ))}
-            </div>
+          <label className="block text-xs font-medium text-gray-700 mb-1">{t.size}</label>
+          <div className="grid grid-cols-3 gap-2 mb-2">
+            {sizes.map(size => (
+              <button
+                key={size.value}
+                onClick={() => setSelectedSize(size.value)}
+                className={`px-2 py-1.5 rounded-xl border text-xs font-medium transition-all ${
+                  selectedSize === size.value
+                    ? 'bg-[#ff0000] text-white border-[#ff0000]'
+                    : 'bg-white text-gray-700 border-gray-300'
+                }`}
+              >
+                {size.label}
+                <span className="block text-[10px] opacity-80">₾{size.price}</span>
+              </button>
+            ))}
           </div>
 
           {/* Начинка */}
-          <div className="mb-4">
-            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
-              {t.filling}
-            </label>
-            <select
-              value={selectedFilling}
-              onChange={(e) => setSelectedFilling(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#ff0000] focus:border-transparent bg-white"
-            >
-              {product.fillings.map(filling => (
-                <option key={filling} value={filling}>
-                  {filling}
-                </option>
-              ))}
-            </select>
-          </div>
+          <label className="block text-xs font-medium text-gray-700 mb-1">{t.filling}</label>
+          <select
+            value={selectedFilling}
+            onChange={(e) => setSelectedFilling(e.target.value)}
+            className="w-full px-3 py-1.5 border border-gray-300 rounded-xl text-xs mb-2 focus:outline-none focus:ring-2 focus:ring-[#ff0000]"
+          >
+            {product.fillings.map(filling => (
+              <option key={filling} value={filling}>{filling}</option>
+            ))}
+          </select>
 
-          {/* Текст на торте */}
-          <div className="mb-4">
-            <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
-              {t.cakeText}
-            </label>
-            <textarea
-              value={cakeText}
-              onChange={(e) => setCakeText(e.target.value)}
-              rows={2}
-              placeholder={t.cakeText}
-              className="w-full px-3 py-2 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#ff0000] focus:border-transparent resize-none"
-            />
-          </div>
+          {/* Текст */}
+          <label className="block text-xs font-medium text-gray-700 mb-1">{t.cakeText}</label>
+          <textarea
+            value={cakeText}
+            onChange={(e) => setCakeText(e.target.value)}
+            rows={2}
+            className="w-full px-3 py-1.5 border border-gray-300 rounded-xl text-xs mb-1 focus:outline-none focus:ring-2 focus:ring-[#ff0000] resize-none"
+          />
+        </div>
 
-          {/* Кнопка добавления */}
+        {/* Кнопка — прилипшая к низу */}
+        <div className="flex-shrink-0 p-3 sm:p-4 border-t border-gray-200 bg-white rounded-b-2xl">
           <button
             onClick={handleAddToCart}
-            className="w-full bg-[#ff0000] hover:bg-[#cc0000] text-white font-bold py-3 rounded-xl transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-sm sm:text-base"
+            className="w-full bg-[#ff0000] hover:bg-[#cc0000] text-white font-bold py-2.5 sm:py-3 rounded-xl flex items-center justify-center gap-2 text-sm shadow-lg"
           >
-            <ShoppingCart className="w-5 h-5" />
+            <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
             {t.addToCart} — ₾{selectedPrice}
           </button>
         </div>
