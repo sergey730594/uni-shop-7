@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import logoImage from '../assets/Logo-grant.png';
+import { Link } from 'react-router-dom';
 
 const LANGUAGES = [
   { code: 'ka', label: 'ქართული', flag: '🇬🇪' },
@@ -147,28 +148,67 @@ export const Header: React.FC<HeaderProps> = ({
 
   const cakeCategories = {
     ka: [
-      'კორპორატიული', 'საქორწილო', 'საბავშვო ტორტები', 'ფოტო ტორტები',
-      'მანქანა ტორტები', 'სპორტული ტორტები', 'გულის ტორტები', 'მარცეპანის ტორტი',
-      'ნათლობის ტორტები', 'მრგვალი ტორტები', 'უფროსებისთვის', 'ოთხკუთხა ტორტები', 'საახალწლო ტორტები'
+      { name: 'კორპორატიული', slug: 'corporate' },
+      { name: 'საქორწილო', slug: 'wedding' },
+      { name: 'საბავშვო ტორტები', slug: 'kids' },
+      { name: 'ფოტო ტორტები', slug: 'photo' },
+      { name: 'მანქანა ტორტები', slug: 'car' },
+      { name: 'სპორტული ტორტები', slug: 'sports' },
+      { name: 'გულის ტორტები', slug: 'heart' },
+      { name: 'მარცეპანის ტორტი', slug: 'marzipan' },
+      { name: 'ნათლობის ტორტები', slug: 'baptism' },
+      { name: 'მრგვალი ტორტები', slug: 'round' },
+      { name: 'უფროსებისთვის', slug: 'adults' },
+      { name: 'ოთხკუთხა ტორტები', slug: 'square' },
+      { name: 'საახალწლო ტორტები', slug: 'new-year' },
     ],
     en: [
-      'Corporate', 'Wedding', 'Kids Cakes', 'Photo Cakes',
-      'Car Cakes', 'Sports Cakes', 'Heart Cakes', 'Marzipan Cake',
-      'Baptism Cakes', 'Round Cakes', 'For Adults', 'Square Cakes', 'New Year Cakes'
+      { name: 'Corporate', slug: 'corporate' },
+      { name: 'Wedding', slug: 'wedding' },
+      { name: 'Kids Cakes', slug: 'kids' },
+      { name: 'Photo Cakes', slug: 'photo' },
+      { name: 'Car Cakes', slug: 'car' },
+      { name: 'Sports Cakes', slug: 'sports' },
+      { name: 'Heart Cakes', slug: 'heart' },
+      { name: 'Marzipan Cake', slug: 'marzipan' },
+      { name: 'Baptism Cakes', slug: 'baptism' },
+      { name: 'Round Cakes', slug: 'round' },
+      { name: 'For Adults', slug: 'adults' },
+      { name: 'Square Cakes', slug: 'square' },
+      { name: 'New Year Cakes', slug: 'new-year' },
     ],
     ru: [
-      'Корпоративные', 'Свадебные', 'Детские торты', 'Фото торты',
-      'Торты-машины', 'Спортивные торты', 'Торты-сердца', 'Марципановый торт',
-      'Торты на крестины', 'Круглые торты', 'Для взрослых', 'Квадратные торты', 'Новогодние торты'
+      { name: 'Корпоративные', slug: 'corporate' },
+      { name: 'Свадебные', slug: 'wedding' },
+      { name: 'Детские торты', slug: 'kids' },
+      { name: 'Фото торты', slug: 'photo' },
+      { name: 'Торты-машины', slug: 'car' },
+      { name: 'Спортивные торты', slug: 'sports' },
+      { name: 'Торты-сердца', slug: 'heart' },
+      { name: 'Марципановый торт', slug: 'marzipan' },
+      { name: 'Торты на крестины', slug: 'baptism' },
+      { name: 'Круглые торты', slug: 'round' },
+      { name: 'Для взрослых', slug: 'adults' },
+      { name: 'Квадратные торты', slug: 'square' },
+      { name: 'Новогодние торты', slug: 'new-year' },
     ],
     tr: [
-      'Kurumsal', 'Düğün', 'Çocuk Pastaları', 'Fotoğraflı Pastalar',
-      'Araba Pastaları', 'Spor Pastaları', 'Kalp Pastaları', 'Badem Ezmesi Pastası',
-      'Vaftiz Pastaları', 'Yuvarlak Pastalar', 'Yetişkinler İçin', 'Kare Pastalar', 'Yılbaşı Pastaları'
+      { name: 'Kurumsal', slug: 'corporate' },
+      { name: 'Düğün', slug: 'wedding' },
+      { name: 'Çocuk Pastaları', slug: 'kids' },
+      { name: 'Fotoğraflı Pastalar', slug: 'photo' },
+      { name: 'Araba Pastaları', slug: 'car' },
+      { name: 'Spor Pastaları', slug: 'sports' },
+      { name: 'Kalp Pastaları', slug: 'heart' },
+      { name: 'Badem Ezmesi Pastası', slug: 'marzipan' },
+      { name: 'Vaftiz Pastaları', slug: 'baptism' },
+      { name: 'Yuvarlak Pastalar', slug: 'round' },
+      { name: 'Yetişkinler İçin', slug: 'adults' },
+      { name: 'Kare Pastalar', slug: 'square' },
+      { name: 'Yılbaşı Pastaları', slug: 'new-year' },
     ],
   };
 
-  // Меню навигации
   const menuItems = {
     ka: [
       { icon: '🏠', name: 'მთავარი', href: '/' },
@@ -219,7 +259,7 @@ export const Header: React.FC<HeaderProps> = ({
       {/* ===== ВЕРХНЯЯ ТОНКАЯ ЛИНИЯ ===== */}
       <div className="bg-[#ffe5e5] border-y border-[#ff0000]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-6 sm:h-7 text-[10px] sm:text-xs text-black">
+          <div className="flex items-center justify-between h-6 sm:h-7 text-[10px] sm:text-xs text-black overflow-x-auto hide-scrollbar">
             <div className="flex items-center gap-2 whitespace-nowrap">
               <span>{getFormattedDate()}</span>
               <span className="font-mono">{getFormattedTime()}</span>
@@ -251,7 +291,7 @@ export const Header: React.FC<HeaderProps> = ({
               <MenuIcon />
             </button>
 
-            <a href="/" className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2">
               <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full overflow-hidden shadow-md flex-shrink-0">
                 <img 
                   src={logoImage} 
@@ -262,7 +302,7 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="font-bold text-lg sm:text-2xl text-gray-800 hidden xs:block">
                 Grant Bakery
               </span>
-            </a>
+            </Link>
           </div>
 
           <form onSubmit={handleSearch} className="flex-1 max-w-md mx-2 sm:mx-4">
@@ -346,8 +386,8 @@ export const Header: React.FC<HeaderProps> = ({
                     onMouseEnter={() => setIsCakesOpen(true)} 
                     onMouseLeave={() => setIsCakesOpen(false)}
                   >
-                    <a
-                      href={item.href}
+                    <Link
+                      to={item.href}
                       className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:bg-white/20 transition-colors tracking-wide px-3 py-1 rounded-full cursor-pointer"
                     >
                       <span className="text-base sm:text-lg">{item.icon}</span>
@@ -355,19 +395,19 @@ export const Header: React.FC<HeaderProps> = ({
                       <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
-                    </a>
+                    </Link>
                     
                     {isCakesOpen && (
-                      <div className="absolute top-full left-0 bg-white rounded-xl shadow-2xl border border-gray-200 p-4 z-[9999] min-w-[550px]">
-                        <div className="grid grid-cols-3 gap-1">
+                      <div className="absolute top-full left-0 bg-white rounded-xl shadow-2xl border border-gray-200 p-4 z-[9999] min-w-[300px] sm:min-w-[450px] lg:min-w-[550px]">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
                           {cakeCategories[language as keyof typeof cakeCategories].map((cat, catIndex) => (
-                            <a
+                            <Link
                               key={catIndex}
-                              href={`/cakes/${cat.toLowerCase().replace(/\s+/g, '-')}`}
+                              to={`/cakes/${cat.slug}`}
                               className="text-xs font-bold text-gray-700 hover:text-[#ff0000] hover:bg-red-50 px-3 py-2 rounded-lg transition-colors whitespace-nowrap"
                             >
-                              {cat}
-                            </a>
+                              {cat.name}
+                            </Link>
                           ))}
                         </div>
                       </div>
@@ -377,14 +417,14 @@ export const Header: React.FC<HeaderProps> = ({
               }
               
               return (
-                <a
+                <Link
                   key={index}
-                  href={item.href}
+                  to={item.href}
                   className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:bg-white/20 transition-colors tracking-wide px-3 py-1 rounded-full"
                 >
                   <span className="text-base sm:text-lg">{item.icon}</span>
                   <span>{item.name}</span>
-                </a>
+                </Link>
               );
             })}
           </nav>
