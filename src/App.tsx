@@ -1,5 +1,5 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
-import { Routes, Route, useParams, Link } from 'react-router-dom';
+import { Routes, Route, useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
 import { ProductGrid } from './components/ProductGrid';
 import { Footer } from './components/Footer';
@@ -63,9 +63,17 @@ function HomePage() {
   const [cartCount, setCartCount] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { language, setLanguage } = useLanguage();
+  const navigate = useNavigate();
+  const { lang } = useParams();
 
   const [bgImage, setBgImage] = useState('');
   const [animationClass, setAnimationClass] = useState('');
+
+  useEffect(() => {
+    if (lang && lang !== language) {
+      setLanguage(lang);
+    }
+  }, [lang]);
 
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * heroBackgrounds.length);
@@ -78,6 +86,11 @@ function HomePage() {
 
   const handleAddToCart = () => {
     setCartCount(prev => prev + 1);
+  };
+
+  const handleLanguageChange = (newLang: string) => {
+    setLanguage(newLang);
+    navigate(`/${newLang}`);
   };
 
   const texts = {
@@ -129,7 +142,7 @@ function HomePage() {
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header
         language={language}
-        onLanguageChange={setLanguage}
+        onLanguageChange={handleLanguageChange}
         onMenuOpen={() => setIsMenuOpen(true)}
         cartCount={cartCount}
       />
@@ -166,7 +179,7 @@ function HomePage() {
                 {t.subtitle}
               </p>
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center">
-                <Link to="/cakes" className="bg-[#ff0000] text-white px-5 sm:px-6 py-1.5 sm:py-2 rounded-xl font-semibold hover:bg-[#cc0000] transition-all text-xs sm:text-sm shadow-md hover:shadow-lg">
+                <Link to={`/${language}/cakes`} className="bg-[#ff0000] text-white px-5 sm:px-6 py-1.5 sm:py-2 rounded-xl font-semibold hover:bg-[#cc0000] transition-all text-xs sm:text-sm shadow-md hover:shadow-lg">
                   {t.button}
                 </Link>
                 <button className="bg-gray-200 text-gray-700 px-5 sm:px-6 py-1.5 sm:py-2 rounded-xl font-semibold hover:bg-gray-300 transition-all text-xs sm:text-sm">
@@ -185,7 +198,7 @@ function HomePage() {
                 {products.length} {language === 'ka' ? 'ტორტი' : language === 'en' ? 'cakes' : language === 'ru' ? 'тортов' : 'pasta'} 
               </p>
             </div>
-            <Link to="/cakes" className="text-[#ff0000] font-medium hover:text-[#cc0000] transition text-sm sm:text-base">
+            <Link to={`/${language}/cakes`} className="text-[#ff0000] font-medium hover:text-[#cc0000] transition text-sm sm:text-base">
               {t.viewAll}
             </Link>
           </div>
@@ -208,6 +221,21 @@ function CategoryPage() {
   const { category } = useParams();
   const { language, setLanguage } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const { lang } = useParams();
+
+  useEffect(() => {
+    if (lang && lang !== language) {
+      setLanguage(lang);
+    }
+  }, [lang]);
+
+  const handleLanguageChange = (newLang: string) => {
+    setLanguage(newLang);
+    const currentPath = window.location.pathname;
+    const pathWithoutLang = currentPath.replace(/^\/(ka|en|ru|tr)/, '');
+    navigate(`/${newLang}${pathWithoutLang || ''}`);
+  };
 
   const categoryNames: Record<string, Record<string, string>> = {
     cakes: {
@@ -266,7 +294,7 @@ function CategoryPage() {
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header
         language={language}
-        onLanguageChange={setLanguage}
+        onLanguageChange={handleLanguageChange}
         onMenuOpen={() => setIsMenuOpen(true)}
       />
 
@@ -299,8 +327,9 @@ function App() {
     <LanguageProvider>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/:category" element={<CategoryPage />} />
-        <Route path="/cakes/:subcategory" element={<CategoryPage />} />
+        <Route path="/:lang" element={<HomePage />} />
+        <Route path="/:lang/:category" element={<CategoryPage />} />
+        <Route path="/:lang/cakes/:subcategory" element={<CategoryPage />} />
       </Routes>
     </LanguageProvider>
   );
