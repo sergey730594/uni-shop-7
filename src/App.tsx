@@ -254,7 +254,7 @@ function HomePage() {
 
 // ==================== СТРАНИЦА КАТЕГОРИИ ====================
 function CategoryPage() {
-  const { category } = useParams();
+  const { category, subcategory } = useParams();
   const { language, setLanguage } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -318,8 +318,99 @@ function CategoryPage() {
     },
   };
 
-  const categoryName = categoryNames[category || '']?.[language] || category || 'Category';
+  // Подкатегории тортов
+  const subcategoryNames: Record<string, Record<string, string>> = {
+    corporate: {
+      ka: 'კორპორატიული',
+      en: 'Corporate',
+      ru: 'Корпоративные',
+      tr: 'Kurumsal',
+    },
+    wedding: {
+      ka: 'საქორწილო',
+      en: 'Wedding',
+      ru: 'Свадебные',
+      tr: 'Düğün',
+    },
+    kids: {
+      ka: 'საბავშვო ტორტები',
+      en: 'Kids Cakes',
+      ru: 'Детские торты',
+      tr: 'Çocuk Pastaları',
+    },
+    photo: {
+      ka: 'ფოტო ტორტები',
+      en: 'Photo Cakes',
+      ru: 'Фото торты',
+      tr: 'Fotoğraflı Pastalar',
+    },
+    car: {
+      ka: 'მანქანა ტორტები',
+      en: 'Car Cakes',
+      ru: 'Торты-машины',
+      tr: 'Araba Pastaları',
+    },
+    sports: {
+      ka: 'სპორტული ტორტები',
+      en: 'Sports Cakes',
+      ru: 'Спортивные торты',
+      tr: 'Spor Pastaları',
+    },
+    heart: {
+      ka: 'გულის ტორტები',
+      en: 'Heart Cakes',
+      ru: 'Торты-сердца',
+      tr: 'Kalp Pastaları',
+    },
+    marzipan: {
+      ka: 'მარცეპანის ტორტი',
+      en: 'Marzipan Cake',
+      ru: 'Марципановый торт',
+      tr: 'Badem Ezmesi Pastası',
+    },
+    baptism: {
+      ka: 'ნათლობის ტორტები',
+      en: 'Baptism Cakes',
+      ru: 'Торты на крестины',
+      tr: 'Vaftiz Pastaları',
+    },
+    round: {
+      ka: 'მრგვალი ტორტები',
+      en: 'Round Cakes',
+      ru: 'Круглые торты',
+      tr: 'Yuvarlak Pastalar',
+    },
+    adults: {
+      ka: 'უფროსებისთვის',
+      en: 'For Adults',
+      ru: 'Для взрослых',
+      tr: 'Yetişkinler İçin',
+    },
+    square: {
+      ka: 'ოთხკუთხა ტორტები',
+      en: 'Square Cakes',
+      ru: 'Квадратные торты',
+      tr: 'Kare Pastalar',
+    },
+    'new-year': {
+      ka: 'საახალწლო ტორტები',
+      en: 'New Year Cakes',
+      ru: 'Новогодние торты',
+      tr: 'Yılbaşı Pastaları',
+    },
+  };
+
+  // Определяем заголовок
+  let pageTitle = '';
   
+  if (subcategory) {
+    pageTitle = subcategoryNames[subcategory]?.[language] || subcategory;
+  } else if (category) {
+    pageTitle = categoryNames[category]?.[language] || category;
+  } else {
+    pageTitle = 'Category';
+  }
+
   const filteredProducts = products.filter(p => {
     if (category === 'cakes') return p.category === 'cakes';
     if (category === 'desserts') return p.category === 'desserts';
@@ -342,7 +433,7 @@ function CategoryPage() {
 
       <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10 w-full">
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-4 sm:mb-6">
-          {categoryName}
+          {pageTitle}
         </h1>
         {filteredProducts.length > 0 ? (
           <ProductGrid products={filteredProducts} onAddToCart={() => {}} language={language} />
