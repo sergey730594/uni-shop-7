@@ -391,39 +391,38 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* Поиск с выпадающими результатами */}
-          <div className="flex-1 max-w-md mx-2 sm:mx-4 relative" ref={searchRef}>
-            <div className="relative">
-              <SearchIcon />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => { setSearchQuery(e.target.value); setIsSearchOpen(true); }}
-                onFocus={() => setIsSearchOpen(true)}
-                placeholder={getPlaceholder()}
-                className="w-full pl-9 pr-4 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#ff0000]"
-              />
-            </div>
+          {/* Поиск с выпадающими результатами */}
+<div className="flex-1 max-w-md mx-2 sm:mx-4 relative" ref={searchRef}>
+  <div className="relative">
+    <input
+      type="text"
+      value={searchQuery}
+      onChange={(e) => { setSearchQuery(e.target.value); setIsSearchOpen(true); }}
+      onFocus={() => setIsSearchOpen(true)}
+      placeholder={getPlaceholder()}
+      className="w-full px-4 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm bg-gray-50 focus:bg-white focus:outline-none focus:border-[#ff0000] transition-colors"
+    />
+  </div>
 
-            {/* Выпадающие результаты */}
-            {isSearchOpen && searchQuery.trim() && filteredResults.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-[9999]">
-                {filteredResults.map(product => (
-                  <Link
-                    key={product.id}
-                    to={`/${language}/cakes`}
-                    onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
-                    className="flex items-center gap-3 px-3 py-2 hover:bg-red-50 transition-colors"
-                  >
-                    <img src={product.photo} alt={product.name} className="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs font-medium text-gray-800 truncate">{product.name}</p>
-                      <p className="text-[10px] text-gray-500">₾{product.price}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
+  {isSearchOpen && searchQuery.trim() && filteredResults.length > 0 && (
+    <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-[9999]">
+      {filteredResults.map(product => (
+        <Link
+          key={product.id}
+          to={`/${language}/cakes`}
+          onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
+          className="flex items-center gap-3 px-3 py-2 hover:bg-red-50 transition-colors"
+        >
+          <img src={product.photo} alt={product.name} className="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-medium text-gray-800 truncate">{product.name}</p>
+            <p className="text-[10px] text-gray-500">₾{product.price}</p>
           </div>
+        </Link>
+      ))}
+    </div>
+  )}
+</div>
 
           {/* Языки и корзина */}
           <div className="flex items-center gap-1 sm:gap-3">
