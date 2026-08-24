@@ -324,21 +324,22 @@ function CategoryPage() {
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} language={language} />
 
       <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10 w-full">
-        <div className="flex items-center justify-between mb-4 sm:mb-6 flex-wrap gap-2">
-        <h1 className="text-lg sm:text-2xl font-bold text-gray-800">{pageTitle}</h1>
-
-          
-          <select
-            value={priceFilter}
-            onChange={(e) => setPriceFilter(e.target.value)}
-            className="px-3 py-1.5 border border-gray-300 rounded-lg text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#ff0000]"
-          >
-            <option value="all">{language === 'ka' ? 'ყველა ფასი' : language === 'en' ? 'All prices' : language === 'ru' ? 'Все цены' : 'Tüm fiyatlar'}</option>
-            <option value="0-100">{language === 'ka' ? '100₾-მდე' : language === 'en' ? 'Up to 100₾' : language === 'ru' ? 'До 100₾' : "100₾'a kadar"}</option>
-            <option value="100-200">100₾ - 200₾</option>
-            <option value="200+">200₾+</option>
-          </select>
-        </div>
+      <div className="flex items-center justify-between mb-4 sm:mb-6 flex-wrap gap-2">
+  <h1 className="text-lg sm:text-2xl font-bold text-gray-800">{pageTitle}</h1>
+  
+  {category === 'cakes' || category === 'accessories' || category === 'flowers') && (
+    <select
+      value={priceFilter}
+      onChange={(e) => setPriceFilter(e.target.value)}
+      className="px-3 py-1.5 border border-gray-300 rounded-lg text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#ff0000]"
+    >
+      <option value="all">{language === 'ka' ? 'ყველა ფასი' : language === 'en' ? 'All prices' : language === 'ru' ? 'Все цены' : 'Tüm fiyatlar'}</option>
+      <option value="0-100">{language === 'ka' ? '100₾-მდე' : language === 'en' ? 'Up to 100₾' : language === 'ru' ? 'До 100₾' : "100₾'a kadar"}</option>
+      <option value="100-200">100₾ - 200₾</option>
+      <option value="200+">200₾+</option>
+    </select>
+  )}
+</div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {filteredProducts.map(product => (
