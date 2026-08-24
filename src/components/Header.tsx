@@ -35,71 +35,46 @@ const ChevronDownIcon = ({ className = '' }) => (
 );
 
 // SVG флаги
-// SVG флаги с волной
+// SVG флаги — минималистичные
 const FlagGE = () => (
-  <svg className="w-7 h-5 sm:w-8 sm:h-6 rounded-md shadow-md" viewBox="0 0 28 20">
-    <defs>
-      <linearGradient id="geGrad" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stopColor="#fff"/>
-        <stop offset="100%" stopColor="#f0f0f0"/>
-      </linearGradient>
-    </defs>
-    <path d="M0 2 C 7 0, 21 0, 28 2 L 28 18 C 21 20, 7 20, 0 18 Z" fill="url(#geGrad)"/>
-    {/* Красный крест */}
-    <path d="M0 6 C 7 5, 21 5, 28 6 L 28 14 C 21 15, 7 15, 0 14 Z" fill="#DA291C"/>
-    <path d="M9 0 C 8 7, 8 13, 9 20 C 11 20, 17 20, 19 20 C 18 13, 18 7, 19 0 C 17 0, 11 0, 9 0 Z" fill="#DA291C"/>
-    {/* 4 красных квадрата */}
-    <rect x="3" y="2" width="3" height="3" fill="#DA291C" rx="0.5"/>
-    <rect x="22" y="2" width="3" height="3" fill="#DA291C" rx="0.5"/>
-    <rect x="3" y="15" width="3" height="3" fill="#DA291C" rx="0.5"/>
-    <rect x="22" y="15" width="3" height="3" fill="#DA291C" rx="0.5"/>
+  <svg className="w-6 h-4 sm:w-7 sm:h-5 rounded-[3px] shadow-sm ring-1 ring-black/10" viewBox="0 0 24 16">
+    <rect width="24" height="16" fill="#fff"/>
+    <rect width="24" height="3.5" y="6.25" fill="#DA291C"/>
+    <rect width="3.5" height="16" x="10.25" fill="#DA291C"/>
+    <rect width="2.5" height="2.5" x="3" y="2" fill="#DA291C"/>
+    <rect width="2.5" height="2.5" x="18.5" y="2" fill="#DA291C"/>
+    <rect width="2.5" height="2.5" x="3" y="11.5" fill="#DA291C"/>
+    <rect width="2.5" height="2.5" x="18.5" y="11.5" fill="#DA291C"/>
   </svg>
 );
 
 const FlagGB = () => (
-  <svg className="w-7 h-5 sm:w-8 sm:h-6 rounded-md shadow-md" viewBox="0 0 28 20">
-    <defs>
-      <linearGradient id="gbGrad" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stopColor="#012169"/>
-        <stop offset="100%" stopColor="#001a4d"/>
-      </linearGradient>
-    </defs>
-    <path d="M0 2 C 7 0, 21 0, 28 2 L 28 18 C 21 20, 7 20, 0 18 Z" fill="url(#gbGrad)"/>
-    {/* Белые диагонали */}
-    <path d="M0 2 L 28 18 M 28 2 L 0 18" stroke="#fff" strokeWidth="3.5" opacity="0.9"/>
-    {/* Красные диагонали */}
-    <path d="M0 2 L 28 18 M 28 2 L 0 18" stroke="#C8102E" strokeWidth="1.5" opacity="0.8"/>
-    {/* Белый крест */}
-    <path d="M14 0 L 14 20 M 0 10 L 28 10" stroke="#fff" strokeWidth="6" opacity="0.9"/>
-    {/* Красный крест */}
-    <path d="M14 0 L 14 20 M 0 10 L 28 10" stroke="#C8102E" strokeWidth="3" opacity="0.8"/>
+  <svg className="w-6 h-4 sm:w-7 sm:h-5 rounded-[3px] shadow-sm ring-1 ring-black/10" viewBox="0 0 24 16">
+    <rect width="24" height="16" fill="#012169"/>
+    <path d="M0 0 L24 16 M24 0 L0 16" stroke="#fff" strokeWidth="3"/>
+    <path d="M0 0 L24 16 M24 0 L0 16" stroke="#C8102E" strokeWidth="1.2"/>
+    <path d="M12 0 L12 16 M0 8 L24 8" stroke="#fff" strokeWidth="4.5"/>
+    <path d="M12 0 L12 16 M0 8 L24 8" stroke="#C8102E" strokeWidth="2.5"/>
   </svg>
 );
 
 const FlagRU = () => (
-  <svg className="w-7 h-5 sm:w-8 sm:h-6 rounded-md shadow-md" viewBox="0 0 28 20">
-    <path d="M0 2 C 7 0, 21 0, 28 2 L 28 6 C 21 8, 7 8, 0 6 Z" fill="#fff"/>
-    <path d="M0 6 C 7 8, 21 8, 28 6 L 28 14 C 21 12, 7 12, 0 14 Z" fill="#0039A6"/>
-    <path d="M0 14 C 7 12, 21 12, 28 14 L 28 18 C 21 20, 7 20, 0 18 Z" fill="#D52B1E"/>
+  <svg className="w-6 h-4 sm:w-7 sm:h-5 rounded-[3px] shadow-sm ring-1 ring-black/10" viewBox="0 0 24 16">
+    <rect width="24" height="5.33" fill="#fff"/>
+    <rect width="24" height="5.33" y="5.33" fill="#0039A6"/>
+    <rect width="24" height="5.34" y="10.66" fill="#D52B1E"/>
   </svg>
 );
 
 const FlagTR = () => (
-  <svg className="w-7 h-5 sm:w-8 sm:h-6 rounded-md shadow-md" viewBox="0 0 28 20">
-    <defs>
-      <linearGradient id="trGrad" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stopColor="#E30A17"/>
-        <stop offset="100%" stopColor="#c00812"/>
-      </linearGradient>
-    </defs>
-    <path d="M0 2 C 7 0, 21 0, 28 2 L 28 18 C 21 20, 7 20, 0 18 Z" fill="url(#trGrad)"/>
-    {/* Белый полумесяц */}
-    <circle cx="9" cy="10" r="5" fill="#fff"/>
-    <circle cx="10.5" cy="10" r="4" fill="url(#trGrad)"/>
-    {/* Звезда */}
-    <polygon points="16,4 17.2,7.5 21,8 18,10.5 19,14 16,12 13,14 14,10.5 11,8 14.8,7.5" fill="#fff"/>
+  <svg className="w-6 h-4 sm:w-7 sm:h-5 rounded-[3px] shadow-sm ring-1 ring-black/10" viewBox="0 0 24 16">
+    <rect width="24" height="16" fill="#E30A17"/>
+    <circle cx="7" cy="8" r="3.5" fill="#fff"/>
+    <circle cx="8" cy="8" r="2.8" fill="#E30A17"/>
+    <polygon points="12.5,4.5 13.2,6.5 15.3,6.6 13.6,7.9 14.2,9.9 12.5,8.7 10.8,9.9 11.4,7.9 9.7,6.6 11.8,6.5" fill="#fff"/>
   </svg>
 );
+
 const flagComponents: Record<string, React.ReactNode> = {
   ka: <FlagGE />,
   en: <FlagGB />,
