@@ -60,7 +60,7 @@ const products = [
       'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=800&h=600&fit=crop&q=80',
     ],
     price20: 80, price30: 100, price40: 120,
-    fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
+    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
     category: 'cakes', description: 'Классический торт Наполеон с нежным кремом',
   },
   {
