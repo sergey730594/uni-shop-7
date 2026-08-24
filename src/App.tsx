@@ -1,9 +1,17 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
-import { Routes, Route, useParams, Link, useNavigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useParams, Link, useNavigate } from 'react-router-dom';
 import { Header } from './components/Header';
 import { ProductGrid } from './components/ProductGrid';
 import { Footer } from './components/Footer';
 import { MobileMenu } from './components/MobileMenu';
+import { WhatsAppButton } from './components/WhatsAppButton';
+import { ScrollToTopButton } from './components/ScrollToTopButton';
+import { WhyUs } from './components/WhyUs';
+import { HowToOrder } from './components/HowToOrder';
+import { PromoBanner } from './components/PromoBanner';
+import { Testimonials } from './components/Testimonials';
+import { StatsCounter } from './components/StatsCounter';
+import { InstagramFeed } from './components/InstagramFeed';
 import './index.css';
 
 // ==================== КОНТЕКСТ ЯЗЫКА ====================
@@ -154,6 +162,7 @@ function HomePage() {
       />
 
       <main className="flex-1">
+        {/* HERO СЕКЦИЯ */}
         <section className="relative bg-[#f5e6e6] text-gray-800 overflow-hidden min-h-[180px] sm:min-h-[220px] md:min-h-[260px]">
           <div
             className={`absolute inset-0 opacity-15 ${animationClass}`}
@@ -190,6 +199,7 @@ function HomePage() {
           </div>
         </section>
 
+        {/* ПОПУЛЯРНЫЕ ТОВАРЫ */}
         <section className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12">
           <div className="flex justify-between items-center mb-4 sm:mb-6 md:mb-8">
             <div>
@@ -209,9 +219,29 @@ function HomePage() {
             language={language}
           />
         </section>
+
+        {/* ПОЧЕМУ МЫ */}
+        <WhyUs language={language} />
+
+        {/* КАК ЗАКАЗАТЬ */}
+        <HowToOrder language={language} />
+
+        {/* БАННЕР-АКЦИЯ */}
+        <PromoBanner language={language} />
+
+        {/* ОТЗЫВЫ */}
+        <Testimonials language={language} />
+
+        {/* СЧЁТЧИКИ */}
+        <StatsCounter language={language} />
+
+        {/* INSTAGRAM ЛЕНТА */}
+        <InstagramFeed language={language} />
       </main>
 
       <Footer language={language} />
+      <WhatsAppButton />
+      <ScrollToTopButton />
     </div>
   );
 }
@@ -316,7 +346,10 @@ function CategoryPage() {
           </p>
         )}
       </main>
+
       <Footer language={language} />
+      <WhatsAppButton />
+      <ScrollToTopButton />
     </div>
   );
 }
