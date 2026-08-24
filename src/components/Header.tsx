@@ -17,7 +17,7 @@ const MenuIcon = () => (
 );
 
 const SearchIcon = () => (
-  <svg className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
   </svg>
 );
@@ -81,7 +81,7 @@ const flagComponents: Record<string, React.ReactNode> = {
   tr: <FlagTR />,
 };
 
-// SVG иконки меню — единый стиль, белые, контурные
+// Иконки меню
 const HomeIcon = () => (
   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10" />
@@ -143,6 +143,16 @@ const menuIcons: Record<string, React.ReactNode> = {
   contact: <PhoneIcon />,
 };
 
+// Тестовые данные для поиска
+const searchProducts = [
+  { id: 1, name: 'Наполеон', price: 100, photo: 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=100&h=100&fit=crop' },
+  { id: 2, name: 'Медовик', price: 90, photo: 'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=100&h=100&fit=crop' },
+  { id: 3, name: 'Прага', price: 110, photo: 'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=100&h=100&fit=crop' },
+  { id: 4, name: 'Красный бархат', price: 180, photo: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=100&h=100&fit=crop' },
+  { id: 5, name: 'Чизкейк', price: 80, photo: 'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=100&h=100&fit=crop' },
+  { id: 6, name: 'Эклеры', price: 50, photo: 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=100&h=100&fit=crop' },
+];
+
 interface HeaderProps {
   onSearch?: (query: string) => void;
   onCartOpen?: () => void;
@@ -153,7 +163,6 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({
-  onSearch,
   onCartOpen,
   onMenuOpen,
   language = 'ka',
@@ -162,14 +171,19 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isCakesOpen, setIsCakesOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (langRef.current && !langRef.current.contains(event.target as Node)) {
         setIsLangOpen(false);
+      }
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setIsSearchOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -182,11 +196,6 @@ export const Header: React.FC<HeaderProps> = ({
     }, 1000);
     return () => clearInterval(timer);
   }, []);
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (onSearch) onSearch(searchQuery);
-  };
 
   const currentLanguage = LANGUAGES.find(l => l.code === language) || LANGUAGES[0];
 
@@ -201,12 +210,7 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   const getLocale = () => {
-    const locales = {
-      ka: 'ka-GE',
-      en: 'en-US',
-      ru: 'ru-RU',
-      tr: 'tr-TR',
-    };
+    const locales = { ka: 'ka-GE', en: 'en-US', ru: 'ru-RU', tr: 'tr-TR' };
     return locales[language as keyof typeof locales] || 'ka-GE';
   };
 
@@ -221,39 +225,28 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   const getPhoneLabel = () => {
-    const labels = {
-      ka: 'ტელ.',
-      en: 'Tel.',
-      ru: 'Тел.',
-      tr: 'Tel.',
-    };
+    const labels = { ka: 'ტელ.', en: 'Tel.', ru: 'Тел.', tr: 'Tel.' };
     return labels[language as keyof typeof labels] || labels.ka;
   };
 
   const getFormattedDate = () => {
     const months = {
-      ka: ['იანვარი', 'თებერვალი', 'მარტი', 'აპრილი', 'მაისი', 'ივნისი', 'ივლისი', 'აგვისტო', 'სექტემბერი', 'ოქტომბერი', 'ნოემბერი', 'დეკემბერი'],
-      en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-      ru: ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'],
-      tr: ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'],
+      ka: ['იანვარი','თებერვალი','მარტი','აპრილი','მაისი','ივნისი','ივლისი','აგვისტო','სექტემბერი','ოქტომბერი','ნოემბერი','დეკემბერი'],
+      en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+      ru: ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'],
+      tr: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
     };
-    
     const monthNames = months[language as keyof typeof months] || months.ka;
-    const day = currentTime.getDate();
-    const month = monthNames[currentTime.getMonth()];
-    const year = currentTime.getFullYear();
-    
-    return `${day} ${month} ${year}`;
+    return `${currentTime.getDate()} ${monthNames[currentTime.getMonth()]} ${currentTime.getFullYear()}`;
   };
 
   const getFormattedTime = () => {
-    return currentTime.toLocaleTimeString(getLocale(), { 
-      hour: '2-digit', 
-      minute: '2-digit', 
-      second: '2-digit', 
-      hour12: false 
-    });
+    return currentTime.toLocaleTimeString(getLocale(), { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
   };
+
+  const filteredResults = searchProducts.filter(p =>
+    p.name.toLowerCase().includes(searchQuery.toLowerCase())
+  ).slice(0, 6);
 
   const cakeCategories = {
     ka: [
@@ -365,7 +358,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-      {/* ВЕРХНЯЯ ТОНКАЯ ЛИНИЯ */}
+      {/* Верхняя линия */}
       <div className="bg-[#ffe5e5] border-y border-[#ff0000]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-6 sm:h-7 text-[10px] sm:text-xs text-black overflow-x-auto hide-scrollbar">
@@ -373,103 +366,90 @@ export const Header: React.FC<HeaderProps> = ({
               <span>{getFormattedDate()}</span>
               <span className="font-mono">{getFormattedTime()}</span>
             </div>
-            <div className="hidden md:block text-center whitespace-nowrap">
-              {getAddress()}
-            </div>
+            <div className="hidden md:block text-center whitespace-nowrap">{getAddress()}</div>
             <div className="whitespace-nowrap">
               {getPhoneLabel()}/WhatsApp/Viber:{' '}
-              <a href="tel:+995593756700" className="hover:text-[#ff0000] transition-colors font-medium">
-                +995 593 756 700
-              </a>
+              <a href="tel:+995593756700" className="hover:text-[#ff0000] font-medium">+995 593 756 700</a>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ЛОГО, ПОИСК, ЯЗЫКИ, КОРЗИНА */}
+      {/* Лого, поиск, языки, корзина */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
           <div className="flex items-center gap-2 sm:gap-4">
-            <button
-              onClick={onMenuOpen}
-              className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors lg:hidden"
-              aria-label="Меню"
-            >
+            <button onClick={onMenuOpen} className="p-1.5 hover:bg-gray-100 rounded-lg lg:hidden">
               <MenuIcon />
             </button>
-
             <Link to={`/${language}`} className="flex items-center gap-2">
               <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full overflow-hidden shadow-md flex-shrink-0">
-                <img 
-                  src={logoImage} 
-                  alt="Grant Bakery" 
-                  className="w-full h-full object-cover"
-                />
+                <img src={logoImage} alt="Grant Bakery" className="w-full h-full object-cover" />
               </div>
-              <span className="font-bold text-lg sm:text-2xl text-gray-800 hidden xs:block">
-                Grant Bakery
-              </span>
+              <span className="font-bold text-lg sm:text-2xl text-gray-800 hidden xs:block">Grant Bakery</span>
             </Link>
           </div>
 
-          <form onSubmit={handleSearch} className="flex-1 max-w-md mx-2 sm:mx-4">
+          {/* Поиск с выпадающими результатами */}
+          <div className="flex-1 max-w-md mx-2 sm:mx-4 relative" ref={searchRef}>
             <div className="relative">
               <SearchIcon />
               <input
                 type="text"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => { setSearchQuery(e.target.value); setIsSearchOpen(true); }}
+                onFocus={() => setIsSearchOpen(true)}
                 placeholder={getPlaceholder()}
-                className="w-full pl-9 pr-4 py-1.5 sm:py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#ff0000] focus:border-transparent text-sm bg-gray-50 hover:bg-white transition-colors"
+                className="w-full pl-9 pr-4 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm bg-gray-50 focus:bg-white focus:ring-2 focus:ring-[#ff0000]"
               />
             </div>
-          </form>
 
+            {/* Выпадающие результаты */}
+            {isSearchOpen && searchQuery.trim() && filteredResults.length > 0 && (
+              <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-[9999]">
+                {filteredResults.map(product => (
+                  <Link
+                    key={product.id}
+                    to={`/${language}/cakes`}
+                    onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
+                    className="flex items-center gap-3 px-3 py-2 hover:bg-red-50 transition-colors"
+                  >
+                    <img src={product.photo} alt={product.name} className="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-medium text-gray-800 truncate">{product.name}</p>
+                      <p className="text-[10px] text-gray-500">₾{product.price}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Языки и корзина */}
           <div className="flex items-center gap-1 sm:gap-3">
             <div className="relative z-[9999]" ref={langRef}>
-              <button
-                onClick={() => setIsLangOpen(!isLangOpen)}
-                className="flex items-center gap-1.5 px-2 py-1.5 hover:bg-gray-100 rounded-lg transition-colors"
-              >
+              <button onClick={() => setIsLangOpen(!isLangOpen)} className="flex items-center gap-1.5 px-2 py-1.5 hover:bg-gray-100 rounded-lg">
                 {flagComponents[language]}
-                <span className="hidden sm:inline text-sm font-medium text-gray-700">
-                  {language.toUpperCase()}
-                </span>
+                <span className="hidden sm:inline text-sm font-medium text-gray-700">{language.toUpperCase()}</span>
                 <ChevronDownIcon className={isLangOpen ? 'rotate-180' : ''} />
               </button>
-
               {isLangOpen && (
-                <div className="absolute right-0 mt-1 sm:mt-2 w-44 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-[9999] animate-fade-in">
+                <div className="absolute right-0 mt-1 w-44 bg-white rounded-lg shadow-lg border py-1 z-[9999]">
                   {LANGUAGES.map((lang) => (
-                    <button
-                      key={lang.code}
-                      onClick={() => {
-                        if (onLanguageChange) onLanguageChange(lang.code);
-                        setIsLangOpen(false);
-                      }}
-                      className={`w-full text-left px-3 sm:px-4 py-2 hover:bg-gray-50 transition-colors flex items-center gap-3 ${
-                        language === lang.code ? 'bg-red-50 text-[#ff0000]' : 'text-gray-700'
-                      }`}
-                    >
+                    <button key={lang.code} onClick={() => { if (onLanguageChange) onLanguageChange(lang.code); setIsLangOpen(false); }} className={`w-full text-left px-3 py-2 hover:bg-gray-50 flex items-center gap-3 ${language === lang.code ? 'bg-red-50 text-[#ff0000]' : 'text-gray-700'}`}>
                       {flagComponents[lang.code]}
-                      <span className="text-sm font-medium">{lang.label}</span>
-                      {language === lang.code && (
-                        <span className="ml-auto text-[#ff0000]">✓</span>
-                      )}
+                      <span className="text-sm">{lang.label}</span>
+                      {language === lang.code && <span className="ml-auto text-[#ff0000]">✓</span>}
                     </button>
                   ))}
                 </div>
               )}
             </div>
 
-            <button
-              onClick={onCartOpen}
-              className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors relative"
-              aria-label="Корзина"
-            >
+            <button onClick={onCartOpen} className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg relative">
               <ShoppingBagIcon />
               {cartCount > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 bg-[#ff0000] text-white text-[10px] sm:text-xs min-w-[18px] h-[18px] sm:min-w-[20px] sm:h-[20px] rounded-full flex items-center justify-center font-bold px-1">
+                <span className="absolute -top-0.5 -right-0.5 bg-[#ff0000] text-white text-[10px] min-w-[18px] h-[18px] rounded-full flex items-center justify-center font-bold px-1">
                   {cartCount > 99 ? '99+' : cartCount}
                 </span>
               )}
@@ -478,41 +458,25 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      {/* ГОРИЗОНТАЛЬНОЕ МЕНЮ */}
+      {/* Меню */}
       <div className="hidden lg:block bg-[#ff0000] border-t border-[#cc0000] relative z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="flex items-center justify-start gap-1 sm:gap-2 md:gap-3 py-2.5 sm:py-3 overflow-visible hide-scrollbar relative z-40">
+          <nav className="flex items-center justify-start gap-1 sm:gap-2 md:gap-3 py-2.5 sm:py-3 overflow-visible relative z-40">
             {items.map((item, index) => {
               const isCakeItem = item.name === 'ტორტები' || item.name === 'Cakes' || item.name === 'Торты' || item.name === 'Pastalar';
-              
               if (isCakeItem) {
                 return (
-                  <div 
-                    key={index} 
-                    className="relative"
-                    onMouseEnter={() => setIsCakesOpen(true)} 
-                    onMouseLeave={() => setIsCakesOpen(false)}
-                  >
-                    <Link
-                      to={`/${language}${item.href === '/' ? '' : item.href}`}
-                      className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:bg-white/20 transition-colors tracking-wide px-3 py-1 rounded-full cursor-pointer"
-                    >
-                      <span>{menuIcons[item.icon]}</span>
+                  <div key={index} className="relative" onMouseEnter={() => setIsCakesOpen(true)} onMouseLeave={() => setIsCakesOpen(false)}>
+                    <Link to={`/${language}${item.href === '/' ? '' : item.href}`} className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-full hover:bg-white/20">
+                      {menuIcons[item.icon]}
                       <span>{item.name}</span>
-                      <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
+                      <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                     </Link>
-                    
                     {isCakesOpen && (
-                      <div className="absolute top-full left-0 bg-white rounded-xl shadow-2xl border border-gray-200 p-4 z-[9999] min-w-[300px] sm:min-w-[450px] lg:min-w-[550px]">
+                      <div className="absolute top-full left-0 bg-white rounded-xl shadow-2xl border p-4 z-[9999] min-w-[300px] sm:min-w-[450px] lg:min-w-[550px]">
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
                           {(cakeCategories[language as keyof typeof cakeCategories] || cakeCategories.ka).map((cat, catIndex) => (
-                            <Link
-                              key={catIndex}
-                              to={`/${language}/cakes/${cat.slug}`}
-                              className="text-xs font-bold text-gray-700 hover:text-[#ff0000] hover:bg-red-50 px-3 py-2 rounded-lg transition-colors whitespace-nowrap"
-                            >
+                            <Link key={catIndex} to={`/${language}/cakes/${cat.slug}`} className="text-xs font-bold text-gray-700 hover:text-[#ff0000] hover:bg-red-50 px-3 py-2 rounded-lg whitespace-nowrap">
                               {cat.name}
                             </Link>
                           ))}
@@ -522,14 +486,9 @@ export const Header: React.FC<HeaderProps> = ({
                   </div>
                 );
               }
-              
               return (
-                <Link
-                  key={index}
-                  to={`/${language}${item.href === '/' ? '' : item.href}`}
-                  className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold whitespace-nowrap hover:bg-white/20 transition-colors tracking-wide px-3 py-1 rounded-full"
-                >
-                  <span>{menuIcons[item.icon]}</span>
+                <Link key={index} to={`/${language}${item.href === '/' ? '' : item.href}`} className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-full hover:bg-white/20">
+                  {menuIcons[item.icon]}
                   <span>{item.name}</span>
                 </Link>
               );
