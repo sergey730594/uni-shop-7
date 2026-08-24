@@ -71,7 +71,7 @@ const products = [
       'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=600&fit=crop&q=80',
     ],
     price20: 70, price30: 90, price40: 110,
-    fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
+    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
     category: 'cakes', description: 'Медовый торт с сметанным кремом',
   },
   {
@@ -82,7 +82,7 @@ const products = [
       'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=800&h=600&fit=crop&q=80',
     ],
     price20: 90, price30: 110, price40: 130,
-    fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
+    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
     category: 'cakes', description: 'Шоколадный торт Прага',
   },
   {
@@ -93,7 +93,7 @@ const products = [
       'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=800&h=600&fit=crop&q=80',
     ],
     price20: 150, price30: 180, price40: 210,
-    fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
+    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
     category: 'cakes', description: 'Красный бархат с кремом чиз',
   },
   {
