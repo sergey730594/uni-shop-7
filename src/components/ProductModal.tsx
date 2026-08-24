@@ -71,9 +71,9 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
     <div className="fixed inset-0 z-[10000] overflow-hidden">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
 
-      <div className="fixed inset-0 sm:inset-auto sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 bg-white w-full h-full sm:w-[400px] sm:h-[600px] sm:rounded-2xl flex flex-col shadow-2xl overflow-hidden">
+      <div className="fixed inset-0 sm:inset-auto sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 bg-white w-full h-full sm:w-[400px] sm:h-[650px] sm:rounded-2xl flex flex-col shadow-2xl overflow-hidden">
         {/* Фото */}
-        <div className="relative bg-gray-100 h-[200px] sm:h-[220px] flex-shrink-0">
+        <div className="relative bg-gray-100 h-[180px] sm:h-[200px] flex-shrink-0">
           <img
             src={product.photos[currentPhoto] || ''}
             alt={product.name}
@@ -114,12 +114,12 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
           )}
         </div>
 
-        {/* Содержимое — фиксированное, без прокрутки */}
-        <div className="flex-1 p-3 sm:p-4 min-h-0">
-          <h2 className="text-sm sm:text-base font-bold text-gray-800 mb-1 truncate">{product.name}</h2>
+        {/* Содержимое */}
+        <div className="flex-1 p-4 min-h-0">
+          <h2 className="text-sm sm:text-base font-bold text-gray-800 mb-2 truncate">{product.name}</h2>
 
           {/* Кнопки размера */}
-          <div className="flex gap-1.5 mb-2">
+          <div className="flex gap-1.5 mb-3">
             {sizes.map(size => (
               <button
                 key={size.value}
@@ -136,31 +136,30 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
           </div>
 
           {/* Начинка */}
-          <label className="block text-[10px] font-medium text-gray-700 mb-0.5">{t.filling}</label>
+          <label className="block text-[10px] font-medium text-gray-700 mb-1">{t.filling}</label>
           <select
             value={selectedFilling}
             onChange={(e) => setSelectedFilling(e.target.value)}
-            className="w-full px-2 py-1 border border-gray-300 rounded-lg text-xs mb-2 focus:outline-none focus:ring-1 focus:ring-[#ff0000]"
+            className="w-full px-2 py-1.5 border border-gray-300 rounded-lg text-xs mb-3 focus:outline-none focus:ring-1 focus:ring-[#ff0000]"
           >
             {product.fillings.map(filling => (
               <option key={filling} value={filling}>{filling}</option>
             ))}
           </select>
 
-          {/* Текст — фиксированная высота, не растёт */}
-          <label className="block text-[10px] font-medium text-gray-700 mb-0.5">{t.cakeText}</label>
+          {/* Текст — большой, с внутренним скроллом, не растёт */}
+          <label className="block text-[10px] font-medium text-gray-700 mb-1">{t.cakeText}</label>
           <textarea
             value={cakeText}
-            onChange={(e) => setCakeText(e.target.value.slice(0, 150))}
-            maxLength={150}
-            rows={2}
-            className="w-full px-2 py-1 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-[#ff0000] resize-none"
-            style={{ height: '50px', minHeight: '50px', maxHeight: '50px' }}
+            onChange={(e) => setCakeText(e.target.value.slice(0, 300))}
+            maxLength={300}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-[#ff0000] resize-none overflow-y-auto"
+            style={{ height: '120px', minHeight: '120px', maxHeight: '120px' }}
           />
         </div>
 
         {/* Кнопка */}
-        <div className="flex-shrink-0 p-3 sm:p-4 border-t border-gray-200 bg-white">
+        <div className="flex-shrink-0 p-4 border-t border-gray-200 bg-white">
           <button
             onClick={handleAddToCart}
             className="w-full bg-[#ff0000] hover:bg-[#cc0000] text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm"
