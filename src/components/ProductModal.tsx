@@ -17,7 +17,7 @@ interface ProductModalProps {
   onClose: () => void;
 }
 
-// Иконки соцсетей для шаринга
+// Иконки соцсетей
 const FacebookShareIcon = () => (
   <svg className="w-4 h-4" fill="white" viewBox="0 0 24 24">
     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -84,46 +84,15 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
   ];
 
   const selectedPrice = sizes.find(s => s.value === selectedSize)?.price || product.price20;
-
   const shareUrl = window.location.href;
 
   const shareLinks = [
-    {
-      name: 'Facebook',
-      icon: <FacebookShareIcon />,
-      bg: 'bg-[#1877F2] hover:bg-[#1664d9]',
-      url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
-    },
-    {
-      name: 'WhatsApp',
-      icon: <WhatsAppShareIcon />,
-      bg: 'bg-[#25D366] hover:bg-[#20b85a]',
-      url: `https://wa.me/?text=${encodeURIComponent(`${product.name} - Grant Bakery\n${shareUrl}`)}`,
-    },
-    {
-      name: 'Viber',
-      icon: <ViberShareIcon />,
-      bg: 'bg-[#7360F2] hover:bg-[#5e4fd1]',
-      url: `viber://forward?text=${encodeURIComponent(`${product.name} - Grant Bakery\n${shareUrl}`)}`,
-    },
-    {
-      name: 'Telegram',
-      icon: <TelegramShareIcon />,
-      bg: 'bg-[#0088cc] hover:bg-[#006699]',
-      url: `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(product.name)}`,
-    },
-    {
-      name: 'Pinterest',
-      icon: <PinterestShareIcon />,
-      bg: 'bg-[#E60023] hover:bg-[#cc0020]',
-      url: `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(shareUrl)}&media=${encodeURIComponent(product.photos[0])}&description=${encodeURIComponent(product.name)}`,
-    },
-    {
-      name: 'TikTok',
-      icon: <TikTokShareIcon />,
-      bg: 'bg-black hover:bg-gray-800',
-      url: `https://www.tiktok.com/@grantis_torti`,
-    },
+    { name: 'Facebook', icon: <FacebookShareIcon />, bg: 'bg-[#1877F2]', url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}` },
+    { name: 'WhatsApp', icon: <WhatsAppShareIcon />, bg: 'bg-[#25D366]', url: `https://wa.me/?text=${encodeURIComponent(product.name + ' - Grant Bakery\n' + shareUrl)}` },
+    { name: 'Viber', icon: <ViberShareIcon />, bg: 'bg-[#7360F2]', url: `viber://forward?text=${encodeURIComponent(product.name + ' - Grant Bakery\n' + shareUrl)}` },
+    { name: 'Telegram', icon: <TelegramShareIcon />, bg: 'bg-[#0088cc]', url: `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(product.name)}` },
+    { name: 'Pinterest', icon: <PinterestShareIcon />, bg: 'bg-[#E60023]', url: `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(shareUrl)}&media=${encodeURIComponent(product.photos[0])}` },
+    { name: 'TikTok', icon: <TikTokShareIcon />, bg: 'bg-black', url: 'https://www.tiktok.com/@grantis_torti' },
   ];
 
   const handleAddToCart = () => {
@@ -141,21 +110,23 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
   };
 
   return (
-    <div className="fixed inset-0 z-[10000] overflow-hidden">
+    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-3 sm:p-4 overflow-hidden">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
 
-      <div className="fixed inset-0 sm:inset-auto sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 bg-white w-full h-full sm:w-[400px] sm:h-[700px] sm:rounded-2xl flex flex-col shadow-2xl overflow-hidden">
-        <div className="relative bg-gray-100 h-[160px] sm:h-[180px] flex-shrink-0">
+      {/* Резиновое окно — height: auto */}
+      <div className="relative bg-white w-full max-w-[400px] rounded-2xl shadow-2xl overflow-hidden flex flex-col" style={{ maxHeight: '95vh' }}>
+        {/* Фото */}
+        <div className="relative bg-gray-100 aspect-[4/3] flex-shrink-0">
           <img src={product.photos[currentPhoto] || ''} alt={product.name} className="w-full h-full object-cover" />
-          <button onClick={onClose} className="absolute top-3 left-3 z-10 p-2 bg-white/80 rounded-full shadow-lg">
+          <button onClick={onClose} className="absolute top-3 left-3 p-2 bg-white/80 rounded-full shadow-lg">
             <X className="w-5 h-5 text-gray-700" />
           </button>
           {product.photos.length > 1 && (
             <>
-              <button onClick={() => setCurrentPhoto(prev => prev === 0 ? product.photos.length - 1 : prev - 1)} className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 rounded-full shadow-lg">
+              <button onClick={() => setCurrentPhoto(prev => prev === 0 ? product.photos.length - 1 : prev - 1)} className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 rounded-full">
                 <ChevronLeft className="w-4 h-4" />
               </button>
-              <button onClick={() => setCurrentPhoto(prev => prev === product.photos.length - 1 ? 0 : prev + 1)} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 rounded-full shadow-lg">
+              <button onClick={() => setCurrentPhoto(prev => prev === product.photos.length - 1 ? 0 : prev + 1)} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 rounded-full">
                 <ChevronRight className="w-4 h-4" />
               </button>
               <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
@@ -167,31 +138,30 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
           )}
         </div>
 
-        <div className="flex-1 p-4 min-h-0">
-          <h2 className="text-sm font-bold text-gray-800 mb-2 truncate">{product.name}</h2>
-          <div className="flex gap-1.5 mb-3">
+        {/* Содержимое */}
+        <div className="p-4">
+          <h2 className="text-sm font-bold text-gray-800 mb-2">{product.name}</h2>
+
+          {/* Размер */}
+          <div className="flex gap-1.5 mb-2">
             {sizes.map(size => (
               <button key={size.value} onClick={() => setSelectedSize(size.value)} className={`px-3 py-1 rounded-full text-[10px] font-bold ${selectedSize === size.value ? 'bg-[#ff0000] text-white' : 'bg-gray-100 text-gray-600'}`}>
                 {size.label}
               </button>
             ))}
           </div>
+
+          {/* Начинка — кнопки-чипсы */}
           <label className="block text-[10px] font-medium text-gray-700 mb-1">{t.filling}</label>
-<div className="flex flex-wrap gap-1.5 mb-3">
-  {product.fillings.map(filling => (
-    <button
-      key={filling}
-      onClick={() => setSelectedFilling(filling)}
-      className={`px-3 py-1 rounded-full text-[10px] font-bold transition-all flex-shrink-0 ${
-        selectedFilling === filling
-          ? 'bg-[#ff0000] text-white'
-          : 'bg-gray-100 text-gray-600 hover:bg-red-50'
-      }`}
-    >
-      {filling}
-    </button>
-  ))}
-</div>
+          <div className="flex flex-wrap gap-1.5 mb-2">
+            {product.fillings.map(filling => (
+              <button key={filling} onClick={() => setSelectedFilling(filling)} className={`px-3 py-1 rounded-full text-[10px] font-bold ${selectedFilling === filling ? 'bg-[#ff0000] text-white' : 'bg-gray-100 text-gray-600'}`}>
+                {filling}
+              </button>
+            ))}
+          </div>
+
+          {/* Текст */}
           <label className="block text-[10px] font-medium text-gray-700 mb-1">{t.cakeText}</label>
           <textarea
             value={cakeText}
@@ -199,24 +169,17 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
             onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
             maxLength={200}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs resize-none"
-            style={{ height: '70px', minHeight: '70px', maxHeight: '70px' }}
+            style={{ height: '60px', minHeight: '60px', maxHeight: '60px' }}
           />
 
           {/* Поделиться */}
-          <div className="mt-3">
-            <p className="flex items-center gap-1 text-[10px] font-medium text-gray-700 mb-1.5">
+          <div className="mt-2">
+            <p className="flex items-center gap-1 text-[10px] font-medium text-gray-700 mb-1">
               <Share2 className="w-3 h-3" /> {t.share}
             </p>
             <div className="flex gap-1.5 flex-wrap">
               {shareLinks.map(social => (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`${social.bg} w-8 h-8 rounded-full flex items-center justify-center transition-transform hover:scale-110`}
-                  title={social.name}
-                >
+                <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className={`${social.bg} w-7 h-7 rounded-full flex items-center justify-center hover:scale-110 transition-transform`}>
                   {social.icon}
                 </a>
               ))}
@@ -224,7 +187,8 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
           </div>
         </div>
 
-        <div className="flex-shrink-0 p-4 border-t border-gray-200 bg-white">
+        {/* Кнопка */}
+        <div className="flex-shrink-0 p-3 sm:p-4 border-t border-gray-200 bg-white">
           <button onClick={handleAddToCart} className="w-full bg-[#ff0000] text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm">
             <ShoppingCart className="w-4 h-4" />
             {t.addToCart} — ₾{selectedPrice}
