@@ -68,12 +68,12 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
   };
 
   return (
-    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-2 sm:p-4">
+    <div className="fixed inset-0 z-[10000] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
 
-      <div className="relative bg-white rounded-2xl w-full max-w-sm sm:max-w-md max-h-[90vh] flex flex-col shadow-2xl">
-        {/* Фото — не слишком большое */}
-        <div className="relative bg-gray-100 aspect-[4/3] flex-shrink-0 rounded-t-2xl overflow-hidden">
+      <div className="relative bg-white w-full max-w-sm sm:max-w-md h-full sm:h-auto sm:max-h-full flex flex-col shadow-2xl overflow-hidden sm:rounded-2xl">
+        {/* Фото */}
+        <div className="relative bg-gray-100 aspect-[4/3] sm:aspect-square flex-shrink-0">
           <img
             src={product.photos[currentPhoto] || ''}
             alt={product.name}
@@ -114,8 +114,8 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
           )}
         </div>
 
-        {/* Прокручиваемое содержимое */}
-        <div className="flex-1 overflow-y-auto p-3 sm:p-4">
+        {/* Содержимое — всё помещается */}
+        <div className="flex-1 p-3 sm:p-4 overflow-y-auto">
           <h2 className="text-base sm:text-lg font-bold text-gray-800 mb-1">{product.name}</h2>
           {product.description && (
             <p className="text-xs text-gray-500 mb-2">{product.description}</p>
@@ -162,8 +162,8 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
           />
         </div>
 
-        {/* Кнопка — прилипшая к низу */}
-        <div className="flex-shrink-0 p-3 sm:p-4 border-t border-gray-200 bg-white rounded-b-2xl">
+        {/* Кнопка — прилипает к низу */}
+        <div className="flex-shrink-0 p-3 sm:p-4 border-t border-gray-200 bg-white">
           <button
             onClick={handleAddToCart}
             className="w-full bg-[#ff0000] hover:bg-[#cc0000] text-white font-bold py-2.5 sm:py-3 rounded-xl flex items-center justify-center gap-2 text-sm shadow-lg"
