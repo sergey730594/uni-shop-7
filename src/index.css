@@ -165,3 +165,34 @@ select option {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* Анимации для Hero */
+@keyframes float-bg-1 {
+  0%, 100% { transform: scale(1.1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes float-bg-2 {
+  0%, 100% { transform: scale(1.15); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes float-bg-3 {
+  0%, 100% { transform: scale(1.2); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes float-bg-4 {
+  0%, 100% { transform: scale(1.1) translateY(10px); }
+  50% { transform: scale(1.15) translateY(-10px); }
+}
+
+@keyframes float-bg-5 {
+  0%, 100% { transform: scale(1.15) translateX(10px); }
+  50% { transform: scale(1.1) translateX(-10px); }
+}
+
+.float-bg-1 { animation: float-bg-1 15s ease-in-out infinite; }
+.float-bg-2 { animation: float-bg-2 18s ease-in-out infinite; }
+.float-bg-3 { animation: float-bg-3 20s ease-in-out infinite; }
+.float-bg-4 { animation: float-bg-4 16s ease-in-out infinite; }
+.float-bg-5 { animation: float-bg-5 22s ease-in-out infinite; }
