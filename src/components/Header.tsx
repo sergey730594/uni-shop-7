@@ -38,9 +38,14 @@ const ChevronDownIcon = ({ className = '' }) => (
 const FlagGE = () => (
   <svg className="w-5 h-5 sm:w-6 sm:h-6 rounded-sm" viewBox="0 0 24 24">
     <rect width="24" height="24" fill="#fff"/>
-    <rect width="24" height="12" y="12" fill="#DA291C"/>
-    <rect width="24" height="6" y="9" fill="#DA291C"/>
-    <rect width="6" height="6" x="9" fill="#DA291C"/>
+    {/* Красный крест */}
+    <rect width="24" height="5" y="9.5" fill="#DA291C"/>
+    <rect width="5" height="24" x="9.5" fill="#DA291C"/>
+    {/* 4 красных квадрата */}
+    <rect width="4" height="4" x="2" y="2" fill="#DA291C"/>
+    <rect width="4" height="4" x="18" y="2" fill="#DA291C"/>
+    <rect width="4" height="4" x="2" y="18" fill="#DA291C"/>
+    <rect width="4" height="4" x="18" y="18" fill="#DA291C"/>
   </svg>
 );
 
