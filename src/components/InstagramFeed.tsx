@@ -1,4 +1,5 @@
 import React from 'react';
+import instagramData from '../data/instagram.json';
 
 interface InstagramFeedProps {
   language?: string;
@@ -11,42 +12,28 @@ export const InstagramFeed: React.FC<InstagramFeedProps> = ({ language = 'ka' })
       subtitle: '@grantis_torti',
       button: 'გამოწერა',
       description: 'იხილეთ მეტი ჩვენი ნამუშევრები Instagram-ზე',
-      placeholder: 'ფოტო',
     },
     en: {
       title: 'Follow us on Instagram',
       subtitle: '@grantis_torti',
       button: 'Follow',
       description: 'See more of our work on Instagram',
-      placeholder: 'Photo',
     },
     ru: {
       title: 'Подписывайтесь на Instagram',
       subtitle: '@grantis_torti',
       button: 'Подписаться',
       description: 'Смотрите больше наших работ в Instagram',
-      placeholder: 'Фото',
     },
     tr: {
       title: 'Instagram\'da takip edin',
       subtitle: '@grantis_torti',
       button: 'Takip Et',
       description: 'Instagram\'da daha fazla çalışmamızı görün',
-      placeholder: 'Fotoğraf',
     },
   };
 
   const t = texts[language as keyof typeof texts] || texts.ka;
-
-  // Заглушки — замените на реальные фото из Instagram
-  const photos = [
-    { id: 1, emoji: '🎂', bg: 'bg-red-100' },
-    { id: 2, emoji: '🍰', bg: 'bg-pink-100' },
-    { id: 3, emoji: '🧁', bg: 'bg-rose-100' },
-    { id: 4, emoji: '🎨', bg: 'bg-orange-100' },
-    { id: 5, emoji: '🍫', bg: 'bg-amber-100' },
-    { id: 6, emoji: '🌸', bg: 'bg-red-50' },
-  ];
 
   return (
     <section className="bg-white py-10 sm:py-14">
@@ -70,17 +57,20 @@ export const InstagramFeed: React.FC<InstagramFeedProps> = ({ language = 'ka' })
 
         {/* Сетка фото */}
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-3 mb-6 sm:mb-8">
-          {photos.map((photo) => (
+          {instagramData.photos.map((photo, index) => (
             <a
-              key={photo.id}
-              href="https://www.instagram.com/grantis_torti"
+              key={index}
+              href={photo.link}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${photo.bg} aspect-square rounded-xl sm:rounded-2xl flex items-center justify-center text-3xl sm:text-4xl lg:text-5xl hover:scale-105 transition-transform duration-300 cursor-pointer group relative overflow-hidden`}
+              className="aspect-square rounded-xl sm:rounded-2xl overflow-hidden hover:scale-105 transition-transform duration-300 cursor-pointer group relative shadow-sm"
             >
-              <span className="group-hover:scale-125 transition-transform duration-300">
-                {photo.emoji}
-              </span>
+              <img
+                src={photo.url}
+                alt={`Instagram photo ${index + 1}`}
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                loading="lazy"
+              />
               {/* Overlay при наведении */}
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
                 <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
