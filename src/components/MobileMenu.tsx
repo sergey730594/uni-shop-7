@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { X, ChevronDown } from 'lucide-react';
 import logoImage from '../assets/Logo-grant.png';
+import { Link } from 'react-router-dom';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -24,24 +25,64 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
 
   const cakeCategories = {
     ka: [
-      'კორპორატიული', 'საქორწილო', 'საბავშვო ტორტები', 'ფოტო ტორტები',
-      'მანქანა ტორტები', 'სპორტული ტორტები', 'გულის ტორტები', 'მარცეპანის ტორტი',
-      'ნათლობის ტორტები', 'მრგვალი ტორტები', 'უფროსებისთვის', 'ოთხკუთხა ტორტები', 'საახალწლო ტორტები'
+      { name: 'კორპორატიული', slug: 'corporate' },
+      { name: 'საქორწილო', slug: 'wedding' },
+      { name: 'საბავშვო ტორტები', slug: 'kids' },
+      { name: 'ფოტო ტორტები', slug: 'photo' },
+      { name: 'მანქანა ტორტები', slug: 'car' },
+      { name: 'სპორტული ტორტები', slug: 'sports' },
+      { name: 'გულის ტორტები', slug: 'heart' },
+      { name: 'მარცეპანის ტორტი', slug: 'marzipan' },
+      { name: 'ნათლობის ტორტები', slug: 'baptism' },
+      { name: 'მრგვალი ტორტები', slug: 'round' },
+      { name: 'უფროსებისთვის', slug: 'adults' },
+      { name: 'ოთხკუთხა ტორტები', slug: 'square' },
+      { name: 'საახალწლო ტორტები', slug: 'new-year' },
     ],
     en: [
-      'Corporate', 'Wedding', 'Kids Cakes', 'Photo Cakes',
-      'Car Cakes', 'Sports Cakes', 'Heart Cakes', 'Marzipan Cake',
-      'Baptism Cakes', 'Round Cakes', 'For Adults', 'Square Cakes', 'New Year Cakes'
+      { name: 'Corporate', slug: 'corporate' },
+      { name: 'Wedding', slug: 'wedding' },
+      { name: 'Kids Cakes', slug: 'kids' },
+      { name: 'Photo Cakes', slug: 'photo' },
+      { name: 'Car Cakes', slug: 'car' },
+      { name: 'Sports Cakes', slug: 'sports' },
+      { name: 'Heart Cakes', slug: 'heart' },
+      { name: 'Marzipan Cake', slug: 'marzipan' },
+      { name: 'Baptism Cakes', slug: 'baptism' },
+      { name: 'Round Cakes', slug: 'round' },
+      { name: 'For Adults', slug: 'adults' },
+      { name: 'Square Cakes', slug: 'square' },
+      { name: 'New Year Cakes', slug: 'new-year' },
     ],
     ru: [
-      'Корпоративные', 'Свадебные', 'Детские торты', 'Фото торты',
-      'Торты-машины', 'Спортивные торты', 'Торты-сердца', 'Марципановый торт',
-      'Торты на крестины', 'Круглые торты', 'Для взрослых', 'Квадратные торты', 'Новогодние торты'
+      { name: 'Корпоративные', slug: 'corporate' },
+      { name: 'Свадебные', slug: 'wedding' },
+      { name: 'Детские торты', slug: 'kids' },
+      { name: 'Фото торты', slug: 'photo' },
+      { name: 'Торты-машины', slug: 'car' },
+      { name: 'Спортивные торты', slug: 'sports' },
+      { name: 'Торты-сердца', slug: 'heart' },
+      { name: 'Марципановый торт', slug: 'marzipan' },
+      { name: 'Торты на крестины', slug: 'baptism' },
+      { name: 'Круглые торты', slug: 'round' },
+      { name: 'Для взрослых', slug: 'adults' },
+      { name: 'Квадратные торты', slug: 'square' },
+      { name: 'Новогодние торты', slug: 'new-year' },
     ],
     tr: [
-      'Kurumsal', 'Düğün', 'Çocuk Pastaları', 'Fotoğraflı Pastalar',
-      'Araba Pastaları', 'Spor Pastaları', 'Kalp Pastaları', 'Badem Ezmesi Pastası',
-      'Vaftiz Pastaları', 'Yuvarlak Pastalar', 'Yetişkinler İçin', 'Kare Pastalar', 'Yılbaşı Pastaları'
+      { name: 'Kurumsal', slug: 'corporate' },
+      { name: 'Düğün', slug: 'wedding' },
+      { name: 'Çocuk Pastaları', slug: 'kids' },
+      { name: 'Fotoğraflı Pastalar', slug: 'photo' },
+      { name: 'Araba Pastaları', slug: 'car' },
+      { name: 'Spor Pastaları', slug: 'sports' },
+      { name: 'Kalp Pastaları', slug: 'heart' },
+      { name: 'Badem Ezmesi Pastası', slug: 'marzipan' },
+      { name: 'Vaftiz Pastaları', slug: 'baptism' },
+      { name: 'Yuvarlak Pastalar', slug: 'round' },
+      { name: 'Yetişkinler İçin', slug: 'adults' },
+      { name: 'Kare Pastalar', slug: 'square' },
+      { name: 'Yılbaşı Pastaları', slug: 'new-year' },
     ],
   };
 
@@ -139,14 +180,14 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
                   {isCakesOpen && (
                     <div className="bg-gray-50 py-2">
                       {cakeCategories[language as keyof typeof cakeCategories].map((cat, catIndex) => (
-                        <a
+                        <Link
                           key={catIndex}
-                          href={`/cakes/${cat.toLowerCase().replace(/\s+/g, '-')}`}
+                          to={`/cakes/${cat.slug}`}
                           className="flex items-center gap-3 px-8 py-2.5 text-xs font-bold text-gray-600 hover:text-[#ff0000] hover:bg-red-50 transition-colors"
                           onClick={onClose}
                         >
-                          🍰 {cat}
-                        </a>
+                          🍰 {cat.name}
+                        </Link>
                       ))}
                     </div>
                   )}
@@ -155,9 +196,9 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
             }
             
             return (
-              <a
+              <Link
                 key={index}
-                href={item.href}
+                to={item.href}
                 className={`flex items-center gap-3 px-6 py-3.5 transition-colors border-b border-gray-50 ${
                   item.name === 'ფასდაკლება' || item.name === 'Sale' || item.name === 'Скидки' || item.name === 'İndirim'
                     ? 'bg-red-50 text-[#ff0000] font-bold'
@@ -167,7 +208,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
               >
                 <span className="text-xl">{item.icon}</span>
                 <span className="font-medium text-sm">{item.name}</span>
-              </a>
+              </Link>
             );
           })}
         </nav>
