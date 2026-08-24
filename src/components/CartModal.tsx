@@ -14,55 +14,37 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
   const [showCalendar, setShowCalendar] = useState(false);
   const [showTimeSlots, setShowTimeSlots] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [form, setForm] = useState({
-    name: '', phone: '', extraPhone: '', date: '', time: '', address: '', comment: '',
-  });
+  const [form, setForm] = useState({ name: '', phone: '', extraPhone: '', date: '', time: '', address: '', comment: '' });
 
   const texts = {
     ka: {
-      title: 'კალათა', empty: 'კალათა ცარიელია',
-      name: 'სახელი და გვარი', phone: 'ტელეფონი', extraPhone: 'დამატებითი ტელეფონი',
-      date: 'რომელ რიცხვში?', time: 'რომელ საათზე?',
-      pickup: 'თვითგატანა', delivery: 'მიტანა (+10₾)', address: 'სრული მისამართი',
-      comment: 'ტექსტი ტორტზე / კომენტარი', total: 'სულ',
-      sendEmail: 'Email', sendWhatsApp: 'WhatsApp',
-      required: 'შეავსეთ აუცილებელი ველები', deliveryFee: 'მიტანა',
+      title: 'კალათა', empty: 'კალათა ცარიელია', name: 'სახელი და გვარი', phone: 'ტელეფონი', extraPhone: 'დამატებითი ტელეფონი',
+      date: 'რომელ რიცხვში?', time: 'რომელ საათზე?', pickup: 'თვითგატანა', delivery: 'მიტანა (+10₾)', address: 'სრული მისამართი',
+      comment: 'ტექსტი ტორტზე / კომენტარი', total: 'სულ', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'შეავსეთ ველები', deliveryFee: 'მიტანა',
       months: ['იანვარი','თებერვალი','მარტი','აპრილი','მაისი','ივნისი','ივლისი','აგვისტო','სექტემბერი','ოქტომბერი','ნოემბერი','დეკემბერი'],
       days: ['კვ','ორ','სამ','ოთხ','ხუთ','პარ','შაბ'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
     },
     en: {
-      title: 'Cart', empty: 'Cart is empty',
-      name: 'Full name', phone: 'Phone', extraPhone: 'Additional phone',
-      date: 'Date?', time: 'Time?',
-      pickup: 'Pickup', delivery: 'Delivery (+10₾)', address: 'Full address',
-      comment: 'Text on cake / Comment', total: 'Total',
-      sendEmail: 'Email', sendWhatsApp: 'WhatsApp',
-      required: 'Fill required fields', deliveryFee: 'Delivery',
+      title: 'Cart', empty: 'Cart is empty', name: 'Full name', phone: 'Phone', extraPhone: 'Additional phone',
+      date: 'Date?', time: 'Time?', pickup: 'Pickup', delivery: 'Delivery (+10₾)', address: 'Full address',
+      comment: 'Text on cake / Comment', total: 'Total', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'Fill fields', deliveryFee: 'Delivery',
       months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
       days: ['Mo','Tu','We','Th','Fr','Sa','Su'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
     },
     ru: {
-      title: 'Корзина', empty: 'Корзина пуста',
-      name: 'Имя и фамилия', phone: 'Телефон', extraPhone: 'Доп. телефон',
-      date: 'Дата?', time: 'Время?',
-      pickup: 'Самовывоз', delivery: 'Доставка (+10₾)', address: 'Полный адрес',
-      comment: 'Текст на торте / Комментарий', total: 'Итого',
-      sendEmail: 'Email', sendWhatsApp: 'WhatsApp',
-      required: 'Заполните обязательные поля', deliveryFee: 'Доставка',
+      title: 'Корзина', empty: 'Корзина пуста', name: 'Имя и фамилия', phone: 'Телефон', extraPhone: 'Доп. телефон',
+      date: 'Дата?', time: 'Время?', pickup: 'Самовывоз', delivery: 'Доставка (+10₾)', address: 'Полный адрес',
+      comment: 'Текст на торте / Комментарий', total: 'Итого', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'Заполните поля', deliveryFee: 'Доставка',
       months: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
       days: ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
     },
     tr: {
-      title: 'Sepet', empty: 'Sepet boş',
-      name: 'Ad soyad', phone: 'Telefon', extraPhone: 'Ek telefon',
-      date: 'Tarih?', time: 'Saat?',
-      pickup: 'Teslim alma', delivery: 'Teslimat (+10₾)', address: 'Tam adres',
-      comment: 'Pasta üzerine yazı / Yorum', total: 'Toplam',
-      sendEmail: 'Email', sendWhatsApp: 'WhatsApp',
-      required: 'Zorunlu alanları doldurun', deliveryFee: 'Teslimat',
+      title: 'Sepet', empty: 'Sepet boş', name: 'Ad soyad', phone: 'Telefon', extraPhone: 'Ek telefon',
+      date: 'Tarih?', time: 'Saat?', pickup: 'Teslim alma', delivery: 'Teslimat (+10₾)', address: 'Tam adres',
+      comment: 'Pasta üzerine yazı / Yorum', total: 'Toplam', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'Alanları doldurun', deliveryFee: 'Teslimat',
       months: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
       days: ['Pt','Sa','Ça','Pe','Cu','Ct','Pz'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -107,7 +89,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
     <div className="fixed inset-0 z-[9999] overflow-hidden">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
       <div className="fixed right-0 top-0 h-screen w-full max-w-md bg-white shadow-2xl flex flex-col">
-        <div className="flex items-center justify-between px-5 py-3 border-b border-gray-200 flex-shrink-0">
+        <div className="flex items-center justify-between px-5 py-3 border-b flex-shrink-0">
           <h2 className="text-lg font-bold">{t.title}</h2>
           <button onClick={onClose} className="p-2"><X className="w-5 h-5" /></button>
         </div>
@@ -129,9 +111,9 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
                 </div>
               ))}
 
-              <input type="text" value={form.name} onChange={e => setForm({...form, name: e.target.value})} placeholder={t.name} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
-              <input type="tel" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} placeholder={t.phone} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
-              <input type="tel" value={form.extraPhone} onChange={e => setForm({...form, extraPhone: e.target.value})} placeholder={t.extraPhone} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+              <input type="text" value={form.name} onChange={e => setForm({...form, name: e.target.value})} placeholder={t.name} className="w-full px-3 py-2 border rounded-lg text-sm" />
+              <input type="tel" value={form.phone} onChange={e => setForm({...form, phone: e.target.value})} placeholder={t.phone} className="w-full px-3 py-2 border rounded-lg text-sm" />
+              <input type="tel" value={form.extraPhone} onChange={e => setForm({...form, extraPhone: e.target.value})} placeholder={t.extraPhone} className="w-full px-3 py-2 border rounded-lg text-sm" />
 
               <div className="grid grid-cols-2 gap-2">
                 <button onClick={() => { setShowCalendar(!showCalendar); setShowTimeSlots(false); }} className={`px-3 py-2 rounded-lg border text-xs ${form.date ? 'bg-[#ff0000] text-white' : 'bg-white'}`}>
@@ -174,16 +156,17 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
               </div>
 
               {deliveryType === 'delivery' && (
-                <input type="text" value={form.address} onChange={e => setForm({...form, address: e.target.value})} placeholder={t.address} className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" />
+                <input type="text" value={form.address} onChange={e => setForm({...form, address: e.target.value})} placeholder={t.address} className="w-full px-3 py-2 border rounded-lg text-sm" />
               )}
 
-              {/* Комментарий — фиксированное поле с внутренним скроллом */}
+              {/* Enter заблокирован */}
               <textarea
                 value={form.comment}
                 onChange={(e) => setForm({ ...form, comment: e.target.value.slice(0, 300) })}
+                onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
                 maxLength={300}
                 placeholder={t.comment}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm resize-none overflow-y-auto"
+                className="w-full px-3 py-2 border rounded-lg text-sm resize-none"
                 style={{ height: '70px', minHeight: '70px', maxHeight: '70px' }}
               />
 
