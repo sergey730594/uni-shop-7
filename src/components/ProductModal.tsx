@@ -54,6 +54,15 @@ const TikTokShareIcon = () => (
   </svg>
 );
 
+// Начинки на 4 языках
+const fillingNames: Record<string, Record<string, string>> = {
+  'fruit': { ka: 'ხილის ტორტი', en: 'Fruit Cake', ru: 'Фруктовый торт', tr: 'Meyveli Pasta' },
+  'fruit-mix': { ka: 'ხილის მიქსი', en: 'Fruit Mix', ru: 'Фруктовый микс', tr: 'Meyve Karışımı' },
+  'banana-chocolate': { ka: 'ბანანი შოკოლადით', en: 'Banana with Chocolate', ru: 'Банан с шоколадом', tr: 'Çikolatalı Muz' },
+  'black-special': { ka: 'შავი საფირმო', en: 'Black Special', ru: 'Чёрный фирменный', tr: 'Siyah Özel' },
+  'bounty-special': { ka: 'საფირმო ბაუნტი', en: 'Bounty Special', ru: 'Фирменный Баунти', tr: 'Bounty Özel' },
+};
+
 export const ProductModal: React.FC<ProductModalProps> = ({ product, language, onClose }) => {
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const [selectedSize, setSelectedSize] = useState('20');
@@ -101,7 +110,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
       name: product.name,
       photo: product.photos[currentPhoto] || '',
       size: `${selectedSize} ${t.pieces}`,
-      filling: selectedFilling,
+      filling: fillingNames[selectedFilling]?.[language] || selectedFilling,
       cakeText: cakeText,
       price: selectedPrice,
       quantity: 1,
@@ -113,7 +122,6 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
     <div className="fixed inset-0 z-[10000] flex items-center justify-center p-3 sm:p-4 overflow-hidden">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
 
-      {/* Резиновое окно — height: auto */}
       <div className="relative bg-white w-full max-w-[400px] rounded-2xl shadow-2xl overflow-hidden flex flex-col" style={{ maxHeight: '95vh' }}>
         {/* Фото */}
         <div className="relative bg-gray-100 aspect-[4/3] flex-shrink-0">
@@ -142,7 +150,6 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
         <div className="p-4">
           <h2 className="text-sm font-bold text-gray-800 mb-2">{product.name}</h2>
 
-          {/* Размер */}
           <div className="flex gap-1.5 mb-2">
             {sizes.map(size => (
               <button key={size.value} onClick={() => setSelectedSize(size.value)} className={`px-3 py-1 rounded-full text-[10px] font-bold ${selectedSize === size.value ? 'bg-[#ff0000] text-white' : 'bg-gray-100 text-gray-600'}`}>
@@ -151,17 +158,18 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
             ))}
           </div>
 
-          {/* Начинка — кнопки-чипсы */}
           <label className="block text-[10px] font-medium text-gray-700 mb-1">{t.filling}</label>
           <div className="flex flex-wrap gap-1.5 mb-2">
-            {product.fillings.map(filling => (
-              <button key={filling} onClick={() => setSelectedFilling(filling)} className={`px-3 py-1 rounded-full text-[10px] font-bold ${selectedFilling === filling ? 'bg-[#ff0000] text-white' : 'bg-gray-100 text-gray-600'}`}>
-                {filling}
-              </button>
-            ))}
+            {product.fillings.map(fillingKey => {
+              const fillingName = fillingNames[fillingKey]?.[language] || fillingKey;
+              return (
+                <button key={fillingKey} onClick={() => setSelectedFilling(fillingKey)} className={`px-3 py-1 rounded-full text-[10px] font-bold ${selectedFilling === fillingKey ? 'bg-[#ff0000] text-white' : 'bg-gray-100 text-gray-600'}`}>
+                  {fillingName}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Текст */}
           <label className="block text-[10px] font-medium text-gray-700 mb-1">{t.cakeText}</label>
           <textarea
             value={cakeText}
@@ -172,7 +180,6 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
             style={{ height: '60px', minHeight: '60px', maxHeight: '60px' }}
           />
 
-          {/* Поделиться */}
           <div className="mt-2">
             <p className="flex items-center gap-1 text-[10px] font-medium text-gray-700 mb-1">
               <Share2 className="w-3 h-3" /> {t.share}
@@ -187,7 +194,6 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
           </div>
         </div>
 
-        {/* Кнопка */}
         <div className="flex-shrink-0 p-3 sm:p-4 border-t border-gray-200 bg-white">
           <button onClick={handleAddToCart} className="w-full bg-[#ff0000] text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm">
             <ShoppingCart className="w-4 h-4" />
