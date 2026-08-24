@@ -71,104 +71,99 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
     <div className="fixed inset-0 z-[10000] overflow-hidden">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
 
-      <div className="fixed inset-0 sm:inset-auto sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 bg-white w-full sm:w-[420px] sm:max-h-[95vh] sm:rounded-2xl flex flex-col shadow-2xl overflow-hidden">
-        {/* Фото с кнопками размера под ним */}
-        <div className="flex-shrink-0">
-          <div className="relative bg-gray-100 aspect-[4/3]">
-            <img
-              src={product.photos[currentPhoto] || ''}
-              alt={product.name}
-              className="w-full h-full object-cover"
-            />
+      <div className="fixed inset-0 sm:inset-auto sm:left-1/2 sm:top-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 bg-white w-full h-full sm:w-[400px] sm:h-[600px] sm:rounded-2xl flex flex-col shadow-2xl overflow-hidden">
+        {/* Фото */}
+        <div className="relative bg-gray-100 h-[200px] sm:h-[220px] flex-shrink-0">
+          <img
+            src={product.photos[currentPhoto] || ''}
+            alt={product.name}
+            className="w-full h-full object-cover"
+          />
 
-            <button
-              onClick={onClose}
-              className="absolute top-3 left-3 z-10 p-2 bg-white/80 hover:bg-white rounded-full shadow-lg"
-            >
-              <X className="w-5 h-5 text-gray-700" />
-            </button>
+          <button
+            onClick={onClose}
+            className="absolute top-3 left-3 z-10 p-2 bg-white/80 hover:bg-white rounded-full shadow-lg"
+          >
+            <X className="w-5 h-5 text-gray-700" />
+          </button>
 
-            {product.photos.length > 1 && (
-              <>
-                <button
-                  onClick={() => setCurrentPhoto(prev => prev === 0 ? product.photos.length - 1 : prev - 1)}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 rounded-full shadow-lg"
-                >
-                  <ChevronLeft className="w-4 h-4 text-gray-700" />
-                </button>
-                <button
-                  onClick={() => setCurrentPhoto(prev => prev === product.photos.length - 1 ? 0 : prev + 1)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 rounded-full shadow-lg"
-                >
-                  <ChevronRight className="w-4 h-4 text-gray-700" />
-                </button>
+          {product.photos.length > 1 && (
+            <>
+              <button
+                onClick={() => setCurrentPhoto(prev => prev === 0 ? product.photos.length - 1 : prev - 1)}
+                className="absolute left-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 rounded-full shadow-lg"
+              >
+                <ChevronLeft className="w-4 h-4 text-gray-700" />
+              </button>
+              <button
+                onClick={() => setCurrentPhoto(prev => prev === product.photos.length - 1 ? 0 : prev + 1)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-white/80 rounded-full shadow-lg"
+              >
+                <ChevronRight className="w-4 h-4 text-gray-700" />
+              </button>
 
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
-                  {product.photos.map((_, index) => (
-                    <div
-                      key={index}
-                      className={`w-1.5 h-1.5 rounded-full ${index === currentPhoto ? 'bg-[#ff0000]' : 'bg-white/60'}`}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                {product.photos.map((_, index) => (
+                  <div
+                    key={index}
+                    className={`w-1.5 h-1.5 rounded-full ${index === currentPhoto ? 'bg-[#ff0000]' : 'bg-white/60'}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
 
-          {/* Кнопки размера — под фото */}
-          <div className="flex gap-1.5 px-3 py-2 bg-gray-50 border-b border-gray-100">
+        {/* Содержимое — фиксированное, без прокрутки */}
+        <div className="flex-1 p-3 sm:p-4 min-h-0">
+          <h2 className="text-sm sm:text-base font-bold text-gray-800 mb-1 truncate">{product.name}</h2>
+
+          {/* Кнопки размера */}
+          <div className="flex gap-1.5 mb-2">
             {sizes.map(size => (
               <button
                 key={size.value}
                 onClick={() => setSelectedSize(size.value)}
-                className={`px-3 py-1 rounded-full text-[10px] font-bold transition-all ${
+                className={`px-3 py-1 rounded-full text-[10px] font-bold flex-shrink-0 transition-all ${
                   selectedSize === size.value
                     ? 'bg-[#ff0000] text-white'
-                    : 'bg-white text-gray-600 border border-gray-200 hover:border-[#ff0000]'
+                    : 'bg-gray-100 text-gray-600'
                 }`}
               >
                 {size.label}
               </button>
             ))}
           </div>
-        </div>
-
-        {/* Содержимое */}
-        <div className="flex-1 overflow-y-auto p-4">
-          <h2 className="text-base sm:text-lg font-bold text-gray-800 mb-1">{product.name}</h2>
-          {product.description && (
-            <p className="text-xs text-gray-500 mb-2">{product.description}</p>
-          )}
 
           {/* Начинка */}
-          <label className="block text-xs font-medium text-gray-700 mb-1">{t.filling}</label>
+          <label className="block text-[10px] font-medium text-gray-700 mb-0.5">{t.filling}</label>
           <select
             value={selectedFilling}
             onChange={(e) => setSelectedFilling(e.target.value)}
-            className="w-full px-3 py-1.5 border border-gray-300 rounded-xl text-xs mb-2 focus:outline-none focus:ring-2 focus:ring-[#ff0000]"
+            className="w-full px-2 py-1 border border-gray-300 rounded-lg text-xs mb-2 focus:outline-none focus:ring-1 focus:ring-[#ff0000]"
           >
             {product.fillings.map(filling => (
               <option key={filling} value={filling}>{filling}</option>
             ))}
           </select>
 
-          {/* Текст — ограниченный по высоте */}
-          <label className="block text-xs font-medium text-gray-700 mb-1">{t.cakeText}</label>
+          {/* Текст — фиксированная высота, не растёт */}
+          <label className="block text-[10px] font-medium text-gray-700 mb-0.5">{t.cakeText}</label>
           <textarea
             value={cakeText}
-            onChange={(e) => setCakeText(e.target.value.slice(0, 200))}
+            onChange={(e) => setCakeText(e.target.value.slice(0, 150))}
+            maxLength={150}
             rows={2}
-            maxLength={200}
-            className="w-full px-3 py-1.5 border border-gray-300 rounded-xl text-xs mb-2 focus:outline-none focus:ring-2 focus:ring-[#ff0000] resize-none overflow-hidden"
-            style={{ height: '60px' }}
+            className="w-full px-2 py-1 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-1 focus:ring-[#ff0000] resize-none"
+            style={{ height: '50px', minHeight: '50px', maxHeight: '50px' }}
           />
         </div>
 
-        {/* Кнопка — прилипает к низу */}
-        <div className="flex-shrink-0 p-4 border-t border-gray-200 bg-white">
+        {/* Кнопка */}
+        <div className="flex-shrink-0 p-3 sm:p-4 border-t border-gray-200 bg-white">
           <button
             onClick={handleAddToCart}
-            className="w-full bg-[#ff0000] hover:bg-[#cc0000] text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-sm shadow-lg"
+            className="w-full bg-[#ff0000] hover:bg-[#cc0000] text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm"
           >
             <ShoppingCart className="w-4 h-4" />
             {t.addToCart} — ₾{selectedPrice}
