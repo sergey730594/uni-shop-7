@@ -109,7 +109,7 @@ function HomePage() {
       subtitle: 'ონლაინ შეკვეთა, მიტანის სერვისით',
       button: 'შეკვეთა ახლავე',
       button2: 'გაიგე მეტი',
-      popular: '🔥 პოპულარული ტორტები',
+      popular: 'პოპულარული ტორტები',
       viewAll: 'ყველას ნახვა →',
     },
     en: {
@@ -119,7 +119,7 @@ function HomePage() {
       subtitle: 'Online ordering with delivery service',
       button: 'Order Now',
       button2: 'Learn More',
-      popular: '🔥 Popular Cakes',
+      popular: 'Popular Cakes',
       viewAll: 'View All →',
     },
     ru: {
@@ -129,7 +129,7 @@ function HomePage() {
       subtitle: 'Онлайн-заказ с доставкой',
       button: 'Заказать сейчас',
       button2: 'Узнать больше',
-      popular: '🔥 Популярные торты',
+      popular: 'Популярные торты',
       viewAll: 'Смотреть все →',
     },
     tr: {
@@ -139,7 +139,7 @@ function HomePage() {
       subtitle: 'Teslimat hizmeti ile çevrimiçi sipariş',
       button: 'Şimdi Sipariş Ver',
       button2: 'Daha Fazla',
-      popular: '🔥 Popüler Pastalar',
+      popular: 'Popüler Pastalar',
       viewAll: 'Hepsini Gör →',
     },
   };
@@ -203,7 +203,13 @@ function HomePage() {
         <section className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12">
           <div className="flex justify-between items-center mb-4 sm:mb-6 md:mb-8">
             <div>
-              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800">{t.popular}</h2>
+              <h2 className="flex items-center gap-2 text-lg sm:text-xl md:text-2xl font-bold text-gray-800">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-[#ff0000] flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
+                </svg>
+                {t.popular}
+              </h2>
               <p className="text-xs sm:text-sm text-gray-500 hidden sm:block mt-1">
                 {products.length} {language === 'ka' ? 'ტორტი' : language === 'en' ? 'cakes' : language === 'ru' ? 'тортов' : 'pasta'} 
               </p>
