@@ -59,7 +59,7 @@ const products = [
       'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=800&h=600&fit=crop&q=80',
       'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=800&h=600&fit=crop&q=80',
     ],
-    price20: 3000, price30: 3500, price40: 4000,
+    price20: 80, price30: 100, price40: 120,
     fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
     category: 'cakes', description: 'Классический торт Наполеон с нежным кремом',
   },
@@ -70,7 +70,7 @@ const products = [
       'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=800&h=600&fit=crop&q=80',
       'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=600&fit=crop&q=80',
     ],
-    price20: 2700, price30: 3200, price40: 3700,
+    price20: 70, price30: 90, price40: 110,
     fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
     category: 'cakes', description: 'Медовый торт с сметанным кремом',
   },
@@ -81,7 +81,7 @@ const products = [
       'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=800&h=600&fit=crop&q=80',
       'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=800&h=600&fit=crop&q=80',
     ],
-    price20: 3300, price30: 3800, price40: 4300,
+    price20: 90, price30: 110, price40: 130,
     fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
     category: 'cakes', description: 'Шоколадный торт Прага',
   },
@@ -92,7 +92,7 @@ const products = [
       'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=600&fit=crop&q=80',
       'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=800&h=600&fit=crop&q=80',
     ],
-    price20: 3700, price30: 4200, price40: 4700,
+    price20: 150, price30: 180, price40: 210,
     fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
     category: 'cakes', description: 'Красный бархат с кремом чиз',
   },
@@ -102,7 +102,7 @@ const products = [
     photos: [
       'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=800&h=600&fit=crop&q=80',
     ],
-    price20: 2300, price30: 2800, price40: 3300,
+    price20: 60, price30: 80, price40: 100,
     fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
     category: 'cakes', description: 'Нежный чизкейк',
   },
@@ -112,7 +112,7 @@ const products = [
     photos: [
       'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=800&h=600&fit=crop&q=80',
     ],
-    price20: 1200, price30: 1500, price40: 1800,
+    price20: 40, price30: 50, price40: 60,
     fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
     category: 'cakes', description: 'Французские эклеры',
   },
@@ -122,7 +122,7 @@ const products = [
     photos: [
       'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=800&h=600&fit=crop&q=80',
     ],
-    price20: 1700, price30: 2000, price40: 2300,
+    price20: 50, price30: 65, price40: 80,
     fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
     category: 'cakes', description: 'Нежные макаруны',
   },
@@ -132,7 +132,7 @@ const products = [
     photos: [
       'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?w=800&h=600&fit=crop&q=80',
     ],
-    price20: 1500, price30: 1800, price40: 2100,
+    price20: 45, price30: 55, price40: 70,
     fillings: ['Шоколадная', 'Ванильная', 'Клубничная', 'Карамельная', 'Ореховая', 'Фруктовая'],
     category: 'cakes', description: 'Корзиночки с кремом',
   },
@@ -168,9 +168,7 @@ function HomePage() {
   const [animationClass, setAnimationClass] = useState('');
 
   useEffect(() => {
-    if (lang && lang !== language) {
-      setLanguage(lang);
-    }
+    if (lang && lang !== language) setLanguage(lang);
   }, [lang]);
 
   useEffect(() => {
@@ -187,9 +185,9 @@ function HomePage() {
 
   const texts = {
     ka: { badge: 'საკონდიტრო', title: 'ტორტის შეკვეთა', titleHighlight: 'Grant Bakery"-ში', subtitle: 'ონლაინ შეკვეთა, მიტანის სერვისით', button: 'შეკვეთა ახლავე', button2: 'გაიგე მეტი', popular: 'პოპულარული ტორტები', viewAll: 'ყველას ნახვა →' },
-    en: { badge: 'Bakery', title: 'Order a Cake', titleHighlight: 'at Grant Bakery', subtitle: 'Online ordering with delivery service', button: 'Order Now', button2: 'Learn More', popular: 'Popular Cakes', viewAll: 'View All →' },
-    ru: { badge: 'Кондитерская', title: 'Заказ торта', titleHighlight: 'в Grant Bakery', subtitle: 'Онлайн-заказ с доставкой', button: 'Заказать сейчас', button2: 'Узнать больше', popular: 'Популярные торты', viewAll: 'Смотреть все →' },
-    tr: { badge: 'Pastane', title: 'Pasta Siparişi', titleHighlight: 'Grant Bakery\'de', subtitle: 'Teslimat hizmeti ile çevrimiçi sipariş', button: 'Şimdi Sipariş Ver', button2: 'Daha Fazla', popular: 'Popüler Pastalar', viewAll: 'Hepsini Gör →' },
+    en: { badge: '🧁 Bakery', title: 'Order a Cake', titleHighlight: 'at Grant Bakery', subtitle: 'Online ordering with delivery service', button: 'Order Now', button2: 'Learn More', popular: 'Popular Cakes', viewAll: 'View All →' },
+    ru: { badge: '🧁 Кондитерская', title: 'Заказ торта', titleHighlight: 'в Grant Bakery', subtitle: 'Онлайн-заказ с доставкой', button: 'Заказать сейчас', button2: 'Узнать больше', popular: 'Популярные торты', viewAll: 'Смотреть все →' },
+    tr: { badge: '🧁 Pastane', title: 'Pasta Siparişi', titleHighlight: 'Grant Bakery\'de', subtitle: 'Teslimat hizmeti ile çevrimiçi sipariş', button: 'Şimdi Sipariş Ver', button2: 'Daha Fazla', popular: 'Popüler Pastalar', viewAll: 'Hepsini Gör →' },
   };
 
   const t = texts[language as keyof typeof texts] || texts.ka;
@@ -268,6 +266,7 @@ function CategoryPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [priceFilter, setPriceFilter] = useState('all');
   const { items } = useCart();
   const navigate = useNavigate();
   const { lang } = useParams();
@@ -310,15 +309,37 @@ function CategoryPage() {
 
   let pageTitle = subcategory ? subcategoryNames[subcategory]?.[language] || subcategory : categoryNames[category || '']?.[language] || category || 'Category';
 
+  const filteredProducts = products.filter(p => {
+    if (category !== 'cakes' && category !== undefined) return false;
+    if (priceFilter === '0-100') return p.price30 <= 100;
+    if (priceFilter === '100-200') return p.price30 > 100 && p.price30 <= 200;
+    if (priceFilter === '200+') return p.price30 > 200;
+    return true;
+  });
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header language={language} onLanguageChange={handleLanguageChange} onMenuOpen={() => setIsMenuOpen(true)} onCartOpen={() => setIsCartOpen(true)} cartCount={items.length} />
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} language={language} />
 
       <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10 w-full">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-4 sm:mb-6">{pageTitle}</h1>
+        <div className="flex items-center justify-between mb-4 sm:mb-6 flex-wrap gap-2">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">{pageTitle}</h1>
+          
+          <select
+            value={priceFilter}
+            onChange={(e) => setPriceFilter(e.target.value)}
+            className="px-3 py-1.5 border border-gray-300 rounded-lg text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#ff0000]"
+          >
+            <option value="all">{language === 'ka' ? 'ყველა ფასი' : language === 'en' ? 'All prices' : language === 'ru' ? 'Все цены' : 'Tüm fiyatlar'}</option>
+            <option value="0-100">{language === 'ka' ? '100₾-მდე' : language === 'en' ? 'Up to 100₾' : language === 'ru' ? 'До 100₾' : "100₾'a kadar"}</option>
+            <option value="100-200">100₾ - 200₾</option>
+            <option value="200+">200₾+</option>
+          </select>
+        </div>
+
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-          {products.map(product => (
+          {filteredProducts.map(product => (
             <div key={product.id} onClick={() => setSelectedProduct(product)} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg cursor-pointer group">
               <div className="aspect-square overflow-hidden">
                 <img src={product.photos[0]} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
