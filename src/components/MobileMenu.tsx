@@ -248,7 +248,10 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
                           className="flex items-center gap-3 px-8 py-2.5 text-xs font-bold text-gray-600 hover:text-[#ff0000] hover:bg-red-50 transition-colors"
                           onClick={onClose}
                         >
-                          🍰 {cat.name}
+                          <svg className="w-3 h-3 text-[#ff0000] flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                          </svg>
+                          {cat.name}
                         </Link>
                       ))}
                     </div>
@@ -261,11 +264,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
               <Link
                 key={index}
                 to={`/${language}${item.href === '/' ? '' : item.href}`}
-                className={`flex items-center gap-3 px-6 py-3.5 transition-colors border-b border-gray-50 ${
-                  item.name === 'ფასდაკლება' || item.name === 'Sale' || item.name === 'Скидки' || item.name === 'İndirim'
-                    ? 'bg-red-50 text-[#ff0000] font-bold'
-                    : 'text-gray-700 hover:bg-red-50 hover:text-[#ff0000]'
-                }`}
+                className="flex items-center gap-3 px-6 py-3.5 transition-colors border-b border-gray-50 text-gray-700 hover:bg-red-50 hover:text-[#ff0000]"
                 onClick={onClose}
               >
                 {menuIcons[item.icon]}
