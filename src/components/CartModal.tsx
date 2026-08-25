@@ -31,7 +31,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
     ka: {
       title: 'კალათა', empty: 'კალათა ცარიელია', name: 'სახელი და გვარი', phone: 'ტელეფონი', extraPhone: 'დამატებითი ტელეფონი',
       date: 'რომელ რიცხვში?', time: 'რომელ საათზე?', pickup: 'თვითგატანა', delivery: 'მიტანა (+10₾)', address: 'სრული მისამართი',
-      comment: 'ტექსტი ტორტზე / კომენტარი', total: 'სულ', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'შეავსეთ ველები', deliveryFee: 'მიტანა',
+      comment: 'კომენტარი', total: 'სულ', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'შეავსეთ ველები', deliveryFee: 'მიტანა',
       sendOrder: 'შეკვეთის გაგზავნა',
       months: ['იანვარი','თებერვალი','მარტი','აპრილი','მაისი','ივნისი','ივლისი','აგვისტო','სექტემბერი','ოქტომბერი','ნოემბერი','დეკემბერი'],
       days: ['კვ','ორ','სამ','ოთხ','ხუთ','პარ','შაბ'],
@@ -40,7 +40,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
     en: {
       title: 'Cart', empty: 'Cart is empty', name: 'Full name', phone: 'Phone', extraPhone: 'Additional phone',
       date: 'Date?', time: 'Time?', pickup: 'Pickup', delivery: 'Delivery (+10₾)', address: 'Full address',
-      comment: 'Text on cake / Comment', total: 'Total', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'Fill fields', deliveryFee: 'Delivery',
+      comment: 'Comment', total: 'Total', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'Fill fields', deliveryFee: 'Delivery',
       sendOrder: 'Send Order',
       months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
       days: ['Mo','Tu','We','Th','Fr','Sa','Su'],
@@ -49,7 +49,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
     ru: {
       title: 'Корзина', empty: 'Корзина пуста', name: 'Имя и фамилия', phone: 'Телефон', extraPhone: 'Доп. телефон',
       date: 'Дата?', time: 'Время?', pickup: 'Самовывоз', delivery: 'Доставка (+10₾)', address: 'Полный адрес',
-      comment: 'Текст на торте / Комментарий', total: 'Итого', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'Заполните поля', deliveryFee: 'Доставка',
+      comment: 'Комментарий', total: 'Итого', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'Заполните поля', deliveryFee: 'Доставка',
       sendOrder: 'Отправить заказ',
       months: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
       days: ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'],
@@ -58,7 +58,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
     tr: {
       title: 'Sepet', empty: 'Sepet boş', name: 'Ad soyad', phone: 'Telefon', extraPhone: 'Ek telefon',
       date: 'Tarih?', time: 'Saat?', pickup: 'Teslim alma', delivery: 'Teslimat (+10₾)', address: 'Tam adres',
-      comment: 'Pasta üzerine yazı / Yorum', total: 'Toplam', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'Alanları doldurun', deliveryFee: 'Teslimat',
+      comment: 'Yorum', total: 'Toplam', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'Alanları doldurun', deliveryFee: 'Teslimat',
       sendOrder: 'Siparişi Gönder',
       months: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
       days: ['Pt','Sa','Ça','Pe','Cu','Ct','Pz'],
