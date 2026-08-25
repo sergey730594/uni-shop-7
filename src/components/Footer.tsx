@@ -115,12 +115,12 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
   const t = texts[language as keyof typeof texts] || texts.ka;
 
   const socialLinks = [
-    { name: 'WhatsApp', icon: <WhatsAppIcon />, url: '#', bg: 'bg-[#25D366] hover:bg-[#20b85a]' },
-    { name: 'Viber', icon: <ViberIcon />, url: '#', bg: 'bg-[#7360F2] hover:bg-[#5e4fd1]' },
-    { name: 'Messenger', icon: <MessengerIcon />, url: '#', bg: 'bg-[#0084FF] hover:bg-[#0073df]' },
-    { name: 'Facebook', icon: <FacebookIcon />, url: '#', bg: 'bg-[#1877F2] hover:bg-[#1664d9]' },
-    { name: 'Instagram', icon: <InstagramIcon />, url: '#', bg: 'bg-[#E4405F] hover:bg-[#c13554]' },
-    { name: 'YouTube', icon: <YouTubeIcon />, url: '#', bg: 'bg-[#FF0000] hover:bg-[#cc0000]' },
+    { name: 'WhatsApp', icon: <WhatsAppIcon />, url: 'https://wa.me/995593756700', bg: 'bg-[#25D366] hover:bg-[#20b85a]' },
+    { name: 'Viber', icon: <ViberIcon />, url: 'viber://chat?number=%2B995593756700', bg: 'bg-[#7360F2] hover:bg-[#5e4fd1]' },
+    { name: 'Messenger', icon: <MessengerIcon />, url: 'https://m.me/www.grant.ge', bg: 'bg-[#0084FF] hover:bg-[#0073df]' },
+    { name: 'Facebook', icon: <FacebookIcon />, url: 'https://www.facebook.com/www.grant.ge', bg: 'bg-[#1877F2] hover:bg-[#1664d9]' },
+    { name: 'Instagram', icon: <InstagramIcon />, url: 'https://www.instagram.com/grantis_torti', bg: 'bg-[#E4405F] hover:bg-[#c13554]' },
+    { name: 'YouTube', icon: <YouTubeIcon />, url: 'https://www.youtube.com//@GrantBakery', bg: 'bg-[#FF0000] hover:bg-[#cc0000]' },
   ];
 
   return (
