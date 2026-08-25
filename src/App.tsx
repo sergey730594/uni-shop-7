@@ -331,9 +331,9 @@ function CategoryPage() {
             onChange={(e) => setPriceFilter(e.target.value)}
             className="px-3 py-1.5 border border-gray-300 rounded-lg text-xs sm:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#ff0000]"
           >
-            <option value="all">{language === 'ka' ? 'ყველა ფასი' : language === 'en' ? 'All prices' : language === 'ru' ? 'Все цены' : 'Tüm fiyatlar'}</option>
             <option value="0-100">{language === 'ka' ? '100₾-მდე' : language === 'en' ? 'Up to 100₾' : language === 'ru' ? 'До 100₾' : "100₾'a kadar"}</option>
-            <option value="100-200">100₾ - 200₾</option>
+            <option value="100-150">100₾ - 150₾</option>
+            <option value="150-200">150₾ - 200₾</option>
             <option value="200+">200₾+</option>
           </select>
         </div>
