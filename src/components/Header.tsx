@@ -9,7 +9,6 @@ const LANGUAGES = [
   { code: 'tr', label: 'Türkçe', flag: '🇹🇷' },
 ];
 
-// SVG иконки
 const MenuIcon = () => (
   <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -28,7 +27,6 @@ const ChevronDownIcon = ({ className = '' }) => (
   </svg>
 );
 
-// SVG флаги
 const FlagGE = () => (
   <svg className="w-6 h-4 sm:w-7 sm:h-5 rounded-[3px] shadow-sm ring-1 ring-black/10" viewBox="0 0 24 16">
     <rect width="24" height="16" fill="#fff"/>
@@ -69,13 +67,9 @@ const FlagTR = () => (
 );
 
 const flagComponents: Record<string, React.ReactNode> = {
-  ka: <FlagGE />,
-  en: <FlagGB />,
-  ru: <FlagRU />,
-  tr: <FlagTR />,
+  ka: <FlagGE />, en: <FlagGB />, ru: <FlagRU />, tr: <FlagTR />,
 };
 
-// Иконки меню
 const HomeIcon = () => (
   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10" />
@@ -127,54 +121,18 @@ const PhoneIcon = () => (
 );
 
 const menuIcons: Record<string, React.ReactNode> = {
-  home: <HomeIcon />,
-  cakes: <CakeIcon />,
-  fillings: <CupcakeIcon />,
-  accessories: <GiftIcon />,
-  flowers: <FlowerIcon />,
-  sale: <TagIcon />,
-  delivery: <TruckIcon />,
-  contact: <PhoneIcon />,
+  home: <HomeIcon />, cakes: <CakeIcon />, fillings: <CupcakeIcon />,
+  accessories: <GiftIcon />, flowers: <FlowerIcon />, sale: <TagIcon />,
+  delivery: <TruckIcon />, contact: <PhoneIcon />,
 };
 
-// Данные для поиска
 const searchProducts = [
-  { 
-    id: 1, name: 'Наполеон', price: 100, photos: 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=100&h=100&fit=crop',
-    price20: 80, price30: 100, price40: 120,
-    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
-    description: 'Классический торт Наполеон',
-  },
-  { 
-    id: 2, name: 'Медовик', price: 90, photos: 'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=100&h=100&fit=crop',
-    price20: 70, price30: 90, price40: 110,
-    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
-    description: 'Медовый торт',
-  },
-  { 
-    id: 3, name: 'Прага', price: 110, photos: 'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=100&h=100&fit=crop',
-    price20: 90, price30: 110, price40: 130,
-    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
-    description: 'Шоколадный торт Прага',
-  },
-  { 
-    id: 4, name: 'Красный бархат', price: 180, photos: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=100&h=100&fit=crop',
-    price20: 150, price30: 180, price40: 210,
-    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
-    description: 'Красный бархат',
-  },
-  { 
-    id: 5, name: 'Чизкейк', price: 80, photos: 'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=100&h=100&fit=crop',
-    price20: 60, price30: 80, price40: 100,
-    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
-    description: 'Нежный чизкейк',
-  },
-  { 
-    id: 6, name: 'Эклеры', price: 50, photos: 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=100&h=100&fit=crop',
-    price20: 40, price30: 50, price40: 60,
-    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
-    description: 'Французские эклеры',
-  },
+  { id: 1, name: 'Наполеон', price: 100, photos: ['https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=400&h=300&fit=crop'], price20: 80, price30: 100, price40: 120, fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'], description: 'Классический торт Наполеон' },
+  { id: 2, name: 'Медовик', price: 90, photos: ['https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=400&h=300&fit=crop'], price20: 70, price30: 90, price40: 110, fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'], description: 'Медовый торт' },
+  { id: 3, name: 'Прага', price: 110, photos: ['https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=400&h=300&fit=crop'], price20: 90, price30: 110, price40: 130, fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'], description: 'Шоколадный торт Прага' },
+  { id: 4, name: 'Красный бархат', price: 180, photos: ['https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop'], price20: 150, price30: 180, price40: 210, fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'], description: 'Красный бархат' },
+  { id: 5, name: 'Чизкейк', price: 80, photos: ['https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=400&h=300&fit=crop'], price20: 60, price30: 80, price40: 100, fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'], description: 'Нежный чизкейк' },
+  { id: 6, name: 'Эклеры', price: 50, photos: ['https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=400&h=300&fit=crop'], price20: 40, price30: 50, price40: 60, fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'], description: 'Французские эклеры' },
 ];
 
 interface HeaderProps {
@@ -204,182 +162,119 @@ export const Header: React.FC<HeaderProps> = ({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (langRef.current && !langRef.current.contains(event.target as Node)) {
-        setIsLangOpen(false);
-      }
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-        setIsSearchOpen(false);
-      }
+      if (langRef.current && !langRef.current.contains(event.target as Node)) setIsLangOpen(false);
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) setIsSearchOpen(false);
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
   const currentLanguage = LANGUAGES.find(l => l.code === language) || LANGUAGES[0];
 
   const getPlaceholder = () => {
-    const placeholders = {
-      ka: 'მოძებნეთ ტორტები...',
-      en: 'Search cakes...',
-      ru: 'Поиск тортов...',
-      tr: 'Pastaları ara...',
+    const placeholders: Record<string, string> = {
+      ka: 'მოძებნეთ ტორტები...', en: 'Search cakes...', ru: 'Поиск тортов...', tr: 'Pastaları ara...',
     };
-    return placeholders[language as keyof typeof placeholders] || placeholders.en;
+    return placeholders[language] || placeholders.en;
   };
 
-  const getLocale = () => {
-    const locales = { ka: 'ka-GE', en: 'en-US', ru: 'ru-RU', tr: 'tr-TR' };
-    return locales[language as keyof typeof locales] || 'ka-GE';
-  };
+  const getLocale = () => ({ ka: 'ka-GE', en: 'en-US', ru: 'ru-RU', tr: 'tr-TR' }[language] || 'ka-GE');
 
-  const getAddress = () => {
-    const addresses = {
-      ka: 'თბილისი, ნოდარ დუმბაძის გამზ. №4',
-      en: 'Tbilisi, Nodar Dumbadze Ave. №4',
-      ru: 'г. Тбилиси, просп. Нодара Думбадзе №4',
-      tr: 'Tiflis, Nodar Dumbadze Cad. №4',
-    };
-    return addresses[language as keyof typeof addresses] || addresses.ka;
-  };
+  const getAddress = () => ({
+    ka: 'თბილისი, ნოდარ დუმბაძის გამზ. №4', en: 'Tbilisi, Nodar Dumbadze Ave. №4',
+    ru: 'г. Тбилиси, просп. Нодара Думбадзе №4', tr: 'Tiflis, Nodar Dumbadze Cad. №4',
+  }[language] || 'ka');
 
-  const getPhoneLabel = () => {
-    const labels = { ka: 'ტელ.', en: 'Tel.', ru: 'Тел.', tr: 'Tel.' };
-    return labels[language as keyof typeof labels] || labels.ka;
+  const getPhoneLabel = () => ({ ka: 'ტელ.', en: 'Tel.', ru: 'Тел.', tr: 'Tel.' }[language] || 'ტელ.');
+
+  const months: Record<string, string[]> = {
+    ka: ['იანვარი','თებერვალი','მარტი','აპრილი','მაისი','ივნისი','ივლისი','აგვისტო','სექტემბერი','ოქტომბერი','ნოემბერი','დეკემბერი'],
+    en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    ru: ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'],
+    tr: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
   };
 
   const getFormattedDate = () => {
-    const months = {
-      ka: ['იანვარი','თებერვალი','მარტი','აპრილი','მაისი','ივნისი','ივლისი','აგვისტო','სექტემბერი','ოქტომბერი','ნოემბერი','დეკემბერი'],
-      en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
-      ru: ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'],
-      tr: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
-    };
-    const monthNames = months[language as keyof typeof months] || months.ka;
-    return `${currentTime.getDate()} ${monthNames[currentTime.getMonth()]} ${currentTime.getFullYear()}`;
+    const m = months[language] || months.ka;
+    return `${currentTime.getDate()} ${m[currentTime.getMonth()]} ${currentTime.getFullYear()}`;
   };
 
-  const getFormattedTime = () => {
-    return currentTime.toLocaleTimeString(getLocale(), { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-  };
+  const getFormattedTime = () => currentTime.toLocaleTimeString(getLocale(), { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
 
-  const filteredResults = searchProducts.filter(p =>
-    p.name.toLowerCase().includes(searchQuery.toLowerCase())
-  ).slice(0, 6);
+  const filteredResults = searchProducts.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 6);
 
-  const cakeCategories = {
+  const cakeCategories: Record<string, { name: string; slug: string }[]> = {
     ka: [
-      { name: 'კორპორატიული', slug: 'corporate' },
-      { name: 'საქორწილო', slug: 'wedding' },
-      { name: 'საბავშვო ტორტები', slug: 'kids' },
-      { name: 'ფოტო ტორტები', slug: 'photo' },
-      { name: 'მანქანა ტორტები', slug: 'car' },
-      { name: 'სპორტული ტორტები', slug: 'sports' },
-      { name: 'გულის ტორტები', slug: 'heart' },
-      { name: 'მარცეპანის ტორტი', slug: 'marzipan' },
-      { name: 'ნათლობის ტორტები', slug: 'baptism' },
-      { name: 'მრგვალი ტორტები', slug: 'round' },
-      { name: 'უფროსებისთვის', slug: 'adults' },
-      { name: 'ოთხკუთხა ტორტები', slug: 'square' },
+      { name: 'კორპორატიული', slug: 'corporate' }, { name: 'საქორწილო', slug: 'wedding' },
+      { name: 'საბავშვო ტორტები', slug: 'kids' }, { name: 'ფოტო ტორტები', slug: 'photo' },
+      { name: 'მანქანა ტორტები', slug: 'car' }, { name: 'სპორტული ტორტები', slug: 'sports' },
+      { name: 'გულის ტორტები', slug: 'heart' }, { name: 'მარცეპანის ტორტი', slug: 'marzipan' },
+      { name: 'ნათლობის ტორტები', slug: 'baptism' }, { name: 'მრგვალი ტორტები', slug: 'round' },
+      { name: 'უფროსებისთვის', slug: 'adults' }, { name: 'ოთხკუთხა ტორტები', slug: 'square' },
       { name: 'საახალწლო ტორტები', slug: 'new-year' },
     ],
     en: [
-      { name: 'Corporate', slug: 'corporate' },
-      { name: 'Wedding', slug: 'wedding' },
-      { name: 'Kids Cakes', slug: 'kids' },
-      { name: 'Photo Cakes', slug: 'photo' },
-      { name: 'Car Cakes', slug: 'car' },
-      { name: 'Sports Cakes', slug: 'sports' },
-      { name: 'Heart Cakes', slug: 'heart' },
-      { name: 'Marzipan Cake', slug: 'marzipan' },
-      { name: 'Baptism Cakes', slug: 'baptism' },
-      { name: 'Round Cakes', slug: 'round' },
-      { name: 'For Adults', slug: 'adults' },
-      { name: 'Square Cakes', slug: 'square' },
+      { name: 'Corporate', slug: 'corporate' }, { name: 'Wedding', slug: 'wedding' },
+      { name: 'Kids Cakes', slug: 'kids' }, { name: 'Photo Cakes', slug: 'photo' },
+      { name: 'Car Cakes', slug: 'car' }, { name: 'Sports Cakes', slug: 'sports' },
+      { name: 'Heart Cakes', slug: 'heart' }, { name: 'Marzipan Cake', slug: 'marzipan' },
+      { name: 'Baptism Cakes', slug: 'baptism' }, { name: 'Round Cakes', slug: 'round' },
+      { name: 'For Adults', slug: 'adults' }, { name: 'Square Cakes', slug: 'square' },
       { name: 'New Year Cakes', slug: 'new-year' },
     ],
     ru: [
-      { name: 'Корпоративные', slug: 'corporate' },
-      { name: 'Свадебные', slug: 'wedding' },
-      { name: 'Детские торты', slug: 'kids' },
-      { name: 'Фото торты', slug: 'photo' },
-      { name: 'Торты-машины', slug: 'car' },
-      { name: 'Спортивные торты', slug: 'sports' },
-      { name: 'Торты-сердца', slug: 'heart' },
-      { name: 'Марципановый торт', slug: 'marzipan' },
-      { name: 'Торты на крестины', slug: 'baptism' },
-      { name: 'Круглые торты', slug: 'round' },
-      { name: 'Для взрослых', slug: 'adults' },
-      { name: 'Квадратные торты', slug: 'square' },
+      { name: 'Корпоративные', slug: 'corporate' }, { name: 'Свадебные', slug: 'wedding' },
+      { name: 'Детские торты', slug: 'kids' }, { name: 'Фото торты', slug: 'photo' },
+      { name: 'Торты-машины', slug: 'car' }, { name: 'Спортивные торты', slug: 'sports' },
+      { name: 'Торты-сердца', slug: 'heart' }, { name: 'Марципановый торт', slug: 'marzipan' },
+      { name: 'Торты на крестины', slug: 'baptism' }, { name: 'Круглые торты', slug: 'round' },
+      { name: 'Для взрослых', slug: 'adults' }, { name: 'Квадратные торты', slug: 'square' },
       { name: 'Новогодние торты', slug: 'new-year' },
     ],
     tr: [
-      { name: 'Kurumsal', slug: 'corporate' },
-      { name: 'Düğün', slug: 'wedding' },
-      { name: 'Çocuk Pastaları', slug: 'kids' },
-      { name: 'Fotoğraflı Pastalar', slug: 'photo' },
-      { name: 'Araba Pastaları', slug: 'car' },
-      { name: 'Spor Pastaları', slug: 'sports' },
-      { name: 'Kalp Pastaları', slug: 'heart' },
-      { name: 'Badem Ezmesi Pastası', slug: 'marzipan' },
-      { name: 'Vaftiz Pastaları', slug: 'baptism' },
-      { name: 'Yuvarlak Pastalar', slug: 'round' },
-      { name: 'Yetişkinler İçin', slug: 'adults' },
-      { name: 'Kare Pastalar', slug: 'square' },
+      { name: 'Kurumsal', slug: 'corporate' }, { name: 'Düğün', slug: 'wedding' },
+      { name: 'Çocuk Pastaları', slug: 'kids' }, { name: 'Fotoğraflı Pastalar', slug: 'photo' },
+      { name: 'Araba Pastaları', slug: 'car' }, { name: 'Spor Pastaları', slug: 'sports' },
+      { name: 'Kalp Pastaları', slug: 'heart' }, { name: 'Badem Ezmesi Pastası', slug: 'marzipan' },
+      { name: 'Vaftiz Pastaları', slug: 'baptism' }, { name: 'Yuvarlak Pastalar', slug: 'round' },
+      { name: 'Yetişkinler İçin', slug: 'adults' }, { name: 'Kare Pastalar', slug: 'square' },
       { name: 'Yılbaşı Pastaları', slug: 'new-year' },
     ],
   };
 
-  const menuItems = {
+  const menuItems: Record<string, { icon: string; name: string; href: string }[]> = {
     ka: [
-      { icon: 'home', name: 'მთავარი', href: '/' },
-      { icon: 'cakes', name: 'ტორტები', href: '/cakes' },
-      { icon: 'fillings', name: 'შიგთავსი', href: '/fillings' },
-      { icon: 'accessories', name: 'აქსესუარები', href: '/accessories' },
-      { icon: 'flowers', name: 'ყვავილები', href: '/flowers' },
-      { icon: 'sale', name: 'ფასდაკლება', href: '/sale' },
-      { icon: 'delivery', name: 'გადახდა-მიტანა', href: '/delivery' },
-      { icon: 'contact', name: 'კონტაქტი', href: '/contact' },
+      { icon: 'home', name: 'მთავარი', href: '/' }, { icon: 'cakes', name: 'ტორტები', href: '/cakes' },
+      { icon: 'fillings', name: 'შიგთავსი', href: '/fillings' }, { icon: 'accessories', name: 'აქსესუარები', href: '/accessories' },
+      { icon: 'flowers', name: 'ყვავილები', href: '/flowers' }, { icon: 'sale', name: 'ფასდაკლება', href: '/sale' },
+      { icon: 'delivery', name: 'გადახდა-მიტანა', href: '/delivery' }, { icon: 'contact', name: 'კონტაქტი', href: '/contact' },
     ],
     en: [
-      { icon: 'home', name: 'Home', href: '/' },
-      { icon: 'cakes', name: 'Cakes', href: '/cakes' },
-      { icon: 'fillings', name: 'Fillings', href: '/fillings' },
-      { icon: 'accessories', name: 'Accessories', href: '/accessories' },
-      { icon: 'flowers', name: 'Flowers', href: '/flowers' },
-      { icon: 'sale', name: 'Sale', href: '/sale' },
-      { icon: 'delivery', name: 'Payment-Delivery', href: '/delivery' },
-      { icon: 'contact', name: 'Contact', href: '/contact' },
+      { icon: 'home', name: 'Home', href: '/' }, { icon: 'cakes', name: 'Cakes', href: '/cakes' },
+      { icon: 'fillings', name: 'Fillings', href: '/fillings' }, { icon: 'accessories', name: 'Accessories', href: '/accessories' },
+      { icon: 'flowers', name: 'Flowers', href: '/flowers' }, { icon: 'sale', name: 'Sale', href: '/sale' },
+      { icon: 'delivery', name: 'Payment-Delivery', href: '/delivery' }, { icon: 'contact', name: 'Contact', href: '/contact' },
     ],
     ru: [
-      { icon: 'home', name: 'Главная', href: '/' },
-      { icon: 'cakes', name: 'Торты', href: '/cakes' },
-      { icon: 'fillings', name: 'Начинки', href: '/fillings' },
-      { icon: 'accessories', name: 'Аксессуары', href: '/accessories' },
-      { icon: 'flowers', name: 'Цветы', href: '/flowers' },
-      { icon: 'sale', name: 'Скидки', href: '/sale' },
-      { icon: 'delivery', name: 'Оплата-Доставка', href: '/delivery' },
-      { icon: 'contact', name: 'Контакты', href: '/contact' },
+      { icon: 'home', name: 'Главная', href: '/' }, { icon: 'cakes', name: 'Торты', href: '/cakes' },
+      { icon: 'fillings', name: 'Начинки', href: '/fillings' }, { icon: 'accessories', name: 'Аксессуары', href: '/accessories' },
+      { icon: 'flowers', name: 'Цветы', href: '/flowers' }, { icon: 'sale', name: 'Скидки', href: '/sale' },
+      { icon: 'delivery', name: 'Оплата-Доставка', href: '/delivery' }, { icon: 'contact', name: 'Контакты', href: '/contact' },
     ],
     tr: [
-      { icon: 'home', name: 'Ana Sayfa', href: '/' },
-      { icon: 'cakes', name: 'Pastalar', href: '/cakes' },
-      { icon: 'fillings', name: 'Dolgular', href: '/fillings' },
-      { icon: 'accessories', name: 'Aksesuarlar', href: '/accessories' },
-      { icon: 'flowers', name: 'Çiçekler', href: '/flowers' },
-      { icon: 'sale', name: 'İndirim', href: '/sale' },
-      { icon: 'delivery', name: 'Ödeme-Teslimat', href: '/delivery' },
-      { icon: 'contact', name: 'İletişim', href: '/contact' },
+      { icon: 'home', name: 'Ana Sayfa', href: '/' }, { icon: 'cakes', name: 'Pastalar', href: '/cakes' },
+      { icon: 'fillings', name: 'Dolgular', href: '/fillings' }, { icon: 'accessories', name: 'Aksesuarlar', href: '/accessories' },
+      { icon: 'flowers', name: 'Çiçekler', href: '/flowers' }, { icon: 'sale', name: 'İndirim', href: '/sale' },
+      { icon: 'delivery', name: 'Ödeme-Teslimat', href: '/delivery' }, { icon: 'contact', name: 'İletişim', href: '/contact' },
     ],
   };
 
-  const items = menuItems[language as keyof typeof menuItems] || menuItems.ka;
+  const items = menuItems[language] || menuItems.ka;
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
@@ -414,32 +309,25 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           <div className="flex-1 max-w-md mx-2 sm:mx-4 relative" ref={searchRef}>
-            <div className="relative">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => { setSearchQuery(e.target.value); setIsSearchOpen(true); }}
-                onFocus={() => setIsSearchOpen(true)}
-                placeholder={getPlaceholder()}
-                className="w-full px-4 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm bg-gray-50 focus:bg-white focus:outline-none focus:border-[#ff0000] transition-colors"
-              />
-            </div>
-
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => { setSearchQuery(e.target.value); setIsSearchOpen(true); }}
+              onFocus={() => setIsSearchOpen(true)}
+              placeholder={getPlaceholder()}
+              className="w-full px-4 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm bg-gray-50 focus:bg-white focus:outline-none focus:border-[#ff0000] transition-colors"
+            />
             {isSearchOpen && searchQuery.trim() && filteredResults.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-[9999]">
+              <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-2xl border overflow-hidden z-[9999]">
                 {filteredResults.map(product => (
                   <button
                     key={product.id}
-                    onClick={() => { 
-                      setIsSearchOpen(false); 
-                      setSearchQuery('');
-                      if (onProductClick) onProductClick(product);
-                    }}
-                    className="w-full flex items-center gap-3 px-3 py-2 hover:bg-red-50 transition-colors text-left"
+                    onClick={() => { setIsSearchOpen(false); setSearchQuery(''); if (onProductClick) onProductClick(product); }}
+                    className="w-full flex items-center gap-3 px-3 py-2 hover:bg-red-50 text-left"
                   >
-                    <img src={product.photo} alt={product.name} className="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
+                    <img src={product.photos[0]} alt={product.name} className="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-medium text-gray-800 truncate">{product.name}</p>
+                      <p className="text-xs font-medium truncate">{product.name}</p>
                       <p className="text-[10px] text-gray-500">₾{product.price}</p>
                     </div>
                   </button>
@@ -452,7 +340,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="relative z-[9999]" ref={langRef}>
               <button onClick={() => setIsLangOpen(!isLangOpen)} className="flex items-center gap-1.5 px-2 py-1.5 hover:bg-gray-100 rounded-lg">
                 {flagComponents[language]}
-                <span className="hidden sm:inline text-sm font-medium text-gray-700">{language.toUpperCase()}</span>
+                <span className="hidden sm:inline text-sm font-medium">{language.toUpperCase()}</span>
                 <ChevronDownIcon className={isLangOpen ? 'rotate-180' : ''} />
               </button>
               {isLangOpen && (
@@ -461,7 +349,7 @@ export const Header: React.FC<HeaderProps> = ({
                     <button key={lang.code} onClick={() => { if (onLanguageChange) onLanguageChange(lang.code); setIsLangOpen(false); }} className={`w-full text-left px-3 py-2 hover:bg-gray-50 flex items-center gap-3 ${language === lang.code ? 'bg-red-50 text-[#ff0000]' : 'text-gray-700'}`}>
                       {flagComponents[lang.code]}
                       <span className="text-sm">{lang.label}</span>
-                      {language === lang.code && <span className="ml-auto text-[#ff0000]">✓</span>}
+                      {language === lang.code && <span className="ml-auto">✓</span>}
                     </button>
                   ))}
                 </div>
@@ -488,7 +376,7 @@ export const Header: React.FC<HeaderProps> = ({
               if (isCakeItem) {
                 return (
                   <div key={index} className="relative" onMouseEnter={() => setIsCakesOpen(true)} onMouseLeave={() => setIsCakesOpen(false)}>
-                    <Link to={`/${language}${item.href === '/' ? '' : item.href}`} onClick={() => setIsCakesOpen(false)} className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-full hover:bg-white/20">
+                    <Link to={`/${language}${item.href}`} onClick={() => setIsCakesOpen(false)} className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-full hover:bg-white/20">
                       {menuIcons[item.icon]}
                       <span>{item.name}</span>
                       <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
@@ -496,7 +384,7 @@ export const Header: React.FC<HeaderProps> = ({
                     {isCakesOpen && (
                       <div className="absolute top-full left-0 bg-white rounded-xl shadow-2xl border p-4 z-[9999] min-w-[300px] sm:min-w-[450px] lg:min-w-[550px]">
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
-                          {(cakeCategories[language as keyof typeof cakeCategories] || cakeCategories.ka).map((cat, catIndex) => (
+                          {(cakeCategories[language] || cakeCategories.ka).map((cat, catIndex) => (
                             <Link key={catIndex} to={`/${language}/cakes/${cat.slug}`} onClick={() => setIsCakesOpen(false)} className="text-xs font-bold text-gray-700 hover:text-[#ff0000] hover:bg-red-50 px-3 py-2 rounded-lg whitespace-nowrap">
                               {cat.name}
                             </Link>
@@ -508,7 +396,7 @@ export const Header: React.FC<HeaderProps> = ({
                 );
               }
               return (
-                <Link key={index} to={`/${language}${item.href === '/' ? '' : item.href}`} className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-full hover:bg-white/20">
+                <Link key={index} to={`/${language}${item.href}`} className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-full hover:bg-white/20">
                   {menuIcons[item.icon]}
                   <span>{item.name}</span>
                 </Link>
