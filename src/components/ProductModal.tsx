@@ -78,7 +78,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
   }, []);
 
   const texts = {
-    ka: { size: 'ზომა', pieces: 'ნაჭრიანი', filling: 'შიგთავსი', cakeText: 'ტექსტი ტორტზე / შენიშვნა', addToCart: 'კალათაში დამატება', share: 'გაზიარება' },
+    ka: { size: 'ზომა', pieces: 'კუსკი', filling: 'შიგთავსი', cakeText: 'ტექსტი ტორტზე / შენიშვნა', addToCart: 'კალათაში დამატება', share: 'გაზიარება' },
     en: { size: 'Size', pieces: 'pieces', filling: 'Filling', cakeText: 'Text on cake / Note', addToCart: 'Add to Cart', share: 'Share' },
     ru: { size: 'Размер', pieces: 'кусков', filling: 'Начинка', cakeText: 'Текст на торте / Примечание', addToCart: 'Добавить в корзину', share: 'Поделиться' },
     tr: { size: 'Boyut', pieces: 'dilim', filling: 'Dolgu', cakeText: 'Pasta üzerine yazı / Not', addToCart: 'Sepete Ekle', share: 'Paylaş' },
