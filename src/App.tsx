@@ -370,11 +370,11 @@ function App() {
       <CartProvider>
         <ScrollToTopOnNavigate />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/:lang" element={<HomePage />} />
-          <Route path="/:lang/:category" element={<CategoryPage />} />
-          <Route path="/:lang/cakes/:subcategory" element={<CategoryPage />} />
-        </Routes>
+  <Route path="/" element={<HomePage />} />
+  <Route path="/:lang" element={<HomePage />} />
+  <Route path="/:lang/:category" element={<CategoryPage />} />
+  <Route path="/:lang/:category/:subcategory" element={<CategoryPage />} />
+</Routes>
       </CartProvider>
     </LanguageProvider>
   );
