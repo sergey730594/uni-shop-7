@@ -78,7 +78,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
   }, []);
 
   const texts = {
-    ka: { size: 'ზომა', pieces: 'კუსკი', filling: 'შიგთავსი', cakeText: 'ტექსტი ტორტზე / შენიშვნა', addToCart: 'კალათაში დამატება', share: 'გაზიარება' },
+    ka: { size: 'ზომა', pieces: 'ნაჭრიანი', filling: 'შიგთავსი', cakeText: 'ტექსტი ტორტზე / შენიშვნა', addToCart: 'კალათაში დამატება', share: 'გაზიარება' },
     en: { size: 'Size', pieces: 'pieces', filling: 'Filling', cakeText: 'Text on cake / Note', addToCart: 'Add to Cart', share: 'Share' },
     ru: { size: 'Размер', pieces: 'кусков', filling: 'Начинка', cakeText: 'Текст на торте / Примечание', addToCart: 'Добавить в корзину', share: 'Поделиться' },
     tr: { size: 'Boyut', pieces: 'dilim', filling: 'Dolgu', cakeText: 'Pasta üzerine yazı / Not', addToCart: 'Sepete Ekle', share: 'Paylaş' },
@@ -146,8 +146,8 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
           )}
         </div>
 
-        {/* Содержимое */}
-        <div className="p-4">
+        {/* Содержимое — прокручивается */}
+        <div className="p-4 overflow-y-auto" style={{ maxHeight: 'calc(95vh - 250px)' }}>
           <h2 className="text-sm font-bold text-gray-800 mb-2">{product.name}</h2>
 
           <div className="flex gap-1.5 mb-2">
@@ -194,6 +194,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
           </div>
         </div>
 
+        {/* Кнопка — всегда видна */}
         <div className="flex-shrink-0 p-3 sm:p-4 border-t border-gray-200 bg-white">
           <button onClick={handleAddToCart} className="w-full bg-[#ff0000] text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm">
             <ShoppingCart className="w-4 h-4" />
