@@ -185,16 +185,26 @@ function HomePage() {
 
   const texts = {
     ka: { badge: 'საკონდიტრო', title: 'ტორტის შეკვეთა', titleHighlight: ' Grant Bakery"-ში', subtitle: 'ონლაინ შეკვეთა, მიტანის სერვისით', button: 'შეკვეთა ახლავე', button2: 'გაიგე მეტი', popular: 'პოპულარული ტორტები', viewAll: 'ყველას ნახვა →' },
-    en: { badge: '🧁 Bakery', title: 'Order a Cake', titleHighlight: ' at Grant Bakery', subtitle: 'Online ordering with delivery service', button: 'Order Now', button2: 'Learn More', popular: 'Popular Cakes', viewAll: 'View All →' },
-    ru: { badge: '🧁 Кондитерская', title: 'Заказ торта', titleHighlight: ' в Grant Bakery', subtitle: 'Онлайн-заказ с доставкой', button: 'Заказать сейчас', button2: 'Узнать больше', popular: 'Популярные торты', viewAll: 'Смотреть все →' },
-    tr: { badge: '🧁 Pastane', title: 'Pasta Siparişi', titleHighlight: ' Grant Bakery\'de', subtitle: 'Teslimat hizmeti ile çevrimiçi sipariş', button: 'Şimdi Sipariş Ver', button2: 'Daha Fazla', popular: 'Popüler Pastalar', viewAll: 'Hepsini Gör →' },
+    en: { badge: 'Bakery', title: 'Order a Cake', titleHighlight: ' at Grant Bakery', subtitle: 'Online ordering with delivery service', button: 'Order Now', button2: 'Learn More', popular: 'Popular Cakes', viewAll: 'View All →' },
+    ru: { badge: 'Кондитерская', title: 'Заказ торта', titleHighlight: ' в Grant Bakery', subtitle: 'Онлайн-заказ с доставкой', button: 'Заказать сейчас', button2: 'Узнать больше', popular: 'Популярные торты', viewAll: 'Смотреть все →' },
+    tr: { badge: 'Pastane', title: 'Pasta Siparişi', titleHighlight: ' Grant Bakery\'de', subtitle: 'Teslimat hizmeti ile çevrimiçi sipariş', button: 'Şimdi Sipariş Ver', button2: 'Daha Fazla', popular: 'Popüler Pastalar', viewAll: 'Hepsini Gör →' },
   };
 
   const t = texts[language as keyof typeof texts] || texts.ka;
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header language={language} onLanguageChange={handleLanguageChange} onMenuOpen={() => setIsMenuOpen(true)} onCartOpen={() => setIsCartOpen(true)} cartCount={items.length} onProductClick={(product) => setSelectedProduct(product)} />
+      <Header 
+  language={language} 
+  onLanguageChange={handleLanguageChange} 
+  onMenuOpen={() => setIsMenuOpen(true)} 
+  onCartOpen={() => setIsCartOpen(true)} 
+  cartCount={items.length}
+  onProductClick={(product) => {
+    const fullProduct = { ...product, photos: product.photos || [], price20: product.price20 || product.price, price30: product.price30 || product.price, price40: product.price40 || product.price, fillings: product.fillings || ['fruit'], description: product.description || product.name };
+    setSelectedProduct(fullProduct);
+  }}
+/>
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} language={language} />
 
       <main className="flex-1">
@@ -319,7 +329,17 @@ function CategoryPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Header language={language} onLanguageChange={handleLanguageChange} onMenuOpen={() => setIsMenuOpen(true)} onCartOpen={() => setIsCartOpen(true)} cartCount={items.length} onProductClick={(product) => setSelectedProduct(product)} />
+      <Header 
+  language={language} 
+  onLanguageChange={handleLanguageChange} 
+  onMenuOpen={() => setIsMenuOpen(true)} 
+  onCartOpen={() => setIsCartOpen(true)} 
+  cartCount={items.length}
+  onProductClick={(product) => {
+    const fullProduct = { ...product, photos: product.photos || [], price20: product.price20 || product.price, price30: product.price30 || product.price, price40: product.price40 || product.price, fillings: product.fillings || ['fruit'], description: product.description || product.name };
+    setSelectedProduct(fullProduct);
+  }}
+/>
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} language={language} />
 
       <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-10 w-full">
