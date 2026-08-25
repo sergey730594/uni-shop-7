@@ -229,7 +229,7 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
         {/* ====== КОПИРАЙТ ====== */}
         <div className="border-t border-gray-200 mt-8 pt-6 text-center">
           <p className="text-sm text-gray-500">
-            © 2026 Grant Bakery. Designed by *Sergo* {t.rights}
+            © 2026 Grant Bakery. Designed by *Sergo*. {t.rights}
           </p>
         </div>
       </div>
