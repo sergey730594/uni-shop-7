@@ -140,37 +140,37 @@ const menuIcons: Record<string, React.ReactNode> = {
 // Данные для поиска
 const searchProducts = [
   { 
-    id: 1, name: 'Наполеон', price: 100, photo: 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=100&h=100&fit=crop',
+    id: 1, name: 'Наполеон', price: 100, photos: 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=100&h=100&fit=crop',
     price20: 80, price30: 100, price40: 120,
     fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
     description: 'Классический торт Наполеон',
   },
   { 
-    id: 2, name: 'Медовик', price: 90, photo: 'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=100&h=100&fit=crop',
+    id: 2, name: 'Медовик', price: 90, photos: 'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=100&h=100&fit=crop',
     price20: 70, price30: 90, price40: 110,
     fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
     description: 'Медовый торт',
   },
   { 
-    id: 3, name: 'Прага', price: 110, photo: 'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=100&h=100&fit=crop',
+    id: 3, name: 'Прага', price: 110, photos: 'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=100&h=100&fit=crop',
     price20: 90, price30: 110, price40: 130,
     fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
     description: 'Шоколадный торт Прага',
   },
   { 
-    id: 4, name: 'Красный бархат', price: 180, photo: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=100&h=100&fit=crop',
+    id: 4, name: 'Красный бархат', price: 180, photos: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=100&h=100&fit=crop',
     price20: 150, price30: 180, price40: 210,
     fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
     description: 'Красный бархат',
   },
   { 
-    id: 5, name: 'Чизкейк', price: 80, photo: 'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=100&h=100&fit=crop',
+    id: 5, name: 'Чизкейк', price: 80, photos: 'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=100&h=100&fit=crop',
     price20: 60, price30: 80, price40: 100,
     fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
     description: 'Нежный чизкейк',
   },
   { 
-    id: 6, name: 'Эклеры', price: 50, photo: 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=100&h=100&fit=crop',
+    id: 6, name: 'Эклеры', price: 50, photos: 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=100&h=100&fit=crop',
     price20: 40, price30: 50, price40: 60,
     fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
     description: 'Французские эклеры',
