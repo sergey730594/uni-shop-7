@@ -180,7 +180,7 @@ function HomePage() {
 
   const handleLanguageChange = (newLang: string) => {
     setLanguage(newLang);
-    navigate(`/${newLang}`);
+    navigate(`/${newLang}`, { replace: true });
   };
 
   const texts = {
