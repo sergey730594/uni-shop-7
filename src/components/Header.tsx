@@ -16,12 +16,6 @@ const MenuIcon = () => (
   </svg>
 );
 
-const SearchIcon = () => (
-  <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-  </svg>
-);
-
 const ShoppingBagIcon = () => (
   <svg className="w-5 h-5 sm:w-6 sm:h-6 text-[#ff0000]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -143,23 +137,53 @@ const menuIcons: Record<string, React.ReactNode> = {
   contact: <PhoneIcon />,
 };
 
-// Тестовые данные для поиска
+// Данные для поиска
 const searchProducts = [
-  { id: 1, name: 'Наполеон', price: 100, photo: 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=100&h=100&fit=crop' },
-  { id: 2, name: 'Медовик', price: 90, photo: 'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=100&h=100&fit=crop' },
-  { id: 3, name: 'Прага', price: 110, photo: 'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=100&h=100&fit=crop' },
-  { id: 4, name: 'Красный бархат', price: 180, photo: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=100&h=100&fit=crop' },
-  { id: 5, name: 'Чизкейк', price: 80, photo: 'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=100&h=100&fit=crop' },
-  { id: 6, name: 'Эклеры', price: 50, photo: 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=100&h=100&fit=crop' },
+  { 
+    id: 1, name: 'Наполеон', price: 100, photo: 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=100&h=100&fit=crop',
+    price20: 80, price30: 100, price40: 120,
+    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
+    description: 'Классический торт Наполеон',
+  },
+  { 
+    id: 2, name: 'Медовик', price: 90, photo: 'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=100&h=100&fit=crop',
+    price20: 70, price30: 90, price40: 110,
+    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
+    description: 'Медовый торт',
+  },
+  { 
+    id: 3, name: 'Прага', price: 110, photo: 'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=100&h=100&fit=crop',
+    price20: 90, price30: 110, price40: 130,
+    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
+    description: 'Шоколадный торт Прага',
+  },
+  { 
+    id: 4, name: 'Красный бархат', price: 180, photo: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=100&h=100&fit=crop',
+    price20: 150, price30: 180, price40: 210,
+    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
+    description: 'Красный бархат',
+  },
+  { 
+    id: 5, name: 'Чизкейк', price: 80, photo: 'https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=100&h=100&fit=crop',
+    price20: 60, price30: 80, price40: 100,
+    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
+    description: 'Нежный чизкейк',
+  },
+  { 
+    id: 6, name: 'Эклеры', price: 50, photo: 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=100&h=100&fit=crop',
+    price20: 40, price30: 50, price40: 60,
+    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
+    description: 'Французские эклеры',
+  },
 ];
 
 interface HeaderProps {
-  onSearch?: (query: string) => void;
   onCartOpen?: () => void;
   onMenuOpen?: () => void;
   language?: string;
   onLanguageChange?: (lang: string) => void;
   cartCount?: number;
+  onProductClick?: (product: any) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -168,6 +192,7 @@ export const Header: React.FC<HeaderProps> = ({
   language = 'ka',
   onLanguageChange,
   cartCount = 0,
+  onProductClick,
 }) => {
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -358,7 +383,6 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-      {/* Верхняя линия */}
       <div className="bg-[#ffe5e5] border-y border-[#ff0000]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-6 sm:h-7 text-[10px] sm:text-xs text-black overflow-x-auto hide-scrollbar">
@@ -375,7 +399,6 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      {/* Лого, поиск, языки, корзина */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
           <div className="flex items-center gap-2 sm:gap-4">
@@ -390,7 +413,6 @@ export const Header: React.FC<HeaderProps> = ({
             </Link>
           </div>
 
-          {/* Поиск */}
           <div className="flex-1 max-w-md mx-2 sm:mx-4 relative" ref={searchRef}>
             <div className="relative">
               <input
@@ -406,24 +428,26 @@ export const Header: React.FC<HeaderProps> = ({
             {isSearchOpen && searchQuery.trim() && filteredResults.length > 0 && (
               <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-[9999]">
                 {filteredResults.map(product => (
-                  <Link
+                  <button
                     key={product.id}
-                    to={`/${language}/cakes`}
-                    onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
-                    className="flex items-center gap-3 px-3 py-2 hover:bg-red-50 transition-colors"
+                    onClick={() => { 
+                      setIsSearchOpen(false); 
+                      setSearchQuery('');
+                      if (onProductClick) onProductClick(product);
+                    }}
+                    className="w-full flex items-center gap-3 px-3 py-2 hover:bg-red-50 transition-colors text-left"
                   >
                     <img src={product.photo} alt={product.name} className="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
                     <div className="flex-1 min-w-0">
                       <p className="text-xs font-medium text-gray-800 truncate">{product.name}</p>
                       <p className="text-[10px] text-gray-500">₾{product.price}</p>
                     </div>
-                  </Link>
+                  </button>
                 ))}
               </div>
             )}
           </div>
 
-          {/* Языки и корзина */}
           <div className="flex items-center gap-1 sm:gap-3">
             <div className="relative z-[9999]" ref={langRef}>
               <button onClick={() => setIsLangOpen(!isLangOpen)} className="flex items-center gap-1.5 px-2 py-1.5 hover:bg-gray-100 rounded-lg">
@@ -456,7 +480,6 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
       </div>
 
-      {/* Меню */}
       <div className="hidden lg:block bg-[#ff0000] border-t border-[#cc0000] relative z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <nav className="flex items-center justify-start gap-1 sm:gap-2 md:gap-3 py-2.5 sm:py-3 overflow-visible relative z-40">
@@ -465,11 +488,7 @@ export const Header: React.FC<HeaderProps> = ({
               if (isCakeItem) {
                 return (
                   <div key={index} className="relative" onMouseEnter={() => setIsCakesOpen(true)} onMouseLeave={() => setIsCakesOpen(false)}>
-                    <Link 
-                      to={`/${language}${item.href === '/' ? '' : item.href}`} 
-                      onClick={() => setIsCakesOpen(false)}
-                      className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-full hover:bg-white/20"
-                    >
+                    <Link to={`/${language}${item.href === '/' ? '' : item.href}`} onClick={() => setIsCakesOpen(false)} className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-full hover:bg-white/20">
                       {menuIcons[item.icon]}
                       <span>{item.name}</span>
                       <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
@@ -478,12 +497,7 @@ export const Header: React.FC<HeaderProps> = ({
                       <div className="absolute top-full left-0 bg-white rounded-xl shadow-2xl border p-4 z-[9999] min-w-[300px] sm:min-w-[450px] lg:min-w-[550px]">
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
                           {(cakeCategories[language as keyof typeof cakeCategories] || cakeCategories.ka).map((cat, catIndex) => (
-                            <Link 
-                              key={catIndex} 
-                              to={`/${language}/cakes/${cat.slug}`} 
-                              onClick={() => setIsCakesOpen(false)}
-                              className="text-xs font-bold text-gray-700 hover:text-[#ff0000] hover:bg-red-50 px-3 py-2 rounded-lg whitespace-nowrap"
-                            >
+                            <Link key={catIndex} to={`/${language}/cakes/${cat.slug}`} onClick={() => setIsCakesOpen(false)} className="text-xs font-bold text-gray-700 hover:text-[#ff0000] hover:bg-red-50 px-3 py-2 rounded-lg whitespace-nowrap">
                               {cat.name}
                             </Link>
                           ))}
