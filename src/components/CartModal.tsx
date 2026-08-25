@@ -16,7 +16,6 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [form, setForm] = useState({ name: '', phone: '', extraPhone: '', date: '', time: '', address: '', comment: '' });
 
-  // Блокировка прокрутки
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -32,7 +31,8 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
     ka: {
       title: 'კალათა', empty: 'კალათა ცარიელია', name: 'სახელი და გვარი', phone: 'ტელეფონი', extraPhone: 'დამატებითი ტელეფონი',
       date: 'რომელ რიცხვში?', time: 'რომელ საათზე?', pickup: 'თვითგატანა', delivery: 'მიტანა (+10₾)', address: 'სრული მისამართი',
-      comment: 'შენიშვნა / კომენტარი', total: 'სულ', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'შეავსეთ ველები', deliveryFee: 'მიტანა',
+      comment: 'ტექსტი ტორტზე / კომენტარი', total: 'სულ', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'შეავსეთ ველები', deliveryFee: 'მიტანა',
+      sendOrder: 'შეკვეთის გაგზავნა',
       months: ['იანვარი','თებერვალი','მარტი','აპრილი','მაისი','ივნისი','ივლისი','აგვისტო','სექტემბერი','ოქტომბერი','ნოემბერი','დეკემბერი'],
       days: ['კვ','ორ','სამ','ოთხ','ხუთ','პარ','შაბ'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -40,7 +40,8 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
     en: {
       title: 'Cart', empty: 'Cart is empty', name: 'Full name', phone: 'Phone', extraPhone: 'Additional phone',
       date: 'Date?', time: 'Time?', pickup: 'Pickup', delivery: 'Delivery (+10₾)', address: 'Full address',
-      comment: 'Note / Comment', total: 'Total', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'Fill fields', deliveryFee: 'Delivery',
+      comment: 'Text on cake / Comment', total: 'Total', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'Fill fields', deliveryFee: 'Delivery',
+      sendOrder: 'Send Order',
       months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
       days: ['Mo','Tu','We','Th','Fr','Sa','Su'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -48,7 +49,8 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
     ru: {
       title: 'Корзина', empty: 'Корзина пуста', name: 'Имя и фамилия', phone: 'Телефон', extraPhone: 'Доп. телефон',
       date: 'Дата?', time: 'Время?', pickup: 'Самовывоз', delivery: 'Доставка (+10₾)', address: 'Полный адрес',
-      comment: 'Примечание / Комментарий', total: 'Итого', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'Заполните поля', deliveryFee: 'Доставка',
+      comment: 'Текст на торте / Комментарий', total: 'Итого', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'Заполните поля', deliveryFee: 'Доставка',
+      sendOrder: 'Отправить заказ',
       months: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
       days: ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -56,7 +58,8 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
     tr: {
       title: 'Sepet', empty: 'Sepet boş', name: 'Ad soyad', phone: 'Telefon', extraPhone: 'Ek telefon',
       date: 'Tarih?', time: 'Saat?', pickup: 'Teslim alma', delivery: 'Teslimat (+10₾)', address: 'Tam adres',
-      comment: 'Not / Yorum', total: 'Toplam', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'Alanları doldurun', deliveryFee: 'Teslimat',
+      comment: 'Pasta üzerine yazı / Yorum', total: 'Toplam', sendEmail: 'Email', sendWhatsApp: 'WhatsApp', required: 'Alanları doldurun', deliveryFee: 'Teslimat',
+      sendOrder: 'Siparişi Gönder',
       months: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
       days: ['Pt','Sa','Ça','Pe','Cu','Ct','Pz'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -77,8 +80,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
   for (let d = 1; d <= daysInMonth; d++) calendarDays.push(d);
 
   const handleSelectDate = (day: number) => {
-    const formattedDate = `${String(day).padStart(2, '0')}.${String(month + 1).padStart(2, '0')}.${year}`;
-    setForm({ ...form, date: formattedDate });
+    setForm({ ...form, date: `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}` });
     setShowCalendar(false);
   };
 
@@ -101,7 +103,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
   return (
     <div className="fixed inset-0 z-[9999] overflow-hidden">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
-      <div className="fixed right-0 top-0 h-screen w-full max-w-md bg-white shadow-2xl flex flex-col animate-slide-in-right">
+      <div className="fixed right-0 top-0 h-screen w-full max-w-md bg-white shadow-2xl flex flex-col">
         <div className="flex items-center justify-between px-5 py-3 border-b flex-shrink-0">
           <h2 className="text-lg font-bold">{t.title}</h2>
           <button onClick={onClose} className="p-2"><X className="w-5 h-5" /></button>
@@ -149,7 +151,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
                   </div>
                   <div className="grid grid-cols-7 gap-0.5">
                     {calendarDays.map((day, i) => day ? (
-                      <button key={i} onClick={() => handleSelectDate(day)} className={`h-6 rounded text-[9px] ${form.date.startsWith(String(day).padStart(2, '0')) ? 'bg-[#ff0000] text-white' : 'hover:bg-red-50'}`}>{day}</button>
+                      <button key={i} onClick={() => handleSelectDate(day)} className={`h-6 rounded text-[9px] ${form.date.endsWith(String(day).padStart(2, '0')) ? 'bg-[#ff0000] text-white' : 'hover:bg-red-50'}`}>{day}</button>
                     ) : <div key={i} />)}
                   </div>
                 </div>
@@ -182,25 +184,20 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
                 style={{ height: '70px', minHeight: '70px', maxHeight: '70px' }}
               />
 
-<div className="bg-gray-50 rounded-lg p-2">
-  <div className="flex justify-between text-sm"><span>{t.total}</span><span>₾{totalPrice}</span></div>
-  {deliveryType === 'delivery' && <div className="flex justify-between text-sm"><span>{t.deliveryFee}</span><span>+₾10</span></div>}
-  <div className="flex justify-between font-bold text-lg border-t pt-1"><span>{t.total}</span><span className="text-[#ff0000]">₾{grandTotal}</span></div>
-</div>
+              <div className="bg-gray-50 rounded-lg p-2">
+                <div className="flex justify-between text-sm"><span>{t.total}</span><span>₾{totalPrice}</span></div>
+                {deliveryType === 'delivery' && <div className="flex justify-between text-sm"><span>{t.deliveryFee}</span><span>+₾10</span></div>}
+                <div className="flex justify-between font-bold text-lg border-t pt-1"><span>{t.total}</span><span className="text-[#ff0000]">₾{grandTotal}</span></div>
+              </div>
 
-{/* Отступление и заголовок */}
-<div className="pt-3">
-  <p className="text-center text-xs font-bold text-gray-700 mb-2">
-    {language === 'ka' ? 'შეკვეთის გაგზავნა' : 
-     language === 'en' ? 'Send Order' : 
-     language === 'ru' ? 'Отправить заказ' : 
-     'Siparişi Gönder'}
-  </p>
-  <div className="grid grid-cols-2 gap-2 pb-2">
-    <button onClick={handleSendEmail} className="bg-[#ff0000] text-white py-2.5 rounded-lg text-xs font-bold"><Mail className="w-4 h-4 inline" /> {t.sendEmail}</button>
-    <button onClick={handleSendWhatsApp} className="bg-[#25D366] text-white py-2.5 rounded-lg text-xs font-bold"><Phone className="w-4 h-4 inline" /> {t.sendWhatsApp}</button>
-  </div>
-</div>
+              {/* Отправить заказ */}
+              <div className="pt-3">
+                <p className="text-center text-xs font-bold text-gray-700 mb-2">{t.sendOrder}</p>
+                <div className="grid grid-cols-2 gap-2 pb-2">
+                  <button onClick={handleSendEmail} className="bg-[#ff0000] text-white py-2.5 rounded-lg text-xs font-bold"><Mail className="w-4 h-4 inline" /> {t.sendEmail}</button>
+                  <button onClick={handleSendWhatsApp} className="bg-[#25D366] text-white py-2.5 rounded-lg text-xs font-bold"><Phone className="w-4 h-4 inline" /> {t.sendWhatsApp}</button>
+                </div>
+              </div>
             </>
           )}
         </div>
