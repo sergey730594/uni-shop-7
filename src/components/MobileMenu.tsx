@@ -215,7 +215,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, languag
 
         <nav className="flex-1 overflow-y-auto py-2">
           {items.map((item, index) => {
-            if (item.hasSubmenu) {
+            if (item.hasSubmenu && (item.href === '/cakes' || item.name === 'ტორტები' || item.name === 'Cakes' || item.name === 'Торты' || item.name === 'Pastalar')) {
               return (
                 <div key={index}>
                   <button
