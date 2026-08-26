@@ -73,8 +73,10 @@ const fetchProductsFromAPI = async () => {
     const response = await fetch(BASEROW_API_URL, {
       headers: { 'X-API-Key': API_KEY },
     });
-    const data = await response.json();
-    const formatted = data.map((item: any) => ({
+    const responseData = await response.json();
+// n8n может вернуть объект с данными внутри
+const data = Array.isArray(responseData) ? responseData : (responseData.data || responseData.results || responseData.rows || []);
+const formatted = data.map((item: any) => ({
       id: item.id,
       code: item.Code || '',
       name: item.Name || 'Без названия',
