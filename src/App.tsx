@@ -17,6 +17,9 @@ import { CartModal } from './components/CartModal';
 import { CartProvider, useCart } from './CartContext';
 import './index.css';
 
+const BASEROW_API_URL = 'https://sale-bot.duckdns.org/webhook/cakes';
+const API_KEY = 'leonsito1982grantge';
+
 // ==================== КОНТЕКСТ ЯЗЫКА ====================
 interface LanguageContextType {
   language: string;
