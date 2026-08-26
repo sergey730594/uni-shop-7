@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight, ShoppingCart, Share2 } from 'lucide-react';
 import { useCart } from '../CartContext';
+import { FlyToCartAnimation } from './FlyToCartAnimation';
 
 interface ProductModalProps {
   product: {
     id: number;
-    name: string;
+    name: string | Record<string, string>;
     photos: string[];
     price20: number;
     price30: number;
     price40: number;
     fillings: string[];
-    description: string;
+    description: string | Record<string, string>;
+    code?: string;
+    oldPrice?: number;
   };
   language: string;
   onClose: () => void;
@@ -54,7 +57,6 @@ const TikTokShareIcon = () => (
   </svg>
 );
 
-// Начинки на 4 языках
 const fillingNames: Record<string, Record<string, string>> = {
   'fruit': { ka: 'ხილის ტორტი', en: 'Fruit Cake', ru: 'Фруктовый торт', tr: 'Meyveli Pasta' },
   'fruit-mix': { ka: 'ხილის მიქსი', en: 'Fruit Mix', ru: 'Фруктовый микс', tr: 'Meyve Karışımı' },
@@ -68,14 +70,15 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
   const [selectedSize, setSelectedSize] = useState('20');
   const [selectedFilling, setSelectedFilling] = useState(product.fillings[0] || '');
   const [cakeText, setCakeText] = useState('');
+  const [flyingCake, setFlyingCake] = useState<{ x: number; y: number } | null>(null);
   const { addToCart } = useCart();
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = '';
-    };
+    return () => { document.body.style.overflow = ''; };
   }, []);
+
+  if (!product || !product.photos || product.photos.length === 0) return null;
 
   const texts = {
     ka: { size: 'ზომა', pieces: 'ნაჭრიანი', filling: 'შიგთავსი', cakeText: 'ტექსტი ტორტზე / შენიშვნა', addToCart: 'კალათაში დამატება', share: 'გაზიარება' },
@@ -85,6 +88,9 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
   };
 
   const t = texts[language as keyof typeof texts] || texts.ka;
+
+  const productName = typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name;
+  const productDescription = typeof product.description === 'object' ? product.description[language] || product.description.ka : product.description;
 
   const sizes = [
     { value: '20', label: `20 ${t.pieces}`, price: product.price20 },
@@ -97,17 +103,24 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
 
   const shareLinks = [
     { name: 'Facebook', icon: <FacebookShareIcon />, bg: 'bg-[#1877F2]', url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}` },
-    { name: 'WhatsApp', icon: <WhatsAppShareIcon />, bg: 'bg-[#25D366]', url: `https://wa.me/?text=${encodeURIComponent(product.name + ' - Grant Bakery\n' + shareUrl)}` },
-    { name: 'Viber', icon: <ViberShareIcon />, bg: 'bg-[#7360F2]', url: `viber://forward?text=${encodeURIComponent(product.name + ' - Grant Bakery\n' + shareUrl)}` },
-    { name: 'Telegram', icon: <TelegramShareIcon />, bg: 'bg-[#0088cc]', url: `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(product.name)}` },
+    { name: 'WhatsApp', icon: <WhatsAppShareIcon />, bg: 'bg-[#25D366]', url: `https://wa.me/?text=${encodeURIComponent(productName + ' - Grant Bakery')}` },
+    { name: 'Viber', icon: <ViberShareIcon />, bg: 'bg-[#7360F2]', url: `viber://forward?text=${encodeURIComponent(productName + ' - Grant Bakery')}` },
+    { name: 'Telegram', icon: <TelegramShareIcon />, bg: 'bg-[#0088cc]', url: `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(productName)}` },
     { name: 'Pinterest', icon: <PinterestShareIcon />, bg: 'bg-[#E60023]', url: `https://pinterest.com/pin/create/button/?url=${encodeURIComponent(shareUrl)}&media=${encodeURIComponent(product.photos[0])}` },
     { name: 'TikTok', icon: <TikTokShareIcon />, bg: 'bg-black', url: 'https://www.tiktok.com/@grantis_torti' },
   ];
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e?: React.MouseEvent) => {
+    const rect = (e?.currentTarget as HTMLElement)?.getBoundingClientRect();
+    
+    setFlyingCake({
+      x: rect?.left || window.innerWidth / 2,
+      y: rect?.top || window.innerHeight - 100,
+    });
+    
     addToCart({
       id: product.id,
-      name: product.name,
+      name: productName,
       photo: product.photos[currentPhoto] || '',
       size: `${selectedSize} ${t.pieces}`,
       filling: fillingNames[selectedFilling]?.[language] || selectedFilling,
@@ -115,6 +128,8 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
       price: selectedPrice,
       quantity: 1,
     });
+    
+    setTimeout(() => setFlyingCake(null), 1000);
     onClose();
   };
 
@@ -123,9 +138,8 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
 
       <div className="relative bg-white w-full max-w-[400px] rounded-2xl shadow-2xl overflow-hidden flex flex-col" style={{ maxHeight: '95vh' }}>
-        {/* Фото */}
         <div className="relative bg-gray-100 aspect-[4/3] flex-shrink-0">
-          <img src={product.photos[currentPhoto] || ''} alt={product.name} className="w-full h-full object-cover" />
+          <img src={product.photos[currentPhoto] || ''} alt={productName} className="w-full h-full object-cover" />
           <button onClick={onClose} className="absolute top-3 left-3 p-2 bg-white/80 rounded-full shadow-lg">
             <X className="w-5 h-5 text-gray-700" />
           </button>
@@ -146,15 +160,10 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
           )}
         </div>
 
-        {/* Содержимое — прокручивается */}
         <div className="p-4 overflow-y-auto" style={{ maxHeight: 'calc(95vh - 250px)' }}>
-        <h2 className="text-sm font-bold text-gray-800">{product.name}</h2>
-{product.code && (
-  <p className="text-[10px] text-gray-400 mb-1">კოდი: {product.code}</p>
-)}
-{product.description && (
-  <p className="text-xs text-gray-500 mb-2">{product.description}</p>
-)}
+          <h2 className="text-sm font-bold text-gray-800">{productName}</h2>
+          {product.code && <p className="text-[10px] text-gray-400">კოდი: {product.code}</p>}
+          {productDescription && <p className="text-xs text-gray-500 mt-1 mb-2">{productDescription}</p>}
 
           <div className="flex gap-1.5 mb-2">
             {sizes.map(size => (
@@ -167,10 +176,10 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
           <label className="block text-[10px] font-medium text-gray-700 mb-1">{t.filling}</label>
           <div className="flex flex-wrap gap-1.5 mb-2">
             {product.fillings.map(fillingKey => {
-              const fillingName = fillingNames[fillingKey]?.[language] || fillingKey;
+              const name = fillingNames[fillingKey]?.[language] || fillingKey;
               return (
                 <button key={fillingKey} onClick={() => setSelectedFilling(fillingKey)} className={`px-3 py-1 rounded-full text-[10px] font-bold ${selectedFilling === fillingKey ? 'bg-[#ff0000] text-white' : 'bg-gray-100 text-gray-600'}`}>
-                  {fillingName}
+                  {name}
                 </button>
               );
             })}
@@ -200,14 +209,15 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
           </div>
         </div>
 
-        {/* Кнопка — всегда видна */}
         <div className="flex-shrink-0 p-3 sm:p-4 border-t border-gray-200 bg-white">
-          <button onClick={handleAddToCart} className="w-full bg-[#ff0000] text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm">
+          <button onClick={(e) => handleAddToCart(e)} className="w-full bg-[#ff0000] text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm">
             <ShoppingCart className="w-4 h-4" />
             {t.addToCart} — ₾{selectedPrice}
           </button>
         </div>
       </div>
+
+      {flyingCake && <FlyToCartAnimation startPos={flyingCake} endPos={{ x: window.innerWidth - 60, y: 50 }} />}
     </div>
   );
 };
