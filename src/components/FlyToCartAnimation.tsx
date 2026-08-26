@@ -12,7 +12,7 @@ export const FlyToCartAnimation: React.FC<FlyToCartAnimationProps> = ({ startPos
       style={{
         left: startPos.x,
         top: startPos.y,
-        animation: 'flyToCart 0.8s ease-in-out forwards',
+        animation: 'flyToCart 1.5s ease-in-out forwards',
       }}
     >
       <div className="w-10 h-10 bg-[#ff0000] rounded-full flex items-center justify-center text-white text-xl shadow-2xl">
