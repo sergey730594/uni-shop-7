@@ -38,12 +38,10 @@ export const useLanguage = () => {
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState(() => localStorage.getItem('language') || 'ka');
-
   const handleSetLanguage = (lang: string) => {
     setLanguage(lang);
     localStorage.setItem('language', lang);
   };
-
   return (
     <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage }}>
       {children}
@@ -51,36 +49,10 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   );
 };
 
-// ==================== ТОВАРЫ (тестовые, пока не загружены из API) ====================
+// ==================== ТОВАРЫ (запасные) ====================
 const defaultProducts = [
-  {
-    id: 1, name: 'Наполеон',
-    photos: ['https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=400&h=300&fit=crop'],
-    price20: 80, price30: 100, price40: 120,
-    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
-    category: 'cakes', description: 'Классический торт Наполеон',
-  },
-  {
-    id: 2, name: 'Медовик',
-    photos: ['https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=400&h=300&fit=crop'],
-    price20: 70, price30: 90, price40: 110,
-    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
-    category: 'cakes', description: 'Медовый торт',
-  },
-  {
-    id: 3, name: 'Прага',
-    photos: ['https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=400&h=300&fit=crop'],
-    price20: 90, price30: 110, price40: 130,
-    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
-    category: 'cakes', description: 'Шоколадный торт Прага',
-  },
-  {
-    id: 4, name: 'Красный бархат',
-    photos: ['https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop'],
-    price20: 150, price30: 180, price40: 210,
-    fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'],
-    category: 'cakes', description: 'Красный бархат',
-  },
+  { id: 1, name: 'Наполеон', photos: ['https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=400&h=300&fit=crop'], price20: 80, price30: 100, price40: 120, fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'], category: 'cakes', description: 'Классический торт Наполеон' },
+  { id: 2, name: 'Медовик', photos: ['https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=400&h=300&fit=crop'], price20: 70, price30: 90, price40: 110, fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'], category: 'cakes', description: 'Медовый торт' },
 ];
 
 const heroBackgrounds = [
@@ -89,12 +61,39 @@ const heroBackgrounds = [
   'https://images.unsplash.com/photo-1542826438-bd32f43d626f?w=1600&h=600&fit=crop&q=80',
 ];
 
-// ==================== SCROLL TO TOP ====================
 function ScrollToTopOnNavigate() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return null;
 }
+
+// ==================== ФУНКЦИЯ ЗАГРУЗКИ ТОВАРОВ ====================
+const fetchProductsFromAPI = async () => {
+  try {
+    const response = await fetch(BASEROW_API_URL, {
+      headers: { 'X-API-Key': API_KEY },
+    });
+    const data = await response.json();
+    const formatted = data.map((item: any) => ({
+      id: item.id,
+      code: item.Code || '',
+      name: item.Name || 'Без названия',
+      price20: Number(item.Price20 || 0),
+      price30: Number(item.Price30 || 0),
+      price40: Number(item.Price40 || 0),
+      fillings: item.Fillings || [],
+      category: item.Category || 'cakes',
+      photos: item.Photo ? item.Photo.map((f: any) => f.url) : [],
+      description: item.Description || '',
+      popular: item.Popular || false,
+      published: item.Published !== false,
+    })).filter((p: any) => p.published);
+    return formatted;
+  } catch (error) {
+    console.error('Ошибка загрузки товаров:', error);
+    return [];
+  }
+};
 
 // ==================== ГЛАВНАЯ СТРАНИЦА ====================
 function HomePage() {
@@ -120,32 +119,11 @@ function HomePage() {
   }, []);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch(BASEROW_API_URL, {
-          headers: { 'X-API-Key': API_KEY },
-        });
-        const data = await response.json();
-        const formatted = data.map((item: any) => ({
-          id: item.id,
-          name: item['Название'] || item.name || 'Без названия',
-          price20: Number(item['Цена 20'] || item.price20 || 0),
-          price30: Number(item['Цена 30'] || item.price30 || 0),
-          price40: Number(item['Цена 40'] || item.price40 || 0),
-          fillings: item['Начинки'] || item.fillings || [],
-          category: item['Категория'] || item.category || 'cakes',
-          photos: item['Фото'] ? item['Фото'].map((f: any) => f.url) : (item.photos || ['https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=400&h=300&fit=crop']),
-          description: item['Описание'] || item.description || '',
-          popular: item['Популярный'] || false,
-          published: item['Опубликован'] !== false,
-        })).filter((p: any) => p.published);
-        
-        if (formatted.length > 0) setProducts(formatted);
-      } catch (error) {
-        console.error('Ошибка загрузки товаров:', error);
-      }
+    const loadProducts = async () => {
+      const data = await fetchProductsFromAPI();
+      if (data.length > 0) setProducts(data);
     };
-    fetchProducts();
+    loadProducts();
   }, []);
 
   const handleLanguageChange = (newLang: string) => {
@@ -199,7 +177,7 @@ function HomePage() {
             {products.map(product => (
               <div key={product.id} onClick={() => setSelectedProduct(product)} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg cursor-pointer">
                 <div className="aspect-square overflow-hidden">
-                  <img src={product.photos[0]} alt={product.name} className="w-full h-full object-cover" />
+                  <img src={product.photos[0] || 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=400&h=300&fit=crop'} alt={product.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="p-2">
                   <h3 className="font-medium text-xs truncate">{product.name}</h3>
@@ -245,30 +223,11 @@ function CategoryPage() {
   }, [lang]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch(BASEROW_API_URL, {
-          headers: { 'X-API-Key': API_KEY },
-        });
-        const data = await response.json();
-        const formatted = data.map((item: any) => ({
-          id: item.id,
-          name: item['Название'] || 'Без названия',
-          price20: Number(item['Цена 20'] || 0),
-          price30: Number(item['Цена 30'] || 0),
-          price40: Number(item['Цена 40'] || 0),
-          fillings: item['Начинки'] || [],
-          category: item['Категория'] || 'cakes',
-          photos: item['Фото'] ? item['Фото'].map((f: any) => f.url) : [],
-          description: item['Описание'] || '',
-          published: item['Опубликован'] !== false,
-        })).filter((p: any) => p.published);
-        if (formatted.length > 0) setProducts(formatted);
-      } catch (error) {
-        console.error('Ошибка загрузки:', error);
-      }
+    const loadProducts = async () => {
+      const data = await fetchProductsFromAPI();
+      if (data.length > 0) setProducts(data);
     };
-    fetchProducts();
+    loadProducts();
   }, []);
 
   const handleLanguageChange = (newLang: string) => {
@@ -336,7 +295,7 @@ function CategoryPage() {
           {filteredProducts.map(product => (
             <div key={product.id} onClick={() => setSelectedProduct(product)} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg cursor-pointer">
               <div className="aspect-square overflow-hidden">
-                <img src={product.photos[0]} alt={product.name} className="w-full h-full object-cover" />
+                <img src={product.photos[0] || 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=400&h=300&fit=crop'} alt={product.name} className="w-full h-full object-cover" />
               </div>
               <div className="p-2">
                 <h3 className="font-medium text-xs truncate">{product.name}</h3>
