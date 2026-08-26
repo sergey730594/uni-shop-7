@@ -29,7 +29,8 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
     ka: {
       title: 'კალათა', empty: 'კალათა ცარიელია', name: 'სახელი და გვარი', phone: 'ტელეფონი', extraPhone: 'დამატებითი ტელეფონი',
       date: 'რომელ რიცხვში?', time: 'რომელ საათზე?', pickup: 'თვითგატანა', delivery: 'მიტანა (+10₾)', address: 'სრული მისამართი',
-      comment: 'კომენტარი', total: 'სულ', sendOrder: 'შეკვეთის გაგზავნა', required: 'შეავსეთ ველები', deliveryFee: 'მიტანა',
+      comment: 'კომენტარი', total: 'სულ', sendEmail: 'Email-ზე გაგზავნა', sendWhatsApp: 'WhatsApp-ზე გაგზავნა',
+      sendOrder: 'შეკვეთის გაგზავნა', required: 'შეავსეთ ველები', deliveryFee: 'მიტანა',
       months: ['იანვარი','თებერვალი','მარტი','აპრილი','მაისი','ივნისი','ივლისი','აგვისტო','სექტემბერი','ოქტომბერი','ნოემბერი','დეკემბერი'],
       days: ['კვ','ორ','სამ','ოთხ','ხუთ','პარ','შაბ'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -37,7 +38,8 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
     en: {
       title: 'Cart', empty: 'Cart is empty', name: 'Full name', phone: 'Phone', extraPhone: 'Additional phone',
       date: 'Date?', time: 'Time?', pickup: 'Pickup', delivery: 'Delivery (+10₾)', address: 'Full address',
-      comment: 'Comment', total: 'Total', sendOrder: 'Send Order', required: 'Fill fields', deliveryFee: 'Delivery',
+      comment: 'Comment', total: 'Total', sendEmail: 'Send via Email', sendWhatsApp: 'Send via WhatsApp',
+      sendOrder: 'Send Order', required: 'Fill fields', deliveryFee: 'Delivery',
       months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
       days: ['Mo','Tu','We','Th','Fr','Sa','Su'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -45,7 +47,8 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
     ru: {
       title: 'Корзина', empty: 'Корзина пуста', name: 'Имя и фамилия', phone: 'Телефон', extraPhone: 'Доп. телефон',
       date: 'Дата?', time: 'Время?', pickup: 'Самовывоз', delivery: 'Доставка (+10₾)', address: 'Полный адрес',
-      comment: 'Комментарий', total: 'Итого', sendOrder: 'Отправить заказ', required: 'Заполните поля', deliveryFee: 'Доставка',
+      comment: 'Комментарий', total: 'Итого', sendEmail: 'Отправить на Email', sendWhatsApp: 'Отправить в WhatsApp',
+      sendOrder: 'Отправить заказ', required: 'Заполните поля', deliveryFee: 'Доставка',
       months: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
       days: ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -53,7 +56,8 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
     tr: {
       title: 'Sepet', empty: 'Sepet boş', name: 'Ad soyad', phone: 'Telefon', extraPhone: 'Ek telefon',
       date: 'Tarih?', time: 'Saat?', pickup: 'Teslim alma', delivery: 'Teslimat (+10₾)', address: 'Tam adres',
-      comment: 'Yorum', total: 'Toplam', sendOrder: 'Siparişi Gönder', required: 'Alanları doldurun', deliveryFee: 'Teslimat',
+      comment: 'Yorum', total: 'Toplam', sendEmail: 'Email ile gönder', sendWhatsApp: 'WhatsApp ile gönder',
+      sendOrder: 'Siparişi Gönder', required: 'Alanları doldurun', deliveryFee: 'Teslimat',
       months: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
       days: ['Pt','Sa','Ça','Pe','Cu','Ct','Pz'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -78,14 +82,12 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
     setShowCalendar(false);
   };
 
-  const handleSendOrder = () => {
-    if (!form.name || !form.phone) { alert(t.required); return; }
-    
+  const buildOrderText = () => {
     const orderDetails = items.map(item => 
       `${item.name} - ${item.size} - ${item.filling}${item.cakeText ? ' - "' + item.cakeText + '"' : ''} - ₾${item.price} x${item.quantity}`
     ).join('\n');
     
-    const message = `Новый заказ - Grant Bakery\n\n` +
+    return `Новый заказ - Grant Bakery\n\n` +
       `Имя: ${form.name}\n` +
       `Телефон: ${form.phone}\n` +
       `Доп. телефон: ${form.extraPhone}\n` +
@@ -96,12 +98,18 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
       `${form.comment ? 'Комментарий: ' + form.comment + '\n' : ''}` +
       `\nТовары:\n${orderDetails}\n` +
       `\nИтого: ₾${grandTotal}`;
-    
-    // Открыть WhatsApp с заказом
-    window.open(`https://wa.me/995593756700?text=${encodeURIComponent(message)}`, '_blank');
-    
-    // Открыть Email
-    window.location.href = `mailto:info@grant.ge?subject=${encodeURIComponent('Новый заказ - Grant Bakery')}&body=${encodeURIComponent(message)}`;
+  };
+
+  const handleSendEmail = () => {
+    if (!form.name || !form.phone) { alert(t.required); return; }
+    const body = buildOrderText();
+    window.location.href = `mailto:info@grant.ge?subject=${encodeURIComponent('Новый заказ - Grant Bakery')}&body=${encodeURIComponent(body)}`;
+  };
+
+  const handleSendWhatsApp = () => {
+    if (!form.name || !form.phone) { alert(t.required); return; }
+    const body = buildOrderText();
+    window.open(`https://wa.me/995593756700?text=${encodeURIComponent(body)}`, '_blank');
   };
 
   if (!isOpen) return null;
@@ -199,12 +207,14 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
 
               <div className="pt-2 pb-4">
                 <p className="text-center text-xs font-bold text-gray-700 mb-2">{t.sendOrder}</p>
-                <button 
-                  onClick={handleSendOrder} 
-                  className="w-full bg-[#ff0000] text-white py-3 rounded-lg text-sm font-bold hover:bg-[#cc0000]"
-                >
-                  {t.sendOrder}
-                </button>
+                <div className="grid grid-cols-2 gap-2">
+                  <button onClick={handleSendEmail} className="flex items-center justify-center gap-1 bg-[#ff0000] text-white py-2.5 rounded-lg text-xs font-bold hover:bg-[#cc0000]">
+                    <Mail className="w-4 h-4" /> {t.sendEmail}
+                  </button>
+                  <button onClick={handleSendWhatsApp} className="flex items-center justify-center gap-1 bg-[#25D366] text-white py-2.5 rounded-lg text-xs font-bold hover:bg-[#20b85a]">
+                    <Phone className="w-4 h-4" /> {t.sendWhatsApp}
+                  </button>
+                </div>
               </div>
             </>
           )}
