@@ -14,36 +14,40 @@ export default async function handler(req, res) {
     );
     const data = await response.json();
     
+    // Без фильтра — просто берём все записи с именем
     const formatted = data.results
-      .filter((item) => item.Published === true && (item.Name_ka || item.Name_en || item.Name_ru || item.Name_tr))
+      .filter((item) => item.Name_ka || item.Name_en || item.Name_ru || item.Name_tr)
       .map((item) => ({
         id: item.id,
         name: {
-          ka: item.Name_ka || item.Name_en || '',
+          ka: item.Name_ka || '',
           en: item.Name_en || item.Name_ka || '',
           ru: item.Name_ru || item.Name_ka || '',
           tr: item.Name_tr || item.Name_ka || '',
         },
         description: {
           ka: item.Description_ka || '',
-          en: item.Description_en || '',
-          ru: item.Description_ru || '',
-          tr: item.Description_tr || '',
+          en: item.Description_en || item.Description_ka || '',
+          ru: item.Description_ru || item.Description_ka || '',
+          tr: item.Description_tr || item.Description_ka || '',
         },
         code: item.Code || '',
         price20: Number(item['Price 20'] || 0),
         price30: Number(item['Price 30'] || 0),
         price40: Number(item['Price 40'] || 0),
-        oldPrice: Number(item.OldPrice || 0),
+        oldPrice: Number(item.oldPrice || 0),
         fillings: (item.Fillings || []).map((f) => f.value),
         category: item.Category?.[0]?.value || 'cakes',
         subcategory: item.SubCategory?.[0]?.value || '',
         photos: (item.Photo || []).map((p) => p.url),
         popular: item.Popular || false,
-      }));
+        published: item.Published !== false,
+      }))
+      .filter((item) => item.published && item.photos.length > 0);
 
     res.status(200).json(formatted);
   } catch (error) {
-    res.status(500).json({ error: 'Ошибка загрузки' });
+    console.error('Ошибка:', error);
+    res.status(500).json({ error: 'Ошибка загрузки', details: error.message });
   }
 }
