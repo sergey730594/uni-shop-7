@@ -3,7 +3,7 @@ import { X, Trash2, Mail, Phone, Truck, Store, Calendar, Clock, ChevronLeft, Che
 import { useCart } from '../CartContext';
 
 // Конфигурация API для заказов
-const ORDERS_API_URL = 'https://sale-bot.duckdns.org/webhook/orders';
+const ORDERS_API_URL = 'https://sale-bot.duckdns.org/webhook/email-order';
 const API_KEY = 'leonsito1982grantge';
 
 interface CartModalProps {
