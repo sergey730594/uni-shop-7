@@ -87,17 +87,17 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
       `${item.name} - ${item.size} - ${item.filling}${item.cakeText ? ' - "' + item.cakeText + '"' : ''} - ₾${item.price} x${item.quantity}`
     ).join('\n');
     
-    return `Новый заказ - Grant Bakery\n\n` +
-      `Имя: ${form.name}\n` +
-      `Телефон: ${form.phone}\n` +
-      `Доп. телефон: ${form.extraPhone}\n` +
-      `Дата: ${form.date}\n` +
-      `Время: ${form.time}\n` +
-      `Тип: ${deliveryType === 'delivery' ? 'Доставка' : 'Самовывоз'}\n` +
-      `${form.address ? 'Адрес: ' + form.address + '\n' : ''}` +
-      `${form.comment ? 'Комментарий: ' + form.comment + '\n' : ''}` +
-      `\nТовары:\n${orderDetails}\n` +
-      `\nИтого: ₾${grandTotal}`;
+    return `ახალი შეკვეთა - Grant Bakery\n\n` +
+      `სახელი: ${form.name}\n` +
+      `ტელეფონი: ${form.phone}\n` +
+      `დამატებითი ტელეფონი: ${form.extraPhone}\n` +
+      `თარიღი: ${form.date}\n` +
+      `დრო: ${form.time}\n` +
+      `ტიპი: ${deliveryType === 'delivery' ? 'მიტანა' : 'თვითგატანა'}\n` +
+      `${form.address ? 'მისამართი: ' + form.address + '\n' : ''}` +
+      `${form.comment ? 'კომენტარი: ' + form.comment + '\n' : ''}` +
+      `\nტორტები:\n${orderDetails}\n` +
+      `\nსულ: ₾${grandTotal}`;
   };
 
   const handleSendEmail = () => {
