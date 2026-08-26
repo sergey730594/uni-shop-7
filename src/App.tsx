@@ -17,8 +17,8 @@ import { CartProvider, useCart } from './CartContext';
 import './index.css';
 
 // ==================== КОНФИГУРАЦИЯ API ====================
-const BASEROW_API_URL = 'https://sale-bot.duckdns.org/webhook/cakes';
-const API_KEY = 'leonsito1982grantge';
+const BASEROW_API_URL = '/api/cakes';  // вместо n8n
+const response = await fetch(BASEROW_API_URL);
 
 // ==================== КОНТЕКСТ ЯЗЫКА ====================
 interface LanguageContextType {
