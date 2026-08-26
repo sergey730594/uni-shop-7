@@ -163,9 +163,10 @@ function HomePage() {
                   <img src={product.photos[0] || 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=400&h=300&fit=crop'} alt={product.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="p-2">
-                  <h3 className="font-medium text-xs truncate">{product.name}</h3>
-                  <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price30}</p>
-                </div>
+  <h3 className="font-medium text-xs truncate">{product.name}</h3>
+  {product.code && <p className="text-[8px] text-gray-400">კოდი: {product.code}</p>}
+  <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price30}</p>
+</div>
               </div>
             ))}
           </div>
