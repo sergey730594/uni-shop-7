@@ -148,7 +148,13 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
 
         {/* Содержимое — прокручивается */}
         <div className="p-4 overflow-y-auto" style={{ maxHeight: 'calc(95vh - 250px)' }}>
-          <h2 className="text-sm font-bold text-gray-800 mb-2">{product.name}</h2>
+        <h2 className="text-sm font-bold text-gray-800">{product.name}</h2>
+{product.code && (
+  <p className="text-[10px] text-gray-400 mb-1">კოდი: {product.code}</p>
+)}
+{product.description && (
+  <p className="text-xs text-gray-500 mb-2">{product.description}</p>
+)}
 
           <div className="flex gap-1.5 mb-2">
             {sizes.map(size => (
