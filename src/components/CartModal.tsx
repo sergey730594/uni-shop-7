@@ -4,7 +4,7 @@ import { useCart } from '../CartContext';
 
 // Конфигурация API для заказов
 const ORDERS_API_URL = 'https://sale-bot.duckdns.org/webhook/orders';
-const API_KEY = 'ВАШ_СЕКРЕТНЫЙ_КЛЮЧ';
+const API_KEY = 'leonsito1982grantge';
 
 interface CartModalProps {
   isOpen: boolean;
