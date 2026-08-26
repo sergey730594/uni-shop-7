@@ -70,33 +70,14 @@ function ScrollToTopOnNavigate() {
 // ==================== ФУНКЦИЯ ЗАГРУЗКИ ТОВАРОВ ====================
 const fetchProductsFromAPI = async () => {
   try {
-    const response = await fetch(BASEROW_API_URL, {
-      headers: { 'X-API-Key': API_KEY },
-    });
-    const responseData = await response.json();
-// n8n может вернуть объект с данными внутри
-const data = Array.isArray(responseData) ? responseData : (responseData.data || responseData.results || responseData.rows || []);
-const formatted = data.map((item: any) => ({
-      id: item.id,
-      code: item.Code || '',
-      name: item.Name || 'Без названия',
-      price20: Number(item.Price20 || 0),
-      price30: Number(item.Price30 || 0),
-      price40: Number(item.Price40 || 0),
-      fillings: item.Fillings || [],
-      category: item.Category || 'cakes',
-      photos: item.Photo ? item.Photo.map((f: any) => f.url) : [],
-      description: item.Description || '',
-      popular: item.Popular || false,
-      published: item.Published !== false,
-    })).filter((p: any) => p.published);
-    return formatted;
+    const response = await fetch('/api/cakes');
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error('Ошибка загрузки товаров:', error);
     return [];
   }
 };
-
 // ==================== ГЛАВНАЯ СТРАНИЦА ====================
 function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
