@@ -2,10 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { X, Trash2, Mail, Phone, Truck, Store, Calendar, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useCart } from '../CartContext';
 
-// Конфигурация API для заказов
-const ORDERS_API_URL = 'https://sale-bot.duckdns.org/webhook/email-order';
-const API_KEY = 'leonsito1982grantge';
-
 interface CartModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -18,7 +14,6 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
   const [showCalendar, setShowCalendar] = useState(false);
   const [showTimeSlots, setShowTimeSlots] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [isSending, setIsSending] = useState(false);
   const [form, setForm] = useState({ name: '', phone: '', extraPhone: '', date: '', time: '', address: '', comment: '' });
 
   useEffect(() => {
@@ -35,7 +30,6 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
       title: 'კალათა', empty: 'კალათა ცარიელია', name: 'სახელი და გვარი', phone: 'ტელეფონი', extraPhone: 'დამატებითი ტელეფონი',
       date: 'რომელ რიცხვში?', time: 'რომელ საათზე?', pickup: 'თვითგატანა', delivery: 'მიტანა (+10₾)', address: 'სრული მისამართი',
       comment: 'კომენტარი', total: 'სულ', sendOrder: 'შეკვეთის გაგზავნა', required: 'შეავსეთ ველები', deliveryFee: 'მიტანა',
-      sending: 'იგზავნება...', success: 'შეკვეთა მიღებულია!', error: 'შეცდომა, სცადეთ თავიდან',
       months: ['იანვარი','თებერვალი','მარტი','აპრილი','მაისი','ივნისი','ივლისი','აგვისტო','სექტემბერი','ოქტომბერი','ნოემბერი','დეკემბერი'],
       days: ['კვ','ორ','სამ','ოთხ','ხუთ','პარ','შაბ'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -44,7 +38,6 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
       title: 'Cart', empty: 'Cart is empty', name: 'Full name', phone: 'Phone', extraPhone: 'Additional phone',
       date: 'Date?', time: 'Time?', pickup: 'Pickup', delivery: 'Delivery (+10₾)', address: 'Full address',
       comment: 'Comment', total: 'Total', sendOrder: 'Send Order', required: 'Fill fields', deliveryFee: 'Delivery',
-      sending: 'Sending...', success: 'Order received!', error: 'Error, try again',
       months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
       days: ['Mo','Tu','We','Th','Fr','Sa','Su'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -53,7 +46,6 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
       title: 'Корзина', empty: 'Корзина пуста', name: 'Имя и фамилия', phone: 'Телефон', extraPhone: 'Доп. телефон',
       date: 'Дата?', time: 'Время?', pickup: 'Самовывоз', delivery: 'Доставка (+10₾)', address: 'Полный адрес',
       comment: 'Комментарий', total: 'Итого', sendOrder: 'Отправить заказ', required: 'Заполните поля', deliveryFee: 'Доставка',
-      sending: 'Отправка...', success: 'Заказ принят!', error: 'Ошибка, попробуйте снова',
       months: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
       days: ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -62,7 +54,6 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
       title: 'Sepet', empty: 'Sepet boş', name: 'Ad soyad', phone: 'Telefon', extraPhone: 'Ek telefon',
       date: 'Tarih?', time: 'Saat?', pickup: 'Teslim alma', delivery: 'Teslimat (+10₾)', address: 'Tam adres',
       comment: 'Yorum', total: 'Toplam', sendOrder: 'Siparişi Gönder', required: 'Alanları doldurun', deliveryFee: 'Teslimat',
-      sending: 'Gönderiliyor...', success: 'Sipariş alındı!', error: 'Hata, tekrar deneyin',
       months: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
       days: ['Pt','Sa','Ça','Pe','Cu','Ct','Pz'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -87,47 +78,30 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
     setShowCalendar(false);
   };
 
-  const handleSendOrder = async () => {
+  const handleSendOrder = () => {
     if (!form.name || !form.phone) { alert(t.required); return; }
     
-    setIsSending(true);
+    const orderDetails = items.map(item => 
+      `${item.name} - ${item.size} - ${item.filling}${item.cakeText ? ' - "' + item.cakeText + '"' : ''} - ₾${item.price} x${item.quantity}`
+    ).join('\n');
     
-    const orderData = {
-      Name: form.name,
-      Phone: form.phone,
-      Extraphone: form.extraPhone,
-      Date: form.date,
-      Time: form.time,
-      Delivery: deliveryType,
-      Address: form.address,
-      Comment: form.comment,
-      Cakes: JSON.stringify(items.map(item => ({ name: item.name, size: item.size, filling: item.filling, price: item.price, quantity: item.quantity }))),
-      Sum: grandTotal,
-      Status: 'Новый',
-    };
-
-    try {
-      const response = await fetch(ORDERS_API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-API-Key': API_KEY,
-        },
-        body: JSON.stringify(orderData),
-      });
-      
-      if (response.ok) {
-        alert(t.success);
-        onClose();
-      } else {
-        alert(t.error);
-      }
-    } catch (error) {
-      console.error('Ошибка отправки:', error);
-      alert(t.error);
-    } finally {
-      setIsSending(false);
-    }
+    const message = `Новый заказ - Grant Bakery\n\n` +
+      `Имя: ${form.name}\n` +
+      `Телефон: ${form.phone}\n` +
+      `Доп. телефон: ${form.extraPhone}\n` +
+      `Дата: ${form.date}\n` +
+      `Время: ${form.time}\n` +
+      `Тип: ${deliveryType === 'delivery' ? 'Доставка' : 'Самовывоз'}\n` +
+      `${form.address ? 'Адрес: ' + form.address + '\n' : ''}` +
+      `${form.comment ? 'Комментарий: ' + form.comment + '\n' : ''}` +
+      `\nТовары:\n${orderDetails}\n` +
+      `\nИтого: ₾${grandTotal}`;
+    
+    // Открыть WhatsApp с заказом
+    window.open(`https://wa.me/995593756700?text=${encodeURIComponent(message)}`, '_blank');
+    
+    // Открыть Email
+    window.location.href = `mailto:info@grant.ge?subject=${encodeURIComponent('Новый заказ - Grant Bakery')}&body=${encodeURIComponent(message)}`;
   };
 
   if (!isOpen) return null;
@@ -152,6 +126,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-medium truncate">{item.name}</p>
                     <p className="text-[10px] text-gray-500">{item.size} • {item.filling}</p>
+                    {item.cakeText && <p className="text-[10px] text-gray-400 truncate">"{item.cakeText}"</p>}
                     <p className="text-xs font-bold text-[#ff0000]">₾{item.price} x{item.quantity}</p>
                   </div>
                   <button onClick={() => removeFromCart(item.id, item.size, item.filling)}><Trash2 className="w-4 h-4 text-red-500" /></button>
@@ -222,14 +197,13 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
                 <div className="flex justify-between font-bold text-lg border-t pt-1"><span>{t.total}</span><span className="text-[#ff0000]">₾{grandTotal}</span></div>
               </div>
 
-              <div className="pt-2">
+              <div className="pt-2 pb-4">
                 <p className="text-center text-xs font-bold text-gray-700 mb-2">{t.sendOrder}</p>
                 <button 
                   onClick={handleSendOrder} 
-                  disabled={isSending}
-                  className="w-full bg-[#ff0000] text-white py-3 rounded-lg text-sm font-bold disabled:opacity-50"
+                  className="w-full bg-[#ff0000] text-white py-3 rounded-lg text-sm font-bold hover:bg-[#cc0000]"
                 >
-                  {isSending ? t.sending : t.sendOrder}
+                  {t.sendOrder}
                 </button>
               </div>
             </>
