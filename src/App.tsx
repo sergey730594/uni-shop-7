@@ -540,19 +540,71 @@ function CategoryPage() {
   <div className="mb-6">
     <div className="flex gap-3 overflow-x-auto pb-4 hide-scrollbar">
       {[
-        { name: 'კორპორატიული', slug: 'corporate', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/1korporatiuli.png' },
-        { name: 'საქორწილო', slug: 'wedding', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/2saqorwilo.png' },
-        { name: 'საბავშვო', slug: 'kids', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/3sabavshvo.png' },
-        { name: 'ფოტო ტორტები', slug: 'photo', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/4photo.png' },
-        { name: 'მანქანა', slug: 'car', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/5manqana.png' },
-        { name: 'სპორტული', slug: 'sports', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/6sport.png' },
-        { name: 'გული', slug: 'heart', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/7gulis.png' },
-        { name: 'მარცეპანი', slug: 'marzipan', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/marcepani.png' },
-        { name: 'ნათლობა', slug: 'baptism', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/natlobis.png' },
-        { name: 'მრგვალი', slug: 'round', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/10mrgvali.png' },
-        { name: 'უფროსებისთვის', slug: 'adults', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/11ufrosebistvis.png' },
-        { name: 'ოთხკუთხა', slug: 'square', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/12square.png' },
-        { name: 'საახალწლო', slug: 'new-year', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/13saaxalwlo.png' },
+        { 
+          slug: 'corporate', 
+          photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/1korporatiuli.png',
+          names: { ka: 'კორპორატიული', en: 'Corporate', ru: 'Корпоративные', tr: 'Kurumsal' }
+        },
+        { 
+          slug: 'wedding', 
+          photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/2saqorwilo.png',
+          names: { ka: 'საქორწილო', en: 'Wedding', ru: 'Свадебные', tr: 'Düğün' }
+        },
+        { 
+          slug: 'kids', 
+          photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/3sabavshvo.png',
+          names: { ka: 'საბავშვო', en: 'Kids', ru: 'Детские', tr: 'Çocuk' }
+        },
+        { 
+          slug: 'photo', 
+          photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/4photo.png',
+          names: { ka: 'ფოტო ტორტები', en: 'Photo Cakes', ru: 'Фото торты', tr: 'Fotoğraflı' }
+        },
+        { 
+          slug: 'car', 
+          photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/5manqana.png',
+          names: { ka: 'მანქანა', en: 'Car Cakes', ru: 'Торты-машины', tr: 'Araba' }
+        },
+        { 
+          slug: 'sports', 
+          photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/6sport.png',
+          names: { ka: 'სპორტული', en: 'Sports', ru: 'Спортивные', tr: 'Spor' }
+        },
+        { 
+          slug: 'heart', 
+          photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/7gulis.png',
+          names: { ka: 'გული', en: 'Heart', ru: 'Сердца', tr: 'Kalp' }
+        },
+        { 
+          slug: 'marzipan', 
+          photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/marcepani.png',
+          names: { ka: 'მარცეპანი', en: 'Marzipan', ru: 'Марципан', tr: 'Badem Ezmesi' }
+        },
+        { 
+          slug: 'baptism', 
+          photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/natlobis.png',
+          names: { ka: 'ნათლობა', en: 'Baptism', ru: 'Крестины', tr: 'Vaftiz' }
+        },
+        { 
+          slug: 'round', 
+          photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/10mrgvali.png',
+          names: { ka: 'მრგვალი', en: 'Round', ru: 'Круглые', tr: 'Yuvarlak' }
+        },
+        { 
+          slug: 'adults', 
+          photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/11ufrosebistvis.png',
+          names: { ka: 'უფროსებისთვის', en: 'For Adults', ru: 'Для взрослых', tr: 'Yetişkinler' }
+        },
+        { 
+          slug: 'square', 
+          photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/12square.png',
+          names: { ka: 'ოთხკუთხა', en: 'Square', ru: 'Квадратные', tr: 'Kare' }
+        },
+        { 
+          slug: 'new-year', 
+          photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/13saaxalwlo.png',
+          names: { ka: 'საახალწლო', en: 'New Year', ru: 'Новогодние', tr: 'Yılbaşı' }
+        },
       ].map((cat) => (
         <Link
           key={cat.slug}
@@ -560,10 +612,10 @@ function CategoryPage() {
           className="flex flex-col items-center gap-2 flex-shrink-0 w-24 group"
         >
           <div className="w-20 h-20 rounded-xl overflow-hidden border-2 border-transparent group-hover:border-[#ff0000] transition-all shadow-sm">
-            <img src={cat.photo} alt={cat.name} className="w-full h-full object-cover" />
+            <img src={cat.photo} alt={cat.names[language] || cat.names.ka} className="w-full h-full object-cover" />
           </div>
           <span className="text-[10px] font-bold text-gray-700 text-center leading-tight group-hover:text-[#ff0000]">
-            {cat.name}
+            {cat.names[language] || cat.names.ka}
           </span>
         </Link>
       ))}
