@@ -221,8 +221,9 @@ function HomePage() {
 }
 
 // ==================== СТРАНИЦА КАТЕГОРИИ ====================
+// ==================== СТРАНИЦА КАТЕГОРИИ ====================
 function CategoryPage() {
-  const { category } = useParams();
+  const { category, subcategory } = useParams();
   const { language, setLanguage } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -257,15 +258,36 @@ function CategoryPage() {
     accessories: { ka: 'აქსესუარები', en: 'Accessories', ru: 'Аксессуары', tr: 'Aksesuarlar' },
     flowers: { ka: 'ყვავილები', en: 'Flowers', ru: 'Цветы', tr: 'Çiçekler' },
     sale: { ka: 'ფასდაკლება', en: 'Sale', ru: 'Скидки', tr: 'İndirim' },
+    delivery: { ka: 'გადახდა-მიტანა', en: 'Payment-Delivery', ru: 'Оплата-Доставка', tr: 'Ödeme-Teslimat' },
+    contact: { ka: 'კონტაქტი', en: 'Contact', ru: 'Контакты', tr: 'İletişim' },
   };
 
-  let pageTitle = categoryNames[category || '']?.[language] || category || 'Category';
+  const subcategoryNames: Record<string, Record<string, string>> = {
+    corporate: { ka: 'კორპორატიული', en: 'Corporate', ru: 'Корпоративные', tr: 'Kurumsal' },
+    wedding: { ka: 'საქორწილო', en: 'Wedding', ru: 'Свадебные', tr: 'Düğün' },
+    kids: { ka: 'საბავშვო ტორტები', en: 'Kids Cakes', ru: 'Детские торты', tr: 'Çocuk Pastaları' },
+    photo: { ka: 'ფოტო ტორტები', en: 'Photo Cakes', ru: 'Фото торты', tr: 'Fotoğraflı Pastalar' },
+    car: { ka: 'მანქანა ტორტები', en: 'Car Cakes', ru: 'Торты-машины', tr: 'Araba Pastaları' },
+    sports: { ka: 'სპორტული ტორტები', en: 'Sports Cakes', ru: 'Спортивные торты', tr: 'Spor Pastaları' },
+    heart: { ka: 'გულის ტორტები', en: 'Heart Cakes', ru: 'Торты-сердца', tr: 'Kalp Pastaları' },
+    marzipan: { ka: 'მარცეპანის ტორტი', en: 'Marzipan Cake', ru: 'Марципановый торт', tr: 'Badem Ezmesi Pastası' },
+    baptism: { ka: 'ნათლობის ტორტები', en: 'Baptism Cakes', ru: 'Торты на крестины', tr: 'Vaftiz Pastaları' },
+    round: { ka: 'მრგვალი ტორტები', en: 'Round Cakes', ru: 'Круглые торты', tr: 'Yuvarlak Pastalar' },
+    adults: { ka: 'უფროსებისთვის', en: 'For Adults', ru: 'Для взрослых', tr: 'Yetişkinler İçin' },
+    square: { ka: 'ოთხკუთხა ტორტები', en: 'Square Cakes', ru: 'Квадратные торты', tr: 'Kare Pastalar' },
+    'new-year': { ka: 'საახალწლო ტორტები', en: 'New Year Cakes', ru: 'Новогодние торты', tr: 'Yılbaşı Pastaları' },
+  };
+
+  let pageTitle = subcategory 
+    ? subcategoryNames[subcategory]?.[language] || subcategory 
+    : categoryNames[category || '']?.[language] || category || 'Category';
 
   const filteredProducts = products.filter(p => {
+    if (subcategory && p.subcategory !== subcategory) return false;
     if (priceFilter === 'all') return true;
     if (priceFilter === '0-100') return p.price20 <= 100;
-    if (priceFilter === '100-150') return p.price20 > 100 && p.price30 <= 150;
-    if (priceFilter === '150-200') return p.price20 > 150 && p.price30 <= 200;
+    if (priceFilter === '100-150') return p.price20 > 100 && p.price20 <= 150;
+    if (priceFilter === '150-200') return p.price20 > 150 && p.price20 <= 200;
     if (priceFilter === '200+') return p.price20 > 200;
     return true;
   });
@@ -295,12 +317,12 @@ function CategoryPage() {
                 <img src={product.photos?.[0] || ''} alt="" className="w-full h-full object-cover" />
               </div>
               <div className="p-2">
-  <div className="flex items-center justify-between gap-1">
-    <h3 className="font-medium text-xs truncate flex-1">{typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name}</h3>
-    {product.code && <span className="text-[10px] font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
-  </div>
-  <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price20}</p>
-</div>
+                <div className="flex items-center justify-between gap-1">
+                  <h3 className="font-medium text-xs truncate flex-1">{typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name}</h3>
+                  {product.code && <span className="text-[10px] font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
+                </div>
+                <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price20}</p>
+              </div>
             </div>
           )) : (
             <p className="text-gray-500 col-span-full text-center py-10">იტვირთება...</p>
