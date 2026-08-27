@@ -16,11 +16,6 @@ import { CartModal } from './components/CartModal';
 import { CartProvider, useCart } from './CartContext';
 import './index.css';
 
-// ==================== КОНФИГУРАЦИЯ API ====================
-const BASEROW_API_URL = '/api/cakes';  // вместо n8n
-
-
-// ==================== КОНТЕКСТ ЯЗЫКА ====================
 interface LanguageContextType {
   language: string;
   setLanguage: (lang: string) => void;
@@ -30,9 +25,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export const useLanguage = () => {
   const context = useContext(LanguageContext);
-  if (!context) {
-    throw new Error('useLanguage must be used within LanguageProvider');
-  }
+  if (!context) throw new Error('useLanguage must be used within LanguageProvider');
   return context;
 };
 
@@ -49,11 +42,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   );
 };
 
-// ==================== ТОВАРЫ (запасные) ====================
-const defaultProducts = [
-  { id: 1, name: 'Наполеон', photos: ['https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=400&h=300&fit=crop'], price20: 80, price30: 100, price40: 120, fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'], category: 'cakes', description: 'Классический торт Наполеон' },
-  { id: 2, name: 'Медовик', photos: ['https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=400&h=300&fit=crop'], price20: 70, price30: 90, price40: 110, fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'], category: 'cakes', description: 'Медовый торт' },
-];
+// ==================== ТОВАРЫ (пусто по умолчанию) ====================
+const defaultProducts = [];
 
 const heroBackgrounds = [
   'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=1600&h=600&fit=crop&q=80',
@@ -67,10 +57,11 @@ function ScrollToTopOnNavigate() {
   return null;
 }
 
-// ==================== ФУНКЦИЯ ЗАГРУЗКИ ТОВАРОВ ====================
+// ==================== ФУНКЦИЯ ЗАГРУЗКИ ====================
 const fetchProductsFromAPI = async () => {
   try {
     const response = await fetch('/api/cakes');
+    if (!response.ok) return [];
     const data = await response.json();
     return data;
   } catch (error) {
@@ -78,6 +69,7 @@ const fetchProductsFromAPI = async () => {
     return [];
   }
 };
+
 // ==================== ГЛАВНАЯ СТРАНИЦА ====================
 function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -104,7 +96,7 @@ function HomePage() {
   useEffect(() => {
     const loadProducts = async () => {
       const data = await fetchProductsFromAPI();
-      if (data.length > 0) setProducts(data);
+      setProducts(data);
     };
     loadProducts();
   }, []);
@@ -157,18 +149,19 @@ function HomePage() {
             <Link to={`/${language}/cakes`} className="text-[#ff0000] text-sm">{t.viewAll}</Link>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-            {products.map(product => (
+            {products.length > 0 ? products.map(product => (
               <div key={product.id} onClick={() => setSelectedProduct(product)} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg cursor-pointer">
                 <div className="aspect-square overflow-hidden">
-                  <img src={product.photos[0] || 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=400&h=300&fit=crop'} alt={product.name} className="w-full h-full object-cover" />
+                  <img src={product.photos?.[0] || ''} alt={typeof product.name === 'object' ? product.name.ka : product.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="p-2">
-  <h3 className="font-medium text-xs truncate">{product.name}</h3>
-  {product.code && <p className="text-[8px] text-gray-400">კოდი: {product.code}</p>}
-  <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price30}</p>
-</div>
+                  <h3 className="font-medium text-xs truncate">{typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name}</h3>
+                  <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price30}</p>
+                </div>
               </div>
-            ))}
+            )) : (
+              <p className="text-gray-500 col-span-full text-center py-10">ტორტები იტვირთება...</p>
+            )}
           </div>
         </section>
 
@@ -197,7 +190,7 @@ function CategoryPage() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [priceFilter, setPriceFilter] = useState('all');
-  const [products, setProducts] = useState<any[]>(defaultProducts);
+  const [products, setProducts] = useState<any[]>([]);
   const { items } = useCart();
   const navigate = useNavigate();
   const { lang } = useParams();
@@ -209,7 +202,7 @@ function CategoryPage() {
   useEffect(() => {
     const loadProducts = async () => {
       const data = await fetchProductsFromAPI();
-      if (data.length > 0) setProducts(data);
+      setProducts(data);
     };
     loadProducts();
   }, []);
@@ -230,23 +223,7 @@ function CategoryPage() {
     contact: { ka: 'კონტაქტი', en: 'Contact', ru: 'Контакты', tr: 'İletişim' },
   };
 
-  const subcategoryNames: Record<string, Record<string, string>> = {
-    corporate: { ka: 'კორპორატიული', en: 'Corporate', ru: 'Корпоративные', tr: 'Kurumsal' },
-    wedding: { ka: 'საქორწილო', en: 'Wedding', ru: 'Свадебные', tr: 'Düğün' },
-    kids: { ka: 'საბავშვო ტორტები', en: 'Kids Cakes', ru: 'Детские торты', tr: 'Çocuk Pastaları' },
-    photo: { ka: 'ფოტო ტორტები', en: 'Photo Cakes', ru: 'Фото торты', tr: 'Fotoğraflı Pastalar' },
-    car: { ka: 'მანქანა ტორტები', en: 'Car Cakes', ru: 'Торты-машины', tr: 'Araba Pastaları' },
-    sports: { ka: 'სპორტული ტორტები', en: 'Sports Cakes', ru: 'Спортивные торты', tr: 'Spor Pastaları' },
-    heart: { ka: 'გულის ტორტები', en: 'Heart Cakes', ru: 'Торты-сердца', tr: 'Kalp Pastaları' },
-    marzipan: { ka: 'მარცეპანის ტორტი', en: 'Marzipan Cake', ru: 'Марципановый торт', tr: 'Badem Ezmesi Pastası' },
-    baptism: { ka: 'ნათლობის ტორტები', en: 'Baptism Cakes', ru: 'Торты на крестины', tr: 'Vaftiz Pastaları' },
-    round: { ka: 'მრგვალი ტორტები', en: 'Round Cakes', ru: 'Круглые торты', tr: 'Yuvarlak Pastalar' },
-    adults: { ka: 'უფროსებისთვის', en: 'For Adults', ru: 'Для взрослых', tr: 'Yetişkinler İçin' },
-    square: { ka: 'ოთხკუთხა ტორტები', en: 'Square Cakes', ru: 'Квадратные торты', tr: 'Kare Pastalar' },
-    'new-year': { ka: 'საახალწლო ტორტები', en: 'New Year Cakes', ru: 'Новогодние торты', tr: 'Yılbaşı Pastaları' },
-  };
-
-  let pageTitle = subcategory ? subcategoryNames[subcategory]?.[language] || subcategory : categoryNames[category || '']?.[language] || category || 'Category';
+  let pageTitle = categoryNames[category || '']?.[language] || category || 'Category';
 
   const filteredProducts = products.filter(p => {
     if (priceFilter === 'all') return true;
@@ -267,8 +244,8 @@ function CategoryPage() {
           <h1 className="text-lg sm:text-2xl font-bold">{pageTitle}</h1>
           {(category === 'cakes' || category === 'accessories' || category === 'flowers' || category === 'sale') && (
             <select value={priceFilter} onChange={(e) => setPriceFilter(e.target.value)} className="px-3 py-1.5 border rounded-lg text-xs bg-white">
-              <option value="all">{language === 'ka' ? 'ყველა ფასი' : language === 'en' ? 'All prices' : language === 'ru' ? 'Все цены' : 'Tüm fiyatlar'}</option>
-              <option value="0-100">{language === 'ka' ? '100₾-მდე' : 'До 100₾'}</option>
+              <option value="all">{language === 'ka' ? 'ყველა ფასი' : 'Все цены'}</option>
+              <option value="0-100">100₾-მდე</option>
               <option value="100-150">100₾ - 150₾</option>
               <option value="150-200">150₾ - 200₾</option>
               <option value="200+">200₾+</option>
@@ -276,17 +253,19 @@ function CategoryPage() {
           )}
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {filteredProducts.map(product => (
+          {filteredProducts.length > 0 ? filteredProducts.map(product => (
             <div key={product.id} onClick={() => setSelectedProduct(product)} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg cursor-pointer">
               <div className="aspect-square overflow-hidden">
-                <img src={product.photos[0] || 'https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=400&h=300&fit=crop'} alt={product.name} className="w-full h-full object-cover" />
+                <img src={product.photos?.[0] || ''} alt="" className="w-full h-full object-cover" />
               </div>
               <div className="p-2">
-                <h3 className="font-medium text-xs truncate">{product.name}</h3>
+                <h3 className="font-medium text-xs truncate">{typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name}</h3>
                 <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price30}</p>
               </div>
             </div>
-          ))}
+          )) : (
+            <p className="text-gray-500 col-span-full text-center py-10">იტვირთება...</p>
+          )}
         </div>
       </main>
 
