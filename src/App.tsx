@@ -519,7 +519,7 @@ function CategoryPage() {
     : categoryNames[category || '']?.[language] || category || 'Category';
 
     const filteredProducts = products.filter(p => {
-      if (category === 'sale') return p.oldPrice && p.oldPrice > p.price20;
+    if (category === 'sale') return p.oldPrice && p.oldPrice > p.price20;
     if (category && p.category !== category) return false;
     if (subcategory && p.subcategory !== subcategory) return false;
     if (priceFilter === 'all') return true;
