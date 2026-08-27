@@ -3,7 +3,7 @@ export const config = {
 };
 
 export default async function handler(req, res) {
-  const SUPABASE_URL = 'https://jmsafpmxjmcnhejkbbgr.supabase.co/rest/v1/';
+  const SUPABASE_URL = 'https://jmsafpmxjmcnhejkbbgr.supabase.co';
   const SUPABASE_ANON_KEY = 'sb_publishable_mgekH7e9x4oxHVjrQjtqOw_Pjl7M4jP';
 
   try {
