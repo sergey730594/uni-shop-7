@@ -18,7 +18,7 @@ import './index.css';
 
 // ==================== КОНФИГУРАЦИЯ API ====================
 const BASEROW_API_URL = '/api/cakes';  // вместо n8n
-const response = await fetch(BASEROW_API_URL);
+
 
 // ==================== КОНТЕКСТ ЯЗЫКА ====================
 interface LanguageContextType {
