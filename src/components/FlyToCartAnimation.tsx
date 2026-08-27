@@ -13,7 +13,7 @@ export const FlyToCartAnimation: React.FC<FlyToCartAnimationProps> = ({ startPos
   const curve = Math.random() * 100 - 50; // -50 до 50
   const height = Math.random() * 80 + 40; // 40 до 120
   
-  const duration = Math.random() * 0.4 + 0.7; // 0.7 до 1.1 сек
+  const duration = 1.2; // фиксированная длительность
 
   return (
     <>
