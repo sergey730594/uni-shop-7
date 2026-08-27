@@ -129,7 +129,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
       quantity: 1,
     });
     
-    setTimeout(() => setFlyingCake(null), 3000);
+    setTimeout(() => setFlyingCake(null), 2000);
     setTimeout(() => onClose(), 1500);
   };
 
