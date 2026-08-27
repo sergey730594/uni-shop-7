@@ -166,6 +166,9 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
         <div className="flex items-center justify-between gap-2">
   <h2 className="text-sm font-bold text-gray-800">{productName}</h2>
   {product.code && <span className="text-xs font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
+</div><div className="flex items-center justify-between gap-2 mb-2">
+  <h2 className="text-sm font-bold text-gray-800">{productName}</h2>
+  {product.code && <span className="text-xs font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
 </div>
           {productDescription && <p className="text-xs text-gray-500 mt-1 mb-2">{productDescription}</p>}
 
