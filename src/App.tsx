@@ -191,7 +191,7 @@ function HomePage() {
                 </div>
                 <div className="p-2">
                   <h3 className="font-medium text-xs truncate">{typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name}</h3>
-                  <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price30}</p>
+                  <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price20}</p>
                 </div>
               </div>
             )) : (
@@ -260,10 +260,10 @@ function CategoryPage() {
 
   const filteredProducts = products.filter(p => {
     if (priceFilter === 'all') return true;
-    if (priceFilter === '0-100') return p.price30 <= 100;
-    if (priceFilter === '100-150') return p.price30 > 100 && p.price30 <= 150;
-    if (priceFilter === '150-200') return p.price30 > 150 && p.price30 <= 200;
-    if (priceFilter === '200+') return p.price30 > 200;
+    if (priceFilter === '0-100') return p.price20 <= 100;
+    if (priceFilter === '100-150') return p.price20 > 100 && p.price30 <= 150;
+    if (priceFilter === '150-200') return p.price20 > 150 && p.price30 <= 200;
+    if (priceFilter === '200+') return p.price20 > 200;
     return true;
   });
 
@@ -293,7 +293,7 @@ function CategoryPage() {
               </div>
               <div className="p-2">
                 <h3 className="font-medium text-xs truncate">{typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name}</h3>
-                <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price30}</p>
+                <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price20}</p>
               </div>
             </div>
           )) : (
