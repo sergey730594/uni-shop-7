@@ -557,9 +557,9 @@ function CategoryPage() {
         <Link
           key={cat.slug}
           to={`/${language}/cakes/${cat.slug}`}
-          className="flex flex-col items-center gap-2 flex-shrink-0 w-20 group"
+          className="flex flex-col items-center gap-2 flex-shrink-0 w-24 group"
         >
-          <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-transparent group-hover:border-[#ff0000] transition-all shadow-sm">
+          <div className="w-20 h-20 rounded-xl overflow-hidden border-2 border-transparent group-hover:border-[#ff0000] transition-all shadow-sm">
             <img src={cat.photo} alt={cat.name} className="w-full h-full object-cover" />
           </div>
           <span className="text-[10px] font-bold text-gray-700 text-center leading-tight group-hover:text-[#ff0000]">
