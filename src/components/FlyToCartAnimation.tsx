@@ -16,39 +16,26 @@ export const FlyToCartAnimation: React.FC<FlyToCartAnimationProps> = ({ startPos
         style={{
           left: startPos.x,
           top: startPos.y,
-          animation: 'flyLoop 1.8s ease-in-out forwards',
+          animation: 'flySimple 1s ease-in-out forwards',
         }}
       >
-        <div className="w-12 h-12 bg-[#ff0000] rounded-full flex items-center justify-center text-2xl shadow-2xl">
+        <div className="w-10 h-10 bg-[#ff0000] rounded-full flex items-center justify-center text-xl shadow-2xl">
           🎂
         </div>
       </div>
       
       <style>{`
-        @keyframes flyLoop {
+        @keyframes flySimple {
           0% {
             transform: translate(0, 0) scale(1);
+            opacity: 1;
           }
-          15% {
-            transform: translate(${dx * 0.05}px, ${-80}px) scale(0.95);
-          }
-          30% {
-            transform: translate(${dx * 0.15}px, ${-180}px) scale(0.85);
-          }
-          45% {
-            transform: translate(${dx * 0.3}px, ${-280}px) scale(0.7);
-          }
-          60% {
-            transform: translate(${dx * 0.5}px, ${-220}px) scale(0.6);
-          }
-          75% {
-            transform: translate(${dx * 0.7}px, ${dy * 0.5}px) scale(0.45);
-          }
-          90% {
-            transform: translate(${dx * 0.9}px, ${dy * 0.8}px) scale(0.3);
+          50% {
+            transform: translate(${dx / 2}px, ${dy / 2 - 100}px) scale(0.6);
+            opacity: 0.8;
           }
           100% {
-            transform: translate(${dx}px, ${dy}px) scale(0.1);
+            transform: translate(${dx}px, ${dy}px) scale(0.2);
             opacity: 0;
           }
         }
