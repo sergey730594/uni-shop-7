@@ -194,7 +194,14 @@ function HomePage() {
     <h3 className="font-medium text-xs truncate flex-1">{typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name}</h3>
     {product.code && <span className="text-[10px] font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
   </div>
+  {product.oldPrice && product.oldPrice > product.price20 ? (
+  <div className="flex items-center gap-1.5 mt-1">
+    <span className="text-[10px] text-gray-400 line-through">₾{product.oldPrice}</span>
+    <span className="text-[#ff0000] font-bold text-sm">₾{product.price20}</span>
+  </div>
+) : (
   <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price20}</p>
+)}
 </div>
               </div>
             )) : (
@@ -321,7 +328,14 @@ function CategoryPage() {
                   <h3 className="font-medium text-xs truncate flex-1">{typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name}</h3>
                   {product.code && <span className="text-[10px] font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
                 </div>
-                <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price20}</p>
+                {product.oldPrice && product.oldPrice > product.price20 ? (
+  <div className="flex items-center gap-1.5 mt-1">
+    <span className="text-[10px] text-gray-400 line-through">₾{product.oldPrice}</span>
+    <span className="text-[#ff0000] font-bold text-sm">₾{product.price20}</span>
+  </div>
+) : (
+  <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price20}</p>
+)}
               </div>
             </div>
           )) : (
