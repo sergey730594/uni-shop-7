@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
         .map((item) => ({
           id: item.id,
           name: {
-            ka: item.Name_ka || item.Name_en || '',
+            ka: item.Name_ka || '',
             en: item.Name_en || item.Name_ka || '',
             ru: item.Name_ru || item.Name_ka || '',
             tr: item.Name_tr || item.Name_ka || '',
