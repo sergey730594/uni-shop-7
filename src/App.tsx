@@ -518,8 +518,9 @@ function CategoryPage() {
     ? subcategoryNames[subcategory]?.[language] || subcategory 
     : categoryNames[category || '']?.[language] || category || 'Category';
 
-  const filteredProducts = products.filter(p => {
-    if (subcategory && p.subcategory !== subcategory) return false;
+    const filteredProducts = products.filter(p => {
+    if (category && p.category !== category) return false;
+     if (subcategory && p.subcategory !== subcategory) return false;
     if (priceFilter === 'all') return true;
     if (priceFilter === '0-100') return p.price20 <= 100;
     if (priceFilter === '100-150') return p.price20 > 100 && p.price20 <= 150;
