@@ -16,7 +16,7 @@ export const FlyToCartAnimation: React.FC<FlyToCartAnimationProps> = ({ startPos
         style={{
           left: startPos.x,
           top: startPos.y,
-          animation: 'flySimple 1s ease-in-out forwards',
+          animation: 'flyStraight 0.8s linear forwards',
         }}
       >
         <div className="w-10 h-10 bg-[#ff0000] rounded-full flex items-center justify-center text-xl shadow-2xl">
@@ -25,14 +25,10 @@ export const FlyToCartAnimation: React.FC<FlyToCartAnimationProps> = ({ startPos
       </div>
       
       <style>{`
-        @keyframes flySimple {
+        @keyframes flyStraight {
           0% {
             transform: translate(0, 0) scale(1);
             opacity: 1;
-          }
-          50% {
-            transform: translate(${dx / 2}px, ${dy / 2 - 100}px) scale(0.6);
-            opacity: 0.8;
           }
           100% {
             transform: translate(${dx}px, ${dy}px) scale(0.2);
