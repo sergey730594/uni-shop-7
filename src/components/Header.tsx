@@ -341,23 +341,55 @@ useEffect(() => {
               placeholder={getPlaceholder()}
               className="w-full px-4 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm bg-gray-50 focus:bg-white focus:outline-none focus:border-[#ff0000] transition-colors"
             />
-            {isSearchOpen && searchQuery.trim() && filteredResults.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-2xl border overflow-hidden z-[9999]">
-                {filteredResults.map(product => (
-                  <button
-                    key={product.id}
-                    onClick={() => { setIsSearchOpen(false); setSearchQuery(''); if (onProductClick) onProductClick(product); }}
-                    className="w-full flex items-center gap-3 px-3 py-2 hover:bg-red-50 text-left"
-                  >
-                    <img src={product.photos[0]} alt={product.name} className="w-10 h-10 rounded-lg object-cover flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs font-medium truncate">{product.name}</p>
-                      <p className="text-[10px] text-gray-500">₾{product.price}</p>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
+            {isSearchOpen && searchQuery.trim() && searchResults.length > 0 && (
+  <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-2xl border overflow-hidden z-[9999]">
+    {searchResults.map((product: any) => (
+      <button
+        key={product.id}
+        onClick={() => { 
+          setIsSearchOpen(false); 
+          setSearchQuery('');
+          if (onProductClick) {
+            onProductClick({
+              id: product.id,
+              name: {
+                ka: product.name_ka || '',
+                en: product.name_en || '',
+                ru: product.name_ru || '',
+                tr: product.name_tr || '',
+              },
+              photos: Array.isArray(product.photos) ? product.photos : product.photos ? [product.photos] : [],
+              price20: Number(product.price20 || 0),
+              price30: Number(product.price30 || 0),
+              price40: Number(product.price40 || 0),
+              fillings: (product.fillings || '').split(',').map((f: string) => f.trim()),
+              description: {
+                ka: product.description_ka || '',
+                en: product.description_en || '',
+                ru: product.description_ru || '',
+                tr: product.description_tr || '',
+              },
+              code: product.code || '',
+            });
+          }
+        }}
+        className="w-full flex items-center gap-3 px-3 py-2 hover:bg-red-50 text-left"
+      >
+        <img 
+          src={Array.isArray(product.photos) ? product.photos[0] : product.photos || ''} 
+          alt="" 
+          className="w-10 h-10 rounded-lg object-cover flex-shrink-0" 
+        />
+        <div className="flex-1 min-w-0">
+          <p className="text-xs font-medium truncate">
+            {product.name_ka || product.name_en || ''}
+          </p>
+          <p className="text-[10px] text-gray-500">₾{product.price20 || 0}</p>
+        </div>
+      </button>
+    ))}
+  </div>
+)}
           </div>
 
           <div className="flex items-center gap-1 sm:gap-3">
