@@ -190,9 +190,12 @@ function HomePage() {
                   <img src={product.photos?.[0] || ''} alt="" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-2">
-                  <h3 className="font-medium text-xs truncate">{typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name}</h3>
-                  <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price20}</p>
-                </div>
+  <div className="flex items-center justify-between gap-1">
+    <h3 className="font-medium text-xs truncate flex-1">{typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name}</h3>
+    {product.code && <span className="text-[10px] font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
+  </div>
+  <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price20}</p>
+</div>
               </div>
             )) : (
               <p className="text-gray-500 col-span-full text-center py-10">იტვირთება...</p>
@@ -292,9 +295,12 @@ function CategoryPage() {
                 <img src={product.photos?.[0] || ''} alt="" className="w-full h-full object-cover" />
               </div>
               <div className="p-2">
-                <h3 className="font-medium text-xs truncate">{typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name}</h3>
-                <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price20}</p>
-              </div>
+  <div className="flex items-center justify-between gap-1">
+    <h3 className="font-medium text-xs truncate flex-1">{typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name}</h3>
+    {product.code && <span className="text-[10px] font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
+  </div>
+  <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price20}</p>
+</div>
             </div>
           )) : (
             <p className="text-gray-500 col-span-full text-center py-10">იტვირთება...</p>
