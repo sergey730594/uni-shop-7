@@ -8,57 +8,47 @@ interface FlyToCartAnimationProps {
 export const FlyToCartAnimation: React.FC<FlyToCartAnimationProps> = ({ startPos, endPos }) => {
   const dx = endPos.x - startPos.x;
   const dy = endPos.y - startPos.y;
-  
-  // Контрольные точки для петли
-  const midX = startPos.x + dx * 0.5;
-  const midY = startPos.y - 200; // верхняя точка петли
-  const loopX = startPos.x + dx * 0.3;
-  const loopY = startPos.y - 300; // ещё выше для петли
 
   return (
     <>
       <div
         className="fixed z-[99999] pointer-events-none"
         style={{
-          left: 0,
-          top: 0,
-          position: 'fixed',
+          left: startPos.x,
+          top: startPos.y,
+          animation: 'flyLoop 1.8s ease-in-out forwards',
         }}
       >
-        <div
-          className="w-12 h-12 rounded-full flex items-center justify-center text-2xl shadow-2xl"
-          style={{
-            backgroundColor: '#ff0000',
-            animation: `flyWithLoop 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards`,
-            position: 'fixed',
-            left: startPos.x,
-            top: startPos.y,
-          }}
-        >
+        <div className="w-12 h-12 bg-[#ff0000] rounded-full flex items-center justify-center text-2xl shadow-2xl">
           🎂
         </div>
       </div>
       
       <style>{`
-        @keyframes flyWithLoop {
+        @keyframes flyLoop {
           0% {
-            transform: translate(0, 0) scale(1) rotate(0deg);
-            opacity: 1;
+            transform: translate(0, 0) scale(1);
           }
-          25% {
-            transform: translate(${dx * 0.2}px, ${-150}px) scale(0.9) rotate(10deg);
-            opacity: 1;
+          15% {
+            transform: translate(${dx * 0.05}px, ${-80}px) scale(0.95);
           }
-          50% {
-            transform: translate(${dx * 0.5}px, ${-250}px) scale(0.7) rotate(-15deg);
-            opacity: 0.9;
+          30% {
+            transform: translate(${dx * 0.15}px, ${-180}px) scale(0.85);
+          }
+          45% {
+            transform: translate(${dx * 0.3}px, ${-280}px) scale(0.7);
+          }
+          60% {
+            transform: translate(${dx * 0.5}px, ${-220}px) scale(0.6);
           }
           75% {
-            transform: translate(${dx * 0.7}px, ${dy * 0.6}px) scale(0.5) rotate(15deg);
-            opacity: 0.7;
+            transform: translate(${dx * 0.7}px, ${dy * 0.5}px) scale(0.45);
+          }
+          90% {
+            transform: translate(${dx * 0.9}px, ${dy * 0.8}px) scale(0.3);
           }
           100% {
-            transform: translate(${dx}px, ${dy}px) scale(0.2) rotate(0deg);
+            transform: translate(${dx}px, ${dy}px) scale(0.1);
             opacity: 0;
           }
         }
