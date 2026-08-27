@@ -536,6 +536,27 @@ function CategoryPage() {
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} language={language} />
 
       <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 w-full">
+        {/* Breadcrumbs */}
+<nav className="flex items-center gap-1.5 text-xs mb-4 flex-wrap">
+  <Link to={`/${language}`} className="flex items-center gap-1 text-gray-400 hover:text-[#ff0000] transition-colors">
+    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10" />
+    </svg>
+  </Link>
+  <span className="text-gray-300">/</span>
+  {subcategory && (
+    <>
+      <Link to={`/${language}/cakes`} className="text-gray-500 hover:text-[#ff0000] transition-colors">
+        {categoryNames.cakes[language]}
+      </Link>
+      <span className="text-gray-300">/</span>
+      <span className="text-[#ff0000] font-bold">{pageTitle}</span>
+    </>
+  )}
+  {!subcategory && (
+    <span className="text-[#ff0000] font-bold">{pageTitle}</span>
+  )}
+</nav>
         <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
           <h1 className="text-lg sm:text-2xl font-bold">{pageTitle}</h1>
           {(category === 'cakes' || category === 'accessories' || category === 'flowers' || category === 'sale') && (
