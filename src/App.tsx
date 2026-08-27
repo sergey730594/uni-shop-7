@@ -57,7 +57,7 @@ const fetchProductsFromAPI = async () => {
       fillings: (item.fillings || '').split(',').map((f: string) => f.trim()).filter(Boolean),
       category: item.category || 'cakes',
       subcategory: item.subcategory || '',
-      photos: item.photos ? [item.photos] : [],
+      photos: Array.isArray(item.photos) ? item.photos : item.photos ? [item.photos] : [],
       popular: item.popular || false,
       published: item.published !== false,
     }));
