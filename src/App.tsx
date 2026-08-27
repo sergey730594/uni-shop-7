@@ -20,7 +20,7 @@ import './index.css';
 // ==================== SUPABASE ====================
 const supabase = createClient(
   'https://jmsafpmxjmcnhejkbbgr.supabase.co',
-  'sb_publishable_mgekH7e9x4oxHVjrQjtqOw_Pjl7M4jP'
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imptc2FmcG14am1jbmhlamtiYmdyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc4MjQxNDgsImV4cCI6MjEwMzQwMDE0OH0.iGwAhWr47N_xfpkj4Da2vj5E0hEMTgLuZa-X3KKnKDI'
 );
 
 const fetchProductsFromAPI = async () => {
