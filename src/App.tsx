@@ -228,7 +228,6 @@ function HomePage() {
 }
 
 // ==================== СТРАНИЦА КАТЕГОРИИ ====================
-// ==================== СТРАНИЦА КАТЕГОРИИ ====================
 function CategoryPage() {
   const { category, subcategory } = useParams();
   const { language, setLanguage } = useLanguage();
@@ -269,6 +268,236 @@ function CategoryPage() {
     contact: { ka: 'კონტაქტი', en: 'Contact', ru: 'Контакты', tr: 'İletişim' },
   };
 
+  // ==================== SVG ИКОНКИ ====================
+  const PhoneIcon = () => (
+    <svg className="w-4 h-4 text-[#ff0000] inline" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z" />
+    </svg>
+  );
+
+  const EmailIcon = () => (
+    <svg className="w-4 h-4 text-[#ff0000] inline" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    </svg>
+  );
+
+  const PinIcon = () => (
+    <svg className="w-4 h-4 text-[#ff0000] inline" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12 0C7.31 0 3.5 3.81 3.5 8.5c0 6.38 8.5 15.5 8.5 15.5s8.5-9.12 8.5-15.5C20.5 3.81 16.69 0 12 0zm0 11.5a3 3 0 110-6 3 3 0 010 6z"/>
+    </svg>
+  );
+
+  const ClockIcon = () => (
+    <svg className="w-4 h-4 text-[#ff0000] inline" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 7v5l3 2" />
+    </svg>
+  );
+
+  const TruckIcon = () => (
+    <svg className="w-4 h-4 text-[#ff0000] inline" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M1 8h13v8H1zM14 10h4l4 4v2h-8M5.5 19a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.5 19a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+    </svg>
+  );
+
+  const BankIcon = () => (
+    <svg className="w-4 h-4 text-[#ff0000] inline" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 10l9-7 9 7M5 10v10h14V10M9 20v-6h6v6" />
+    </svg>
+  );
+
+  // ==================== ТЕКСТОВЫЕ СТРАНИЦЫ (HTML) ====================
+  const textPages: Record<string, Record<string, { title: string; content: string[] }>> = {
+    fillings: {
+      ka: {
+        title: 'შიგთავსი',
+        content: [
+          '<h2 class="text-xl font-bold mb-3">ჩვენი ტორტების შიგთავსები</h2>',
+          '<div class="space-y-3">',
+          '<div class="bg-white rounded-xl p-4 shadow-sm"><h3 class="font-bold text-[#ff0000]">ხილის ტორტი</h3><p class="text-sm text-gray-600">ახალი ხილით, ნაღების კრემით</p></div>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm"><h3 class="font-bold text-[#ff0000]">ბანანი შოკოლადით</h3><p class="text-sm text-gray-600">კლასიკური კომბინაცია</p></div>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm"><h3 class="font-bold text-[#ff0000]">შავი საფირმო</h3><p class="text-sm text-gray-600">შოკოლადის მოყვარულთათვის</p></div>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm"><h3 class="font-bold text-[#ff0000]">საფირმო ბაუნტი</h3><p class="text-sm text-gray-600">ქოქოსის არომატით</p></div>',
+          '</div>',
+        ],
+      },
+      en: {
+        title: 'Fillings',
+        content: [
+          '<h2 class="text-xl font-bold mb-3">Our cake fillings</h2>',
+          '<div class="space-y-3">',
+          '<div class="bg-white rounded-xl p-4 shadow-sm"><h3 class="font-bold text-[#ff0000]">Fruit Cake</h3><p class="text-sm text-gray-600">With fresh fruits</p></div>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm"><h3 class="font-bold text-[#ff0000]">Banana with Chocolate</h3><p class="text-sm text-gray-600">Classic combination</p></div>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm"><h3 class="font-bold text-[#ff0000]">Black Special</h3><p class="text-sm text-gray-600">For chocolate lovers</p></div>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm"><h3 class="font-bold text-[#ff0000]">Bounty Special</h3><p class="text-sm text-gray-600">Coconut flavor</p></div>',
+          '</div>',
+        ],
+      },
+      ru: {
+        title: 'Начинки',
+        content: [
+          '<h2 class="text-xl font-bold mb-3">Начинки для наших тортов</h2>',
+          '<div class="space-y-3">',
+          '<div class="bg-white rounded-xl p-4 shadow-sm"><h3 class="font-bold text-[#ff0000]">Фруктовый торт</h3><p class="text-sm text-gray-600">Со свежими фруктами</p></div>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm"><h3 class="font-bold text-[#ff0000]">Банан с шоколадом</h3><p class="text-sm text-gray-600">Классика</p></div>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm"><h3 class="font-bold text-[#ff0000]">Чёрный фирменный</h3><p class="text-sm text-gray-600">Для любителей шоколада</p></div>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm"><h3 class="font-bold text-[#ff0000]">Фирменный Баунти</h3><p class="text-sm text-gray-600">Кокосовый вкус</p></div>',
+          '</div>',
+        ],
+      },
+      tr: {
+        title: 'Dolgular',
+        content: [
+          '<h2 class="text-xl font-bold mb-3">Pasta dolgularımız</h2>',
+          '<div class="space-y-3">',
+          '<div class="bg-white rounded-xl p-4 shadow-sm"><h3 class="font-bold text-[#ff0000]">Meyveli Pasta</h3><p class="text-sm text-gray-600">Taze meyvelerle</p></div>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm"><h3 class="font-bold text-[#ff0000]">Çikolatalı Muz</h3><p class="text-sm text-gray-600">Klasik</p></div>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm"><h3 class="font-bold text-[#ff0000]">Siyah Özel</h3><p class="text-sm text-gray-600">Çikolata severler için</p></div>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm"><h3 class="font-bold text-[#ff0000]">Bounty Özel</h3><p class="text-sm text-gray-600">Hindistan cevizi aroması</p></div>',
+          '</div>',
+        ],
+      },
+    },
+    delivery: {
+      ka: {
+        title: 'გადახდა-მიტანა',
+        content: [
+          '<h2 class="text-xl font-bold mb-3">მიტანის პირობები</h2>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm mb-3 space-y-2">',
+          '<p class="text-sm flex items-center gap-2">' + TruckIcon().toString() + ' თბილისის მასშტაბით — <strong>10₾</strong></p>',
+          '<p class="text-sm">თვითგატანა — <strong>უფასო</strong></p>',
+          '<p class="text-sm">9:00-დან 22:00-მდე</p>',
+          '</div>',
+          '<h2 class="text-xl font-bold mb-3">გადახდა</h2>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm space-y-2">',
+          '<p class="text-sm flex items-center gap-2">' + BankIcon().toString() + ' საქართველოს ბანკი</p>',
+          '<p class="text-sm">ანგარიში: GE00BG0000000000000000</p>',
+          '</div>',
+        ],
+      },
+      en: {
+        title: 'Payment & Delivery',
+        content: [
+          '<h2 class="text-xl font-bold mb-3">Delivery</h2>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm mb-3 space-y-2">',
+          '<p class="text-sm">Tbilisi — <strong>10₾</strong></p>',
+          '<p class="text-sm">Pickup — <strong>Free</strong></p>',
+          '<p class="text-sm">9:00 - 22:00</p>',
+          '</div>',
+          '<h2 class="text-xl font-bold mb-3">Payment</h2>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm space-y-2">',
+          '<p class="text-sm">Bank of Georgia</p>',
+          '<p class="text-sm">Account: GE00BG0000000000000000</p>',
+          '</div>',
+        ],
+      },
+      ru: {
+        title: 'Оплата и доставка',
+        content: [
+          '<h2 class="text-xl font-bold mb-3">Доставка</h2>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm mb-3 space-y-2">',
+          '<p class="text-sm">По Тбилиси — <strong>10₾</strong></p>',
+          '<p class="text-sm">Самовывоз — <strong>бесплатно</strong></p>',
+          '<p class="text-sm">9:00 - 22:00</p>',
+          '</div>',
+          '<h2 class="text-xl font-bold mb-3">Оплата</h2>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm space-y-2">',
+          '<p class="text-sm">Банк Грузии</p>',
+          '<p class="text-sm">Счёт: GE00BG0000000000000000</p>',
+          '</div>',
+        ],
+      },
+      tr: {
+        title: 'Ödeme & Teslimat',
+        content: [
+          '<h2 class="text-xl font-bold mb-3">Teslimat</h2>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm mb-3 space-y-2">',
+          '<p class="text-sm">Tiflis — <strong>10₾</strong></p>',
+          '<p class="text-sm">Teslim alma — <strong>ücretsiz</strong></p>',
+          '<p class="text-sm">9:00 - 22:00</p>',
+          '</div>',
+          '<h2 class="text-xl font-bold mb-3">Ödeme</h2>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm space-y-2">',
+          '<p class="text-sm">Georgia Bank</p>',
+          '<p class="text-sm">Hesap: GE00BG0000000000000000</p>',
+          '</div>',
+        ],
+      },
+    },
+    contact: {
+      ka: {
+        title: 'კონტაქტი',
+        content: [
+          '<h2 class="text-xl font-bold mb-3">დაგვიკავშირდით</h2>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm space-y-2">',
+          '<p class="text-sm flex items-center gap-2">' + PhoneIcon().toString() + ' <strong>ტელეფონი:</strong> +995 593 756 700</p>',
+          '<p class="text-sm flex items-center gap-2">' + EmailIcon().toString() + ' <strong>Email:</strong> info@grant.ge</p>',
+          '<p class="text-sm flex items-center gap-2">' + PinIcon().toString() + ' <strong>მისამართი:</strong> თბილისი, ნოდარ დუმბაძის გამზ. №4</p>',
+          '<p class="text-sm flex items-center gap-2">' + ClockIcon().toString() + ' <strong>სამუშაო საათები:</strong> 9:00 - 22:00</p>',
+          '</div>',
+        ],
+      },
+      en: {
+        title: 'Contact',
+        content: [
+          '<h2 class="text-xl font-bold mb-3">Contact us</h2>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm space-y-2">',
+          '<p class="text-sm"><strong>Phone:</strong> +995 593 756 700</p>',
+          '<p class="text-sm"><strong>Email:</strong> info@grant.ge</p>',
+          '<p class="text-sm"><strong>Address:</strong> Tbilisi, Nodar Dumbadze Ave. №4</p>',
+          '<p class="text-sm"><strong>Hours:</strong> 9:00 - 22:00</p>',
+          '</div>',
+        ],
+      },
+      ru: {
+        title: 'Контакты',
+        content: [
+          '<h2 class="text-xl font-bold mb-3">Свяжитесь с нами</h2>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm space-y-2">',
+          '<p class="text-sm"><strong>Телефон:</strong> +995 593 756 700</p>',
+          '<p class="text-sm"><strong>Email:</strong> info@grant.ge</p>',
+          '<p class="text-sm"><strong>Адрес:</strong> Тбилиси, просп. Нодара Думбадзе №4</p>',
+          '<p class="text-sm"><strong>Часы работы:</strong> 9:00 - 22:00</p>',
+          '</div>',
+        ],
+      },
+      tr: {
+        title: 'İletişim',
+        content: [
+          '<h2 class="text-xl font-bold mb-3">Bize ulaşın</h2>',
+          '<div class="bg-white rounded-xl p-4 shadow-sm space-y-2">',
+          '<p class="text-sm"><strong>Telefon:</strong> +995 593 756 700</p>',
+          '<p class="text-sm"><strong>Email:</strong> info@grant.ge</p>',
+          '<p class="text-sm"><strong>Adres:</strong> Tiflis, Nodar Dumbadze Cad. №4</p>',
+          '<p class="text-sm"><strong>Saatler:</strong> 9:00 - 22:00</p>',
+          '</div>',
+        ],
+      },
+    },
+  };
+
+  const isTextPage = ['fillings', 'delivery', 'contact'].includes(category || '');
+  const textPage = isTextPage ? textPages[category || '']?.[language] : null;
+
+  if (textPage) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        <Header language={language} onLanguageChange={handleLanguageChange} onMenuOpen={() => setIsMenuOpen(true)} onCartOpen={() => setIsCartOpen(true)} cartCount={items.length} />
+        <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} language={language} />
+        <main className="flex-1 max-w-3xl mx-auto px-4 py-8 w-full">
+          <h1 className="text-2xl font-bold mb-6">{textPage.title}</h1>
+          {textPage.content.map((html, i) => (
+            <div key={i} dangerouslySetInnerHTML={{ __html: html }} />
+          ))}
+        </main>
+        <Footer language={language} />
+        <WhatsAppButton />
+        <ScrollToTopButton />
+      </div>
+    );
+  }
+
+  // ==================== КАТАЛОГ ====================
   const subcategoryNames: Record<string, Record<string, string>> = {
     corporate: { ka: 'კორპორატიული', en: 'Corporate', ru: 'Корпоративные', tr: 'Kurumsal' },
     wedding: { ka: 'საქორწილო', en: 'Wedding', ru: 'Свадебные', tr: 'Düğün' },
@@ -329,13 +558,13 @@ function CategoryPage() {
                   {product.code && <span className="text-[10px] font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
                 </div>
                 {product.oldPrice && product.oldPrice > product.price20 ? (
-  <div className="flex items-center gap-1.5 mt-1">
-    <span className="text-[10px] text-gray-400 line-through">₾{product.oldPrice}</span>
-    <span className="text-[#ff0000] font-bold text-sm">₾{product.price20}</span>
-  </div>
-) : (
-  <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price20}</p>
-)}
+                  <div className="flex items-center gap-1.5 mt-1">
+                    <span className="text-[10px] text-gray-400 line-through">₾{product.oldPrice}</span>
+                    <span className="text-[#ff0000] font-bold text-sm">₾{product.price20}</span>
+                  </div>
+                ) : (
+                  <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price20}</p>
+                )}
               </div>
             </div>
           )) : (
