@@ -126,15 +126,6 @@ const menuIcons: Record<string, React.ReactNode> = {
   delivery: <TruckIcon />, contact: <PhoneIcon />,
 };
 
-const searchProducts = [
-  { id: 1, name: 'Наполеон', price: 100, photos: ['https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=400&h=300&fit=crop'], price20: 80, price30: 100, price40: 120, fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'], description: 'Классический торт Наполеон' },
-  { id: 2, name: 'Медовик', price: 90, photos: ['https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?w=400&h=300&fit=crop'], price20: 70, price30: 90, price40: 110, fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'], description: 'Медовый торт' },
-  { id: 3, name: 'Прага', price: 110, photos: ['https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=400&h=300&fit=crop'], price20: 90, price30: 110, price40: 130, fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'], description: 'Шоколадный торт Прага' },
-  { id: 4, name: 'Красный бархат', price: 180, photos: ['https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop'], price20: 150, price30: 180, price40: 210, fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'], description: 'Красный бархат' },
-  { id: 5, name: 'Чизкейк', price: 80, photos: ['https://images.unsplash.com/photo-1535254973040-607b474cb50d?w=400&h=300&fit=crop'], price20: 60, price30: 80, price40: 100, fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'], description: 'Нежный чизкейк' },
-  { id: 6, name: 'Эклеры', price: 50, photos: ['https://images.unsplash.com/photo-1550617931-e17a7b70dce2?w=400&h=300&fit=crop'], price20: 40, price30: 50, price40: 60, fillings: ['fruit', 'fruit-mix', 'banana-chocolate', 'black-special', 'bounty-special'], description: 'Французские эклеры' },
-];
-
 interface HeaderProps {
   onCartOpen?: () => void;
   onMenuOpen?: () => void;
@@ -206,7 +197,40 @@ export const Header: React.FC<HeaderProps> = ({
 
   const getFormattedTime = () => currentTime.toLocaleTimeString(getLocale(), { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
 
-  const filteredResults = searchProducts.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 6);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+
+useEffect(() => {
+  const searchCakes = async () => {
+    if (!searchQuery.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    try {
+      const { data } = await supabase
+        .from('cakes')
+        .select('*')
+        .eq('published', true);
+      
+      const results = (data || []).filter((item: any) => {
+        const query = searchQuery.toLowerCase();
+        return (
+          (item.name_ka || '').toLowerCase().includes(query) ||
+          (item.name_en || '').toLowerCase().includes(query) ||
+          (item.name_ru || '').toLowerCase().includes(query) ||
+          (item.name_tr || '').toLowerCase().includes(query) ||
+          (item.code || '').toString().includes(query)
+        );
+      }).slice(0, 6);
+      
+      setSearchResults(results);
+    } catch (error) {
+      console.error('Поиск ошибка:', error);
+      setSearchResults([]);
+    }
+  };
+  
+  searchCakes();
+}, [searchQuery]);
 
   const cakeCategories: Record<string, { name: string; slug: string }[]> = {
     ka: [
