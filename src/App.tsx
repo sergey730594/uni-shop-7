@@ -536,6 +536,40 @@ function CategoryPage() {
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} language={language} />
 
       <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 w-full">
+      {category === 'cakes' && !subcategory && (
+  <div className="mb-6">
+    <div className="flex gap-3 overflow-x-auto pb-4 hide-scrollbar">
+      {[
+        { name: 'კორპორატიული', slug: 'corporate', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/1korporatiuli.png' },
+        { name: 'საქორწილო', slug: 'wedding', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/2saqorwilo.png' },
+        { name: 'საბავშვო', slug: 'kids', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/3sabavshvo.png' },
+        { name: 'ფოტო ტორტები', slug: 'photo', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/4photo.png' },
+        { name: 'მანქანა', slug: 'car', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/5manqana.png' },
+        { name: 'სპორტული', slug: 'sports', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/6sport.png' },
+        { name: 'გული', slug: 'heart', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/7gulis.png' },
+        { name: 'მარცეპანი', slug: 'marzipan', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/marcepani.png' },
+        { name: 'ნათლობა', slug: 'baptism', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/natlobis.png' },
+        { name: 'მრგვალი', slug: 'round', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/10mrgvali.png' },
+        { name: 'უფროსებისთვის', slug: 'adults', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/11ufrosebistvis.png' },
+        { name: 'ოთხკუთხა', slug: 'square', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/12square.png' },
+        { name: 'საახალწლო', slug: 'new-year', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/13saaxalwlo.png' },
+      ].map((cat) => (
+        <Link
+          key={cat.slug}
+          to={`/${language}/cakes/${cat.slug}`}
+          className="flex flex-col items-center gap-2 flex-shrink-0 w-20 group"
+        >
+          <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-transparent group-hover:border-[#ff0000] transition-all shadow-sm">
+            <img src={cat.photo} alt={cat.name} className="w-full h-full object-cover" />
+          </div>
+          <span className="text-[10px] font-bold text-gray-700 text-center leading-tight group-hover:text-[#ff0000]">
+            {cat.name}
+          </span>
+        </Link>
+      ))}
+    </div>
+  </div>
+)}
         <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
           <h1 className="text-lg sm:text-2xl font-bold">{pageTitle}</h1>
           {(category === 'cakes' || category === 'accessories' || category === 'flowers' || category === 'sale') && (
