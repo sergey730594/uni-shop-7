@@ -163,8 +163,10 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
         </div>
 
         <div className="p-4 overflow-y-auto" style={{ maxHeight: 'calc(95vh - 250px)' }}>
-          <h2 className="text-sm font-bold text-gray-800">{productName}</h2>
-          {product.code && <p className="text-[10px] text-gray-400">კოდი: {product.code}</p>}
+        <div className="flex items-center justify-between gap-2">
+  <h2 className="text-sm font-bold text-gray-800">{productName}</h2>
+  {product.code && <span className="text-xs font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
+</div>
           {productDescription && <p className="text-xs text-gray-500 mt-1 mb-2">{productDescription}</p>}
 
           <div className="flex gap-1.5 mb-2">
