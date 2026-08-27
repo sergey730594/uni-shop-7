@@ -300,7 +300,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button onClick={onMenuOpen} className="p-1.5 hover:bg-gray-100 rounded-lg lg:hidden">
               <MenuIcon />
             </button>
-            <Link to={`/${language}`} className="flex items-center gap-2">
+            <Link to={`/${language}`} onClick={() => window.scrollTo(0, 0)} className="flex items-center gap-2">
               <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-full overflow-hidden shadow-md flex-shrink-0">
                 <img src={logoImage} alt="Grant Bakery" className="w-full h-full object-cover" />
               </div>
