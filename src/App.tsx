@@ -1,5 +1,6 @@
 import React, { useState, createContext, useContext, useEffect } from 'react';
 import { Routes, Route, useParams, Link, useNavigate, useLocation } from 'react-router-dom';
+import { createClient } from '@supabase/supabase-js';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { MobileMenu } from './components/MobileMenu';
@@ -16,6 +17,57 @@ import { CartModal } from './components/CartModal';
 import { CartProvider, useCart } from './CartContext';
 import './index.css';
 
+// ==================== SUPABASE ====================
+const supabase = createClient(
+  'https://jmsafpmxjmcnhejkbbgr.supabase.co',
+  'sb_publishable_mgekH7e9x4oxHVjrQjtqOw_Pjl7M4jP'
+);
+
+const fetchProductsFromAPI = async () => {
+  try {
+    const { data, error } = await supabase
+      .from('cakes')
+      .select('*')
+      .eq('published', true);
+    
+    if (error) {
+      console.error('Supabase ошибка:', error);
+      return [];
+    }
+    
+    return data.map((item: any) => ({
+      id: item.id,
+      name: {
+        ka: item.name_ka || '',
+        en: item.name_en || item.name_ka || '',
+        ru: item.name_ru || item.name_ka || '',
+        tr: item.name_tr || item.name_ka || '',
+      },
+      description: {
+        ka: item.description_ka || '',
+        en: item.description_en || item.description_ka || '',
+        ru: item.description_ru || item.description_ka || '',
+        tr: item.description_tr || item.description_ka || '',
+      },
+      code: item.code || '',
+      price20: Number(item.price20 || 0),
+      price30: Number(item.price30 || 0),
+      price40: Number(item.price40 || 0),
+      oldPrice: Number(item.old_price || 0),
+      fillings: (item.fillings || '').split(',').map((f: string) => f.trim()).filter(Boolean),
+      category: item.category || 'cakes',
+      subcategory: item.subcategory || '',
+      photos: item.photos ? [item.photos] : [],
+      popular: item.popular || false,
+      published: item.published !== false,
+    }));
+  } catch (error) {
+    console.error('Ошибка:', error);
+    return [];
+  }
+};
+
+// ==================== КОНТЕКСТ ЯЗЫКА ====================
 interface LanguageContextType {
   language: string;
   setLanguage: (lang: string) => void;
@@ -42,9 +94,6 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   );
 };
 
-// ==================== ТОВАРЫ (пусто по умолчанию) ====================
-const defaultProducts = [];
-
 const heroBackgrounds = [
   'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=1600&h=600&fit=crop&q=80',
   'https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=1600&h=600&fit=crop&q=80',
@@ -57,25 +106,12 @@ function ScrollToTopOnNavigate() {
   return null;
 }
 
-// ==================== ФУНКЦИЯ ЗАГРУЗКИ ====================
-const fetchProductsFromAPI = async () => {
-  try {
-    const response = await fetch('/api/cakes');
-    if (!response.ok) return [];
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error('Ошибка загрузки товаров:', error);
-    return [];
-  }
-};
-
 // ==================== ГЛАВНАЯ СТРАНИЦА ====================
 function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
-  const [products, setProducts] = useState<any[]>(defaultProducts);
+  const [products, setProducts] = useState<any[]>([]);
   const { language, setLanguage } = useLanguage();
   const { items } = useCart();
   const navigate = useNavigate();
@@ -88,8 +124,7 @@ function HomePage() {
   }, [lang]);
 
   useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * heroBackgrounds.length);
-    setBgImage(heroBackgrounds[randomIndex]);
+    setBgImage(heroBackgrounds[Math.floor(Math.random() * heroBackgrounds.length)]);
     setAnimationClass(['float-bg-1','float-bg-2','float-bg-3','float-bg-4','float-bg-5'][Math.floor(Math.random() * 5)]);
   }, []);
 
@@ -152,7 +187,7 @@ function HomePage() {
             {products.length > 0 ? products.map(product => (
               <div key={product.id} onClick={() => setSelectedProduct(product)} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg cursor-pointer">
                 <div className="aspect-square overflow-hidden">
-                  <img src={product.photos?.[0] || ''} alt={typeof product.name === 'object' ? product.name.ka : product.name} className="w-full h-full object-cover" />
+                  <img src={product.photos?.[0] || ''} alt="" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-2">
                   <h3 className="font-medium text-xs truncate">{typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name}</h3>
@@ -160,7 +195,7 @@ function HomePage() {
                 </div>
               </div>
             )) : (
-              <p className="text-gray-500 col-span-full text-center py-10">ტორტები იტვირთება...</p>
+              <p className="text-gray-500 col-span-full text-center py-10">იტვირთება...</p>
             )}
           </div>
         </section>
@@ -184,7 +219,7 @@ function HomePage() {
 
 // ==================== СТРАНИЦА КАТЕГОРИИ ====================
 function CategoryPage() {
-  const { category, subcategory } = useParams();
+  const { category } = useParams();
   const { language, setLanguage } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -219,8 +254,6 @@ function CategoryPage() {
     accessories: { ka: 'აქსესუარები', en: 'Accessories', ru: 'Аксессуары', tr: 'Aksesuarlar' },
     flowers: { ka: 'ყვავილები', en: 'Flowers', ru: 'Цветы', tr: 'Çiçekler' },
     sale: { ka: 'ფასდაკლება', en: 'Sale', ru: 'Скидки', tr: 'İndirim' },
-    delivery: { ka: 'გადახდა-მიტანა', en: 'Payment-Delivery', ru: 'Оплата-Доставка', tr: 'Ödeme-Teslimat' },
-    contact: { ka: 'კონტაქტი', en: 'Contact', ru: 'Контакты', tr: 'İletişim' },
   };
 
   let pageTitle = categoryNames[category || '']?.[language] || category || 'Category';
@@ -244,7 +277,7 @@ function CategoryPage() {
           <h1 className="text-lg sm:text-2xl font-bold">{pageTitle}</h1>
           {(category === 'cakes' || category === 'accessories' || category === 'flowers' || category === 'sale') && (
             <select value={priceFilter} onChange={(e) => setPriceFilter(e.target.value)} className="px-3 py-1.5 border rounded-lg text-xs bg-white">
-              <option value="all">{language === 'ka' ? 'ყველა ფასი' : 'Все цены'}</option>
+              <option value="all">ყველა ფასი</option>
               <option value="0-100">100₾-მდე</option>
               <option value="100-150">100₾ - 150₾</option>
               <option value="150-200">150₾ - 200₾</option>
