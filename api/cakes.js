@@ -1,4 +1,8 @@
-module.exports = async (req, res) => {
+export const config = {
+    runtime: 'nodejs20.x',
+  };
+  
+  export default async function handler(req, res) {
     const BASEROW_URL = 'https://sale-bot-database.duckdns.org';
     const BASEROW_TOKEN = '40jIKvApr4EgTXDw0W4B2TwxAAMyrZN4';
     const CAKES_TABLE_ID = 837;
@@ -22,12 +26,6 @@ module.exports = async (req, res) => {
             ru: item.Name_ru || item.Name_ka || '',
             tr: item.Name_tr || item.Name_ka || '',
           },
-          description: {
-            ka: item.Description_ka || '',
-            en: item.Description_en || item.Description_ka || '',
-            ru: item.Description_ru || item.Description_ka || '',
-            tr: item.Description_tr || item.Description_ka || '',
-          },
           code: item.Code || '',
           price20: Number(item['Price 20'] || 0),
           price30: Number(item['Price 30'] || 0),
@@ -35,15 +33,29 @@ module.exports = async (req, res) => {
           oldPrice: Number(item.oldPrice || 0),
           fillings: (item.Fillings || []).map((f) => f.value),
           category: item.Category?.[0]?.value || 'cakes',
-          subcategory: item.SubCategory?.[0]?.value || '',
           photos: (item.Photo || []).map((p) => p.url),
+          description: {
+            ka: item.Description_ka || '',
+            en: item.Description_en || '',
+            ru: item.Description_ru || '',
+            tr: item.Description_tr || '',
+          },
           popular: item.Popular || false,
           published: item.Published !== false,
         }))
         .filter((item) => item.published);
   
-      res.status(200).json(formatted);
+      return new Response(JSON.stringify(formatted), {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
     } catch (error) {
-      res.status(500).json({ error: 'Ошибка', details: error.message });
+      return new Response(JSON.stringify({ error: 'Ошибка', details: error.message }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
-  };
+  }
