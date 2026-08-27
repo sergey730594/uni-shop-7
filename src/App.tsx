@@ -540,11 +540,15 @@ function CategoryPage() {
           <h1 className="text-lg sm:text-2xl font-bold">{pageTitle}</h1>
           {(category === 'cakes' || category === 'accessories' || category === 'flowers' || category === 'sale') && (
             <select value={priceFilter} onChange={(e) => setPriceFilter(e.target.value)} className="px-3 py-1.5 border rounded-lg text-xs bg-white">
-              <option value="all">ყველა ფასი</option>
-              <option value="0-100">100₾-მდე</option>
-              <option value="100-150">100₾ - 150₾</option>
-              <option value="150-200">150₾ - 200₾</option>
-              <option value="200+">200₾+</option>
+            <option value="all">
+              {language === 'ka' ? 'ყველა ფასი' : language === 'en' ? 'All prices' : language === 'ru' ? 'Все цены' : 'Tüm fiyatlar'}
+            </option>
+            <option value="0-100">
+              {language === 'ka' ? '100₾-მდე' : language === 'en' ? 'Up to 100₾' : language === 'ru' ? 'До 100₾' : "100₾'a kadar"}
+            </option>
+            <option value="100-150">100₾ - 150₾</option>
+            <option value="150-200">150₾ - 200₾</option>
+            <option value="200+">200₾+</option>
             </select>
           )}
         </div>
