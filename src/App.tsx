@@ -142,10 +142,10 @@ function HomePage() {
   };
 
   const texts = {
-    ka: { badge: 'საკონდიტრო', title: 'ტორტის შეკვეთა', titleHighlight: 'Grant Bakery"-ში', subtitle: 'ონლაინ შეკვეთა, მიტანის სერვისით', button: 'შეკვეთა ახლავე', button2: 'გაიგე მეტი', popular: 'პოპულარული ტორტები', viewAll: 'ყველას ნახვა →' },
-    en: { badge: '🧁 Bakery', title: 'Order a Cake', titleHighlight: 'at Grant Bakery', subtitle: 'Online ordering with delivery service', button: 'Order Now', button2: 'Learn More', popular: 'Popular Cakes', viewAll: 'View All →' },
-    ru: { badge: '🧁 Кондитерская', title: 'Заказ торта', titleHighlight: 'в Grant Bakery', subtitle: 'Онлайн-заказ с доставкой', button: 'Заказать сейчас', button2: 'Узнать больше', popular: 'Популярные торты', viewAll: 'Смотреть все →' },
-    tr: { badge: '🧁 Pastane', title: 'Pasta Siparişi', titleHighlight: 'Grant Bakery\'de', subtitle: 'Teslimat hizmeti ile çevrimiçi sipariş', button: 'Şimdi Sipariş Ver', button2: 'Daha Fazla', popular: 'Popüler Pastalar', viewAll: 'Hepsini Gör →' },
+    ka: { badge: 'საკონდიტრო', title: 'ტორტის შეკვეთა ', titleHighlight: 'Grant Bakery"-ში', subtitle: 'ონლაინ შეკვეთა, მიტანის სერვისით', button: 'შეკვეთა ახლავე', button2: 'გაიგე მეტი', popular: 'პოპულარული ტორტები', viewAll: 'ყველას ნახვა →' },
+    en: { badge: '🧁 Bakery', title: 'Order a Cake ', titleHighlight: 'at Grant Bakery', subtitle: 'Online ordering with delivery service', button: 'Order Now', button2: 'Learn More', popular: 'Popular Cakes', viewAll: 'View All →' },
+    ru: { badge: '🧁 Кондитерская', title: 'Заказ торта ', titleHighlight: 'в Grant Bakery', subtitle: 'Онлайн-заказ с доставкой', button: 'Заказать сейчас', button2: 'Узнать больше', popular: 'Популярные торты', viewAll: 'Смотреть все →' },
+    tr: { badge: '🧁 Pastane', title: 'Pasta Siparişi ', titleHighlight: 'Grant Bakery\'de', subtitle: 'Teslimat hizmeti ile çevrimiçi sipariş', button: 'Şimdi Sipariş Ver', button2: 'Daha Fazla', popular: 'Popüler Pastalar', viewAll: 'Hepsini Gör →' },
   };
 
   const t = texts[language as keyof typeof texts] || texts.ka;
