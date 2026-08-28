@@ -374,19 +374,21 @@ function CategoryPage() {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
           {filteredProducts.length > 0 ? filteredProducts.map(product => (
-            <div key={product.id} onClick={() => setSelectedProduct(product)} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg cursor-pointer">
-              <div className="aspect-square overflow-hidden">
-                <img src={product.photos?.[0] || ''} alt="" className="w-full h-full object-cover" />
+            <div key={product.id} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg">
+            <div className="aspect-square overflow-hidden cursor-pointer" onClick={() => setSelectedProduct(product)}>
+              <img src={product.photos?.[0] || ''} alt="" className="w-full h-full object-cover" />
+            </div>
+            <div className="p-2">
+              <div className="flex items-center justify-between gap-1">
+                <h3 className="font-medium text-xs truncate flex-1 cursor-pointer" onClick={() => setSelectedProduct(product)}>
+                  {typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name}
+                </h3>
+                {product.code && <span className="text-[10px] font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
               </div>
-              <div className="p-2">
-                <div className="flex items-center justify-between gap-1">
-                  <h3 className="font-medium text-xs truncate flex-1">{typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name}</h3>
-                  {product.code && <span className="text-[10px] font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
-                </div>
-                {product.tags && product.tags[language] && (
-                  <div className="flex flex-wrap gap-1 mt-1 justify-end">
-                    {product.tags[language].split(',').slice(0, 2).map((tag: string) => (
-                      <span 
+              {product.tags && product.tags[language] && (
+                <div className="flex flex-wrap gap-1 mt-1 justify-end">
+                  {product.tags[language].split(',').slice(0, 2).map((tag: string) => (
+                    <span 
                       key={tag} 
                       className="text-[8px] text-black font-medium hover:text-[#ff0000] cursor-pointer transition-colors"
                       onClick={(e) => {
@@ -394,19 +396,19 @@ function CategoryPage() {
                         window.location.href = `/${language}/cakes?tag=${encodeURIComponent(tag.trim())}`;
                       }}
                     >{tag.trim()}</span>
-                    ))}
-                  </div>
-                )}
-                {product.oldPrice && product.oldPrice > product.price20 ? (
-                  <div className="flex items-center gap-1.5 mt-1">
-                    <span className="text-[10px] text-gray-400 line-through">₾{product.oldPrice}</span>
-                    <span className="text-[#ff0000] font-bold text-sm">₾{product.price20}</span>
-                  </div>
-                ) : (
-                  <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price20}</p>
-                )}
-              </div>
+                  ))}
+                </div>
+              )}
+              {product.oldPrice && product.oldPrice > product.price20 ? (
+                <div className="flex items-center gap-1.5 mt-1">
+                  <span className="text-[10px] text-gray-400 line-through">₾{product.oldPrice}</span>
+                  <span className="text-[#ff0000] font-bold text-sm">₾{product.price20}</span>
+                </div>
+              ) : (
+                <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price20}</p>
+              )}
             </div>
+          </div>
           )) : (
             <p className="text-gray-500 col-span-full text-center py-10">იტვირთება...</p>
           )}
