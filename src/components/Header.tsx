@@ -438,7 +438,10 @@ useEffect(() => {
               if (isCakeItem) {
                 return (
                   <div key={index} className="relative" onMouseEnter={() => setIsCakesOpen(true)} onMouseLeave={() => setIsCakesOpen(false)}>
-                    <Link to={`/${language}${item.href}`} onClick={() => setIsCakesOpen(false)} className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-full hover:bg-white/20">
+                    <Link 
+  to={`/${language}${item.href}`} 
+  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+  className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-full hover:bg-white/20">
                       {menuIcons[item.icon]}
                       <span>{item.name}</span>
                       <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
