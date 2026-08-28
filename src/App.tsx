@@ -302,7 +302,11 @@ function CategoryPage() {
     ? subcategoryNames[subcategory]?.[language] || subcategory 
     : categoryNames[category || '']?.[language] || category || 'Category';
 
-  const filteredProducts = products.filter(p => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const tagFilter = searchParams.get('tag');
+    
+    const filteredProducts = products.filter(p => {
+    if (tagFilter && (!p.tags || !p.tags[language] || !p.tags[language].split(',').map(t => t.trim()).includes(tagFilter))) return false;
     if (category === 'sale') return p.oldPrice && p.oldPrice > p.price20;
     if (category && p.category !== category) return false;
     if (subcategory && p.subcategory !== subcategory) return false;
