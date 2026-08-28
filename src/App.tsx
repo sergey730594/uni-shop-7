@@ -204,7 +204,7 @@ function HomePage() {
                   {product.tags && product.tags[language] && (
                     <div className="flex flex-wrap gap-1 mt-1 justify-end">
                       {product.tags[language].split(',').slice(0, 2).map((tag: string) => (
-                        <span key={tag} className="text-[8px] text-black font-medium hover:text-[#ff0000] cursor-pointer transition-colors">{tag.trim()}</span>
+                        <span key={tag} className="text-[8px] text-black font-medium hover:text-[#ff0000] cursor-pointer transition-colors">#{tag.trim()}</span>
                       ))}
                     </div>
                   )}
@@ -395,7 +395,7 @@ function CategoryPage() {
                         e.stopPropagation();
                         window.location.href = `/${language}/cakes?tag=${encodeURIComponent(tag.trim())}`;
                       }}
-                    >{tag.trim()}</span>
+                    >#{tag.trim()}</span>
                   ))}
                 </div>
               )}
