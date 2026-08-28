@@ -103,7 +103,7 @@ const GiftIcon = () => (
 const FlowerIcon = () => (
   <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
     <circle cx="12" cy="12" r="3" />
-    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9V5M12 19v-4M9 12H5M19 12h-4M9.5 9.5L6.5 6.5M17.5 17.5l-3-3M14.5 9.5l3-3M6.5 17.5l3-3" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9V5M12 19v-4M9 12H5M19 12h-4" />
   </svg>
 );
 
@@ -152,6 +152,7 @@ export const Header: React.FC<HeaderProps> = ({
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isCakesOpen, setIsCakesOpen] = useState(false);
   const langRef = useRef<HTMLDivElement>(null);
@@ -171,6 +172,42 @@ export const Header: React.FC<HeaderProps> = ({
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    const searchCakes = async () => {
+      if (!searchQuery.trim()) {
+        setSearchResults([]);
+        return;
+      }
+      try {
+        const { data } = await supabase
+          .from('cakes')
+          .select('*')
+          .eq('published', true);
+        
+        const results = (data || []).filter((item: any) => {
+          const query = searchQuery.toLowerCase();
+          return (
+            (item.name_ka || '').toLowerCase().includes(query) ||
+            (item.name_en || '').toLowerCase().includes(query) ||
+            (item.name_ru || '').toLowerCase().includes(query) ||
+            (item.name_tr || '').toLowerCase().includes(query) ||
+            (item.code || '').toString().includes(query) ||
+            (item.tags_ka || '').toLowerCase().includes(query) ||
+            (item.tags_en || '').toLowerCase().includes(query) ||
+            (item.tags_ru || '').toLowerCase().includes(query) ||
+            (item.tags_tr || '').toLowerCase().includes(query)
+          );
+        }).slice(0, 6);
+        
+        setSearchResults(results);
+      } catch (error) {
+        console.error('Поиск ошибка:', error);
+        setSearchResults([]);
+      }
+    };
+    searchCakes();
+  }, [searchQuery]);
+
   const currentLanguage = LANGUAGES.find(l => l.code === language) || LANGUAGES[0];
 
   const getPlaceholder = () => {
@@ -185,7 +222,7 @@ export const Header: React.FC<HeaderProps> = ({
   const getAddress = () => ({
     ka: 'თბილისი, ნოდარ დუმბაძის გამზ. №4', en: 'Tbilisi, Nodar Dumbadze Ave. №4',
     ru: 'г. Тбилиси, просп. Нодара Думбадзе №4', tr: 'Tiflis, Nodar Dumbadze Cad. №4',
-  }[language] || 'ka');
+  }[language] || '');
 
   const getPhoneLabel = () => ({ ka: 'ტელ.', en: 'Tel.', ru: 'Тел.', tr: 'Tel.' }[language] || 'ტელ.');
 
@@ -203,77 +240,42 @@ export const Header: React.FC<HeaderProps> = ({
 
   const getFormattedTime = () => currentTime.toLocaleTimeString(getLocale(), { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
 
-  const [searchResults, setSearchResults] = useState<any[]>([]);
-
-useEffect(() => {
-  const searchCakes = async () => {
-    if (!searchQuery.trim()) {
-      setSearchResults([]);
-      return;
-    }
-    try {
-      const { data } = await supabase
-        .from('cakes')
-        .select('*')
-        .eq('published', true);
-      
-      const results = (data || []).filter((item: any) => {
-        const query = searchQuery.toLowerCase();
-        return (
-          (item.name_ka || '').toLowerCase().includes(query) ||
-          (item.name_en || '').toLowerCase().includes(query) ||
-          (item.name_ru || '').toLowerCase().includes(query) ||
-          (item.name_tr || '').toLowerCase().includes(query) ||
-          (item.code || '').toString().includes(query)
-        );
-      }).slice(0, 6);
-      
-      setSearchResults(results);
-    } catch (error) {
-      console.error('Поиск ошибка:', error);
-      setSearchResults([]);
-    }
-  };
-  
-  searchCakes();
-}, [searchQuery]);
-
   const cakeCategories: Record<string, { name: string; slug: string }[]> = {
     ka: [
       { name: 'კორპორატიული', slug: 'corporate' }, { name: 'საქორწილო', slug: 'wedding' },
-      { name: 'საბავშვო ტორტები', slug: 'kids' }, { name: 'ფოტო ტორტები', slug: 'photo' },
-      { name: 'მანქანა ტორტები', slug: 'car' }, { name: 'სპორტული ტორტები', slug: 'sports' },
-      { name: 'გულის ტორტები', slug: 'heart' }, { name: 'მარცეპანის ტორტი', slug: 'marzipan' },
-      { name: 'ნათლობის ტორტები', slug: 'baptism' }, { name: 'მრგვალი ტორტები', slug: 'round' },
-      { name: 'უფროსებისთვის', slug: 'adults' }, { name: 'ოთხკუთხა ტორტები', slug: 'square' },
-      { name: 'საახალწლო ტორტები', slug: 'new-year' },
+      { name: 'საბავშვო', slug: 'kids' }, { name: 'ფოტო ტორტები', slug: 'photo' },
+      { name: 'მანქანა', slug: 'car' }, { name: 'სპორტული', slug: 'sports' },
+      { name: 'გული', slug: 'heart' }, { name: 'მარცეპანი', slug: 'marzipan' },
+      { name: 'ნათლობა', slug: 'baptism' }, { name: 'მრგვალი', slug: 'round' },
+      { name: 'უფროსებისთვის', slug: 'adults' }, { name: 'ოთხკუთხა', slug: 'square' },
+      { name: 'საახალწლო', slug: 'new-year' },
     ],
     en: [
       { name: 'Corporate', slug: 'corporate' }, { name: 'Wedding', slug: 'wedding' },
-      { name: 'Kids Cakes', slug: 'kids' }, { name: 'Photo Cakes', slug: 'photo' },
-      { name: 'Car Cakes', slug: 'car' }, { name: 'Sports Cakes', slug: 'sports' },
-      { name: 'Heart Cakes', slug: 'heart' }, { name: 'Marzipan Cake', slug: 'marzipan' },
-      { name: 'Baptism Cakes', slug: 'baptism' }, { name: 'Round Cakes', slug: 'round' },
-      { name: 'For Adults', slug: 'adults' }, { name: 'Square Cakes', slug: 'square' },
-      { name: 'New Year Cakes', slug: 'new-year' },
+      { name: 'Kids', slug: 'kids' }, { name: 'Photo Cakes', slug: 'photo' },
+      { name: 'Car Cakes', slug: 'car' }, { name: 'Sports', slug: 'sports' },
+      { name: 'Heart', slug: 'heart' }, { name: 'Marzipan', slug: 'marzipan' },
+      { name: 'Baptism', slug: 'baptism' }, { name: 'Round', slug: 'round' },
+      { name: 'For Adults', slug: 'adults' }, { name: 'Square', slug: 'square' },
+      { name: 'New Year', slug: 'new-year' },
     ],
     ru: [
       { name: 'Корпоративные', slug: 'corporate' }, { name: 'Свадебные', slug: 'wedding' },
-      { name: 'Детские торты', slug: 'kids' }, { name: 'Фото торты', slug: 'photo' },
-      { name: 'Торты-машины', slug: 'car' }, { name: 'Спортивные торты', slug: 'sports' },
-      { name: 'Торты-сердца', slug: 'heart' }, { name: 'Марципановый торт', slug: 'marzipan' },
-      { name: 'Торты на крестины', slug: 'baptism' }, { name: 'Круглые торты', slug: 'round' },
-      { name: 'Для взрослых', slug: 'adults' }, { name: 'Квадратные торты', slug: 'square' },
-      { name: 'Новогодние торты', slug: 'new-year' },
+      { name: 'Детские', slug: 'kids' }, { name: 'Фото торты', slug: 'photo' },
+      { name: 'Торты-машины', slug: 'car' }, { name: 'Спортивные', slug: 'sports' },
+      { name: 'Сердца', slug: 'heart' }, { name: 'Марципан', slug: 'marzipan' },
+      { name: 'Крестины', slug: 'baptism' }, { name: 'Круглые', slug: 'round' },
+      { name: 'Для взрослых', slug: 'adults' }, { name: 'Квадратные', slug: 'square' },
+      { name: 'Новогодние', slug: 'new-year' },
     ],
     tr: [
       { name: 'Kurumsal', slug: 'corporate' }, { name: 'Düğün', slug: 'wedding' },
-      { name: 'Çocuk Pastaları', slug: 'kids' }, { name: 'Fotoğraflı Pastalar', slug: 'photo' },
-      { name: 'Araba Pastaları', slug: 'car' }, { name: 'Spor Pastaları', slug: 'sports' },
-      { name: 'Kalp Pastaları', slug: 'heart' }, { name: 'Badem Ezmesi Pastası', slug: 'marzipan' },
-      { name: 'Vaftiz Pastaları', slug: 'baptism' }, { name: 'Yuvarlak Pastalar', slug: 'round' },
-      { name: 'Yetişkinler İçin', slug: 'adults' }, { name: 'Kare Pastalar', slug: 'square' },
-      { name: 'Yılbaşı Pastaları', slug: 'new-year' },
+      { name: 'Çocuk', slug: 'kids' }, { name: 'Fotoğraflı', slug: 'photo' },
+      { name: 'Araba', slug: 'car' }, { name: 'Spor', slug: 'sports' },
+      { name: 'Kalp', slug: 'heart' }, { name: 'Badem Ezmesi', slug: 'marzipan' },
+      { name: 'Vaftiz', slug: 'baptism' }, { name: 'Yuvarlak', slug: 'round' },
+      { name: 'Yetişkinler', slug: 'adults' }, { name: 'Kare', slug: 'square' },
+      { name: 'Yılbaşı', slug: 'new-year' },
     ],
   };
 
@@ -288,19 +290,19 @@ useEffect(() => {
       { icon: 'home', name: 'Home', href: '/' }, { icon: 'cakes', name: 'Cakes', href: '/cakes' },
       { icon: 'fillings', name: 'Fillings', href: '/fillings' }, { icon: 'accessories', name: 'Accessories', href: '/accessories' },
       { icon: 'flowers', name: 'Flowers', href: '/flowers' }, { icon: 'sale', name: 'Sale', href: '/sale' },
-      { icon: 'delivery', name: 'Payment-Delivery', href: '/delivery' }, { icon: 'contact', name: 'Contact', href: '/contact' },
+      { icon: 'delivery', name: 'Delivery', href: '/delivery' }, { icon: 'contact', name: 'Contact', href: '/contact' },
     ],
     ru: [
       { icon: 'home', name: 'Главная', href: '/' }, { icon: 'cakes', name: 'Торты', href: '/cakes' },
       { icon: 'fillings', name: 'Начинки', href: '/fillings' }, { icon: 'accessories', name: 'Аксессуары', href: '/accessories' },
       { icon: 'flowers', name: 'Цветы', href: '/flowers' }, { icon: 'sale', name: 'Скидки', href: '/sale' },
-      { icon: 'delivery', name: 'Оплата-Доставка', href: '/delivery' }, { icon: 'contact', name: 'Контакты', href: '/contact' },
+      { icon: 'delivery', name: 'Доставка', href: '/delivery' }, { icon: 'contact', name: 'Контакты', href: '/contact' },
     ],
     tr: [
       { icon: 'home', name: 'Ana Sayfa', href: '/' }, { icon: 'cakes', name: 'Pastalar', href: '/cakes' },
       { icon: 'fillings', name: 'Dolgular', href: '/fillings' }, { icon: 'accessories', name: 'Aksesuarlar', href: '/accessories' },
       { icon: 'flowers', name: 'Çiçekler', href: '/flowers' }, { icon: 'sale', name: 'İndirim', href: '/sale' },
-      { icon: 'delivery', name: 'Ödeme-Teslimat', href: '/delivery' }, { icon: 'contact', name: 'İletişim', href: '/contact' },
+      { icon: 'delivery', name: 'Teslimat', href: '/delivery' }, { icon: 'contact', name: 'İletişim', href: '/contact' },
     ],
   };
 
@@ -344,58 +346,65 @@ useEffect(() => {
               value={searchQuery}
               onChange={(e) => { setSearchQuery(e.target.value); setIsSearchOpen(true); }}
               onFocus={() => setIsSearchOpen(true)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  setIsSearchOpen(false);
+                  window.location.href = `/${language}/cakes?tag=${encodeURIComponent(searchQuery.trim())}`;
+                }
+              }}
               placeholder={getPlaceholder()}
               className="w-full px-4 py-1.5 sm:py-2 border border-gray-300 rounded-lg text-sm bg-gray-50 focus:bg-white focus:outline-none focus:border-[#ff0000] transition-colors"
             />
             {isSearchOpen && searchQuery.trim() && searchResults.length > 0 && (
-  <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-2xl border overflow-hidden z-[9999]">
-    {searchResults.map((product: any) => (
-      <button
-        key={product.id}
-        onClick={() => { 
-          setIsSearchOpen(false); 
-          setSearchQuery('');
-          if (onProductClick) {
-            onProductClick({
-              id: product.id,
-              name: {
-                ka: product.name_ka || '',
-                en: product.name_en || '',
-                ru: product.name_ru || '',
-                tr: product.name_tr || '',
-              },
-              photos: Array.isArray(product.photos) ? product.photos : product.photos ? [product.photos] : [],
-              price20: Number(product.price20 || 0),
-              price30: Number(product.price30 || 0),
-              price40: Number(product.price40 || 0),
-              fillings: (product.fillings || '').split(',').map((f: string) => f.trim()),
-              description: {
-                ka: product.description_ka || '',
-                en: product.description_en || '',
-                ru: product.description_ru || '',
-                tr: product.description_tr || '',
-              },
-              code: product.code || '',
-            });
-          }
-        }}
-        className="w-full flex items-center gap-3 px-3 py-2 hover:bg-red-50 text-left"
-      >
-        <img 
-          src={Array.isArray(product.photos) ? product.photos[0] : product.photos || ''} 
-          alt="" 
-          className="w-10 h-10 rounded-lg object-cover flex-shrink-0" 
-        />
-        <div className="flex-1 min-w-0">
-          <p className="text-xs font-medium truncate">
-            {product.name_ka || product.name_en || ''}
-          </p>
-          <p className="text-[10px] text-gray-500">₾{product.price20 || 0}</p>
-        </div>
-      </button>
-    ))}
-  </div>
-)}
+              <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-xl shadow-2xl border overflow-hidden z-[9999]">
+                {searchResults.map((product: any) => (
+                  <button
+                    key={product.id}
+                    onClick={() => { 
+                      setIsSearchOpen(false); 
+                      setSearchQuery('');
+                      if (onProductClick) {
+                        onProductClick({
+                          id: product.id,
+                          name: {
+                            ka: product.name_ka || '',
+                            en: product.name_en || '',
+                            ru: product.name_ru || '',
+                            tr: product.name_tr || '',
+                          },
+                          photos: Array.isArray(product.photos) ? product.photos : product.photos ? [product.photos] : [],
+                          price20: Number(product.price20 || 0),
+                          price30: Number(product.price30 || 0),
+                          price40: Number(product.price40 || 0),
+                          fillings: (product.fillings || '').split(',').map((f: string) => f.trim()),
+                          description: {
+                            ka: product.description_ka || '',
+                            en: product.description_en || '',
+                            ru: product.description_ru || '',
+                            tr: product.description_tr || '',
+                          },
+                          code: product.code || '',
+                        });
+                      }
+                    }}
+                    className="w-full flex items-center gap-3 px-3 py-2 hover:bg-red-50 text-left"
+                  >
+                    <img 
+                      src={Array.isArray(product.photos) ? product.photos[0] : product.photos || ''} 
+                      alt="" 
+                      className="w-10 h-10 rounded-lg object-cover flex-shrink-0" 
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-medium truncate">
+                        {product.name_ka || product.name_en || ''}
+                      </p>
+                      <p className="text-[10px] text-gray-500">₾{product.price20 || 0}</p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="flex items-center gap-1 sm:gap-3">
@@ -438,10 +447,7 @@ useEffect(() => {
               if (isCakeItem) {
                 return (
                   <div key={index} className="relative" onMouseEnter={() => setIsCakesOpen(true)} onMouseLeave={() => setIsCakesOpen(false)}>
-                    <Link 
-  to={`/${language}${item.href}`} 
-  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-  className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-full hover:bg-white/20">
+                    <Link to={`/${language}/cakes`} onClick={() => { setIsCakesOpen(false); window.scrollTo(0, 0); }} className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-full hover:bg-white/20">
                       {menuIcons[item.icon]}
                       <span>{item.name}</span>
                       <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
@@ -450,7 +456,7 @@ useEffect(() => {
                       <div className="absolute top-full left-0 bg-white rounded-xl shadow-2xl border p-4 z-[9999] min-w-[300px] sm:min-w-[450px] lg:min-w-[550px]">
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-1">
                           {(cakeCategories[language] || cakeCategories.ka).map((cat, catIndex) => (
-                            <Link key={catIndex} to={`/${language}/cakes/${cat.slug}`} onClick={() => setIsCakesOpen(false)} className="text-xs font-bold text-gray-700 hover:text-[#ff0000] hover:bg-red-50 px-3 py-2 rounded-lg whitespace-nowrap">
+                            <Link key={catIndex} to={`/${language}/cakes/${cat.slug}`} onClick={() => { setIsCakesOpen(false); window.scrollTo(0, 0); }} className="text-xs font-bold text-gray-700 hover:text-[#ff0000] hover:bg-red-50 px-3 py-2 rounded-lg whitespace-nowrap">
                               {cat.name}
                             </Link>
                           ))}
@@ -461,15 +467,10 @@ useEffect(() => {
                 );
               }
               return (
-                <Link 
-  key={index} 
-  to={`/${language}${item.href}`} 
-  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-  className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-full hover:bg-white/20"
->
-  {menuIcons[item.icon]}
-  <span>{item.name}</span>
-</Link>
+                <Link key={index} to={`/${language}${item.href}`} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-full hover:bg-white/20">
+                  {menuIcons[item.icon]}
+                  <span>{item.name}</span>
+                </Link>
               );
             })}
           </nav>
