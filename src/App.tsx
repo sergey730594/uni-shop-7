@@ -202,12 +202,19 @@ function HomePage() {
                     {product.code && <span className="text-[10px] font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
                   </div>
                   {product.tags && product.tags[language] && (
-                    <div className="flex flex-wrap gap-1 mt-1 justify-end">
-                      {product.tags[language].split(',').slice(0, 2).map((tag: string) => (
-                        <span key={tag} className="text-[8px] text-black font-medium hover:text-[#ff0000] cursor-pointer transition-colors">#{tag.trim()}</span>
-                      ))}
-                    </div>
-                  )}
+  <div className="flex flex-wrap gap-1 mt-1 justify-end">
+    {product.tags[language].split(',').slice(0, 2).map((tag: string) => (
+      <span 
+        key={tag} 
+        className="text-[8px] text-black font-medium hover:text-[#ff0000] cursor-pointer transition-colors"
+        onClick={(e) => {
+          e.stopPropagation();
+          window.location.href = `/${language}/cakes?tag=${encodeURIComponent(tag.trim())}`;
+        }}
+      >#{tag.trim()}</span>
+    ))}
+  </div>
+)}
                   {product.oldPrice && product.oldPrice > product.price20 ? (
                     <div className="flex items-center gap-1.5 mt-1">
                       <span className="text-[10px] text-gray-400 line-through">₾{product.oldPrice}</span>
@@ -386,19 +393,19 @@ function CategoryPage() {
                 {product.code && <span className="text-[10px] font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
               </div>
               {product.tags && product.tags[language] && (
-                <div className="flex flex-wrap gap-1 mt-1 justify-end">
-                  {product.tags[language].split(',').slice(0, 2).map((tag: string) => (
-                    <span 
-                      key={tag} 
-                      className="text-[8px] text-black font-medium hover:text-[#ff0000] cursor-pointer transition-colors"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.location.href = `/${language}/cakes?tag=${encodeURIComponent(tag.trim())}`;
-                      }}
-                    >#{tag.trim()}</span>
-                  ))}
-                </div>
-              )}
+  <div className="flex flex-wrap gap-1 mt-1 justify-end">
+    {product.tags[language].split(',').slice(0, 2).map((tag: string) => (
+      <span 
+        key={tag} 
+        className="text-[8px] text-black font-medium hover:text-[#ff0000] cursor-pointer transition-colors"
+        onClick={(e) => {
+          e.stopPropagation();
+          window.location.href = `/${language}/cakes?tag=${encodeURIComponent(tag.trim())}`;
+        }}
+      >#{tag.trim()}</span>
+    ))}
+  </div>
+)}
               {product.oldPrice && product.oldPrice > product.price20 ? (
                 <div className="flex items-center gap-1.5 mt-1">
                   <span className="text-[10px] text-gray-400 line-through">₾{product.oldPrice}</span>
