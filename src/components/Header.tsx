@@ -461,10 +461,15 @@ useEffect(() => {
                 );
               }
               return (
-                <Link key={index} to={`/${language}${item.href}`} className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-full hover:bg-white/20">
-                  {menuIcons[item.icon]}
-                  <span>{item.name}</span>
-                </Link>
+                <Link 
+  key={index} 
+  to={`/${language}${item.href}`} 
+  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+  className="flex items-center gap-1 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-full hover:bg-white/20"
+>
+  {menuIcons[item.icon]}
+  <span>{item.name}</span>
+</Link>
               );
             })}
           </nav>
