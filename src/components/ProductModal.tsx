@@ -136,7 +136,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
     <div className="fixed inset-0 z-[10000] flex items-center justify-center p-3 sm:p-4 overflow-hidden">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
 
-      {/* Основное окно: вертикально на мобильных, горизонтально на sm+ */}
+      {/* Основное окно */}
       <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col sm:flex-row w-full max-w-[400px] sm:max-w-[720px] max-h-[95vh]">
         
         {/* ЛЕВАЯ ЧАСТЬ: фото + кнопки соцсетей */}
@@ -174,55 +174,59 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
           </div>
         </div>
 
-        {/* ПРАВАЯ ЧАСТЬ: содержимое */}
-        <div className="flex flex-col flex-1 min-w-0 p-4 sm:p-6 overflow-y-auto">
-          <div className="flex items-center justify-between gap-2 mb-2">
-            <h2 className="text-lg sm:text-xl font-bold text-gray-800">{productName}</h2>
-            {product.code && <span className="text-xs font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
-          </div>
-          
-          {productDescription && <p className="text-xs text-gray-500 mb-3">{productDescription}</p>}
+        {/* ПРАВАЯ ЧАСТЬ: контент + прилипшая кнопка */}
+        <div className="flex flex-col flex-1 min-w-0">
+          {/* Прокручиваемый контент */}
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6">
+            <div className="flex items-center justify-between gap-2 mb-2">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-800">{productName}</h2>
+              {product.code && <span className="text-xs font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
+            </div>
+            
+            {productDescription && <p className="text-xs text-gray-500 mb-3">{productDescription}</p>}
 
-          <label className="block text-[10px] font-medium text-gray-700 mb-1">{t.size}</label>
-          <div className="flex gap-2 mb-3">
-            {sizes.map(size => (
-              <button
-                key={size.value}
-                onClick={() => setSelectedSize(size.value)}
-                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${selectedSize === size.value ? 'bg-[#ff0000] text-white' : 'bg-gray-100 text-gray-600'}`}
-              >
-                {size.label}
-              </button>
-            ))}
-          </div>
-
-          <label className="block text-[10px] font-medium text-gray-700 mb-1">{t.filling}</label>
-          <div className="flex flex-wrap gap-1.5 mb-3">
-            {product.fillings.map(fillingKey => {
-              const name = fillingNames[fillingKey]?.[language] || fillingKey;
-              return (
+            <label className="block text-[10px] font-medium text-gray-700 mb-1">{t.size}</label>
+            <div className="flex gap-2 mb-3">
+              {sizes.map(size => (
                 <button
-                  key={fillingKey}
-                  onClick={() => setSelectedFilling(fillingKey)}
-                  className={`px-3 py-1 rounded-full text-[10px] font-bold transition-all ${selectedFilling === fillingKey ? 'bg-[#ff0000] text-white' : 'bg-gray-100 text-gray-600'}`}
+                  key={size.value}
+                  onClick={() => setSelectedSize(size.value)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${selectedSize === size.value ? 'bg-[#ff0000] text-white' : 'bg-gray-100 text-gray-600'}`}
                 >
-                  {name}
+                  {size.label}
                 </button>
-              );
-            })}
+              ))}
+            </div>
+
+            <label className="block text-[10px] font-medium text-gray-700 mb-1">{t.filling}</label>
+            <div className="flex flex-wrap gap-1.5 mb-3">
+              {product.fillings.map(fillingKey => {
+                const name = fillingNames[fillingKey]?.[language] || fillingKey;
+                return (
+                  <button
+                    key={fillingKey}
+                    onClick={() => setSelectedFilling(fillingKey)}
+                    className={`px-3 py-1 rounded-full text-[10px] font-bold transition-all ${selectedFilling === fillingKey ? 'bg-[#ff0000] text-white' : 'bg-gray-100 text-gray-600'}`}
+                  >
+                    {name}
+                  </button>
+                );
+              })}
+            </div>
+
+            <label className="block text-[10px] font-medium text-gray-700 mb-1">{t.cakeText}</label>
+            <textarea
+              value={cakeText}
+              onChange={(e) => setCakeText(e.target.value.slice(0, 200))}
+              onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
+              maxLength={200}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs resize-none mb-3"
+              style={{ height: '70px', minHeight: '70px', maxHeight: '70px' }}
+            />
           </div>
 
-          <label className="block text-[10px] font-medium text-gray-700 mb-1">{t.cakeText}</label>
-          <textarea
-            value={cakeText}
-            onChange={(e) => setCakeText(e.target.value.slice(0, 200))}
-            onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
-            maxLength={200}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs resize-none mb-3"
-            style={{ height: '70px', minHeight: '70px', maxHeight: '70px' }}
-          />
-
-          <div className="mt-auto sm:self-end">
+          {/* Кнопка в корзину — прилипшая к низу */}
+          <div className="p-4 border-t border-gray-100 flex sm:justify-end">
             <button
               onClick={(e) => handleAddToCart(e)}
               className="w-full sm:w-auto bg-[#ff0000] text-white font-bold py-2.5 px-6 rounded-xl flex items-center justify-center gap-2 text-sm shadow-lg"
