@@ -19,7 +19,7 @@ interface ProductModalProps {
   onClose: () => void;
 }
 
-// Иконки соцсетей
+// Иконки соцсетей (полные SVG)
 const FacebookShareIcon = () => (
   <svg className="w-4 h-4" fill="white" viewBox="0 0 24 24">
     <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -140,9 +140,9 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
       <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col sm:flex-row w-full max-w-[400px] sm:max-w-[720px] max-h-[95vh]">
         
         {/* ЛЕВАЯ ЧАСТЬ: фото + кнопки соцсетей */}
-        <div className="flex flex-col w-full sm:w-1/2 flex-shrink-0">
+        <div className="flex flex-col w-full sm:w-1/2 flex-shrink-0 max-h-[45vh] sm:max-h-none">
           {/* Фото */}
-          <div className="relative bg-gray-100 aspect-[4/3] sm:aspect-auto sm:flex-1">
+          <div className="relative bg-gray-100 h-[40vh] sm:h-full sm:flex-1">
             <img src={product.photos[currentPhoto] || ''} alt={productName} className="w-full h-full object-cover" />
             <button onClick={onClose} className="absolute top-3 left-3 p-2 bg-white/80 rounded-full shadow-lg">
               <X className="w-5 h-5 text-gray-700" />
@@ -165,7 +165,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
           </div>
 
           {/* Кнопки соцсетей под фото */}
-          <div className="p-2 flex justify-end gap-1.5 border-t border-gray-100">
+          <div className="p-2 flex justify-end gap-1.5 border-t border-gray-100 bg-white">
             {shareLinks.map(social => (
               <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className={`${social.bg} w-7 h-7 rounded-full flex items-center justify-center hover:scale-110 transition-transform`}>
                 {social.icon}
@@ -175,7 +175,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
         </div>
 
         {/* ПРАВАЯ ЧАСТЬ: контент + прилипшая кнопка */}
-        <div className="flex flex-col flex-1 min-w-0">
+        <div className="flex flex-col flex-1 min-w-0 min-h-0">
           {/* Прокручиваемый контент */}
           <div className="flex-1 overflow-y-auto p-4 sm:p-6">
             <div className="flex items-center justify-between gap-2 mb-2">
@@ -226,7 +226,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
           </div>
 
           {/* Кнопка в корзину — прилипшая к низу */}
-          <div className="p-4 border-t border-gray-100 flex sm:justify-end">
+          <div className="p-4 border-t border-gray-100 bg-white flex sm:justify-end">
             <button
               onClick={(e) => handleAddToCart(e)}
               className="w-full sm:w-auto bg-[#ff0000] text-white font-bold py-2.5 px-6 rounded-xl flex items-center justify-center gap-2 text-sm shadow-lg"
