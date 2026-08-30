@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight, ShoppingCart, Share2 } from 'lucide-react';
 import { useCart } from '../CartContext';
-import { FlyToCartAnimation } from './FlyToCartAnimation';
 
 interface ProductModalProps {
   product: {
@@ -129,18 +128,19 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
       quantity: 1,
     });
     
-    setTimeout(() => {
-      setFlyingCake(null);
-      onClose();
-    }, 1200);
+    setTimeout(() => setFlyingCake(null), 1000);
+    onClose();
   };
 
   return (
     <div className="fixed inset-0 z-[10000] flex items-center justify-center p-3 sm:p-4 overflow-hidden">
       <div className="absolute inset-0 bg-black/70" onClick={onClose} />
 
-      <div className="relative bg-white w-full max-w-[400px] rounded-2xl shadow-2xl overflow-hidden flex flex-col" style={{ maxHeight: '95vh' }}>
-        <div className="relative bg-gray-100 aspect-[4/3] flex-shrink-0">
+      {/* Основное окно: flex-col на мобильных, flex-row на sm+ */}
+      <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col sm:flex-row w-full max-w-[400px] sm:max-w-[720px] max-h-[95vh]" style={{ maxHeight: '95vh' }}>
+        
+        {/* Левая часть (фото) — на мобильных сверху, на десктопе слева */}
+        <div className="relative bg-gray-100 w-full sm:w-1/2 aspect-[4/3] sm:aspect-auto sm:h-full flex-shrink-0">
           <img src={product.photos[currentPhoto] || ''} alt={productName} className="w-full h-full object-cover" />
           <button onClick={onClose} className="absolute top-3 left-3 p-2 bg-white/80 rounded-full shadow-lg">
             <X className="w-5 h-5 text-gray-700" />
@@ -162,44 +162,61 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
           )}
         </div>
 
-        <div className="p-4 overflow-y-auto" style={{ maxHeight: 'calc(95vh - 250px)' }}>
-        <div className="flex items-center justify-between gap-2 mb-2">
-  <h2 className="text-sm font-bold text-gray-800">{productName}</h2>
-  {product.code && <span className="text-xs font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
-  </div>
-          {productDescription && <p className="text-xs text-gray-500 mt-1 mb-2">{productDescription}</p>}
+        {/* Правая часть (содержимое) */}
+        <div className="flex flex-col flex-1 min-w-0 p-4 sm:p-6 overflow-y-auto">
+          {/* Название и код */}
+          <div className="flex items-center justify-between gap-2 mb-2">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-800">{productName}</h2>
+            {product.code && <span className="text-xs font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
+          </div>
+          
+          {/* Описание */}
+          {productDescription && <p className="text-xs text-gray-500 mb-3">{productDescription}</p>}
 
-          <div className="flex gap-1.5 mb-2">
+          {/* Размер */}
+          <label className="block text-[10px] font-medium text-gray-700 mb-1">{t.size}</label>
+          <div className="flex gap-2 mb-3">
             {sizes.map(size => (
-              <button key={size.value} onClick={() => setSelectedSize(size.value)} className={`px-3 py-1 rounded-full text-[10px] font-bold ${selectedSize === size.value ? 'bg-[#ff0000] text-white' : 'bg-gray-100 text-gray-600'}`}>
+              <button
+                key={size.value}
+                onClick={() => setSelectedSize(size.value)}
+                className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${selectedSize === size.value ? 'bg-[#ff0000] text-white' : 'bg-gray-100 text-gray-600'}`}
+              >
                 {size.label}
               </button>
             ))}
           </div>
 
+          {/* Начинка */}
           <label className="block text-[10px] font-medium text-gray-700 mb-1">{t.filling}</label>
-          <div className="flex flex-wrap gap-1.5 mb-2">
+          <div className="flex flex-wrap gap-1.5 mb-3">
             {product.fillings.map(fillingKey => {
               const name = fillingNames[fillingKey]?.[language] || fillingKey;
               return (
-                <button key={fillingKey} onClick={() => setSelectedFilling(fillingKey)} className={`px-3 py-1 rounded-full text-[10px] font-bold ${selectedFilling === fillingKey ? 'bg-[#ff0000] text-white' : 'bg-gray-100 text-gray-600'}`}>
+                <button
+                  key={fillingKey}
+                  onClick={() => setSelectedFilling(fillingKey)}
+                  className={`px-3 py-1 rounded-full text-[10px] font-bold transition-all ${selectedFilling === fillingKey ? 'bg-[#ff0000] text-white' : 'bg-gray-100 text-gray-600'}`}
+                >
                   {name}
                 </button>
               );
             })}
           </div>
 
+          {/* Текст на торте */}
           <label className="block text-[10px] font-medium text-gray-700 mb-1">{t.cakeText}</label>
           <textarea
             value={cakeText}
             onChange={(e) => setCakeText(e.target.value.slice(0, 200))}
             onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }}
             maxLength={200}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs resize-none"
-            style={{ height: '60px', minHeight: '60px', maxHeight: '60px' }}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-xs resize-none mb-3"
+            style={{ height: '70px', minHeight: '70px', maxHeight: '70px' }}
           />
 
-          <div className="mt-2">
+          {/* Поделиться */}
+          <div className="mt-auto">
             <p className="flex items-center gap-1 text-[10px] font-medium text-gray-700 mb-1">
               <Share2 className="w-3 h-3" /> {t.share}
             </p>
@@ -211,17 +228,35 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
               ))}
             </div>
           </div>
-        </div>
 
-        <div className="flex-shrink-0 p-3 sm:p-4 border-t border-gray-200 bg-white">
-          <button onClick={(e) => handleAddToCart(e)} className="w-full bg-[#ff0000] text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm">
-            <ShoppingCart className="w-4 h-4" />
-            {t.addToCart} — ₾{selectedPrice}
-          </button>
+          {/* Кнопка в корзину — на десктопе внизу справа */}
+          <div className="mt-4 sm:mt-auto sm:self-end">
+            <button
+              onClick={(e) => handleAddToCart(e)}
+              className="w-full sm:w-auto bg-[#ff0000] text-white font-bold py-2.5 px-6 rounded-xl flex items-center justify-center gap-2 text-sm shadow-lg"
+            >
+              <ShoppingCart className="w-4 h-4" />
+              {t.addToCart} — ₾{selectedPrice}
+            </button>
+          </div>
         </div>
       </div>
 
-      {flyingCake && <FlyToCartAnimation startPos={flyingCake} endPos={{ x: window.innerWidth - 60, y: 50 }} />}
+      {/* Анимация полета */}
+      {flyingCake && (
+        <div
+          className="fixed z-[99999] pointer-events-none"
+          style={{
+            left: flyingCake.x,
+            top: flyingCake.y,
+            transition: 'all 0.8s linear',
+          }}
+        >
+          <div className="w-10 h-10 bg-[#ff0000] rounded-full flex items-center justify-center text-xl shadow-2xl">
+            🎂
+          </div>
+        </div>
+      )}
     </div>
   );
 };
