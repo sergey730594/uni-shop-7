@@ -143,7 +143,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ product, language, o
         <div className="flex flex-col w-full sm:w-1/2 flex-shrink-0 max-h-[45vh] sm:max-h-none">
           {/* Фото */}
           <div className="relative bg-gray-100 h-[40vh] sm:h-full sm:flex-1">
-            <img src={product.photos[currentPhoto] || ''} alt={productName} className="w-full h-full object-cover" />
+          <img src={product.photos[currentPhoto] || ''} alt={productName} className="w-full h-full object-contain sm:object-cover" />
             <button onClick={onClose} className="absolute top-3 left-3 p-2 bg-white/80 rounded-full shadow-lg">
               <X className="w-5 h-5 text-gray-700" />
             </button>
