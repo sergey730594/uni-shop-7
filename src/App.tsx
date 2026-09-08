@@ -203,19 +203,19 @@ function HomePage() {
                     {product.code && <span className="text-[10px] font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
                   </div>
                   {product.tags && product.tags[language] && (
-  <div className="flex flex-wrap gap-1 mt-1 justify-end">
-    {product.tags[language].split(',').slice(0, 2).map((tag: string) => (
-      <span 
-        key={tag} 
-        className="text-[8px] text-black font-medium hover:text-[#ff0000] cursor-pointer transition-colors"
-        onClick={(e) => {
-          e.stopPropagation();
-          window.location.href = `/${language}/cakes?tag=${encodeURIComponent(tag.trim())}`;
-        }}
-      >#{tag.trim()}</span>
-    ))}
-  </div>
-)}
+                    <div className="flex flex-wrap gap-1 mt-1 justify-end">
+                      {product.tags[language].split(',').slice(0, 2).map((tag: string) => (
+                        <span 
+                          key={tag} 
+                          className="text-[8px] text-black font-medium hover:text-[#ff0000] cursor-pointer transition-colors"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            window.location.href = `/${language}/cakes?tag=${encodeURIComponent(tag.trim())}`;
+                          }}
+                        >#{tag.trim()}</span>
+                      ))}
+                    </div>
+                  )}
                   {product.oldPrice && product.oldPrice > product.price20 ? (
                     <div className="flex items-center gap-1.5 mt-1">
                       <span className="text-[10px] text-gray-400 line-through">₾{product.oldPrice}</span>
@@ -258,9 +258,20 @@ function CategoryPage() {
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [priceFilter, setPriceFilter] = useState('all');
   const [products, setProducts] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 16;
   const { items } = useCart();
   const navigate = useNavigate();
   const { lang } = useParams();
+
+  // Получение tag из URL
+  const searchParams = new URLSearchParams(window.location.search);
+  const tagFilter = searchParams.get('tag');
+
+  // Сброс страницы при изменении фильтров
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [category, subcategory, priceFilter, tagFilter]);
 
   useEffect(() => {
     if (lang && lang !== language) setLanguage(lang);
@@ -310,11 +321,9 @@ function CategoryPage() {
     ? subcategoryNames[subcategory]?.[language] || subcategory 
     : categoryNames[category || '']?.[language] || category || 'Category';
 
-    const searchParams = new URLSearchParams(window.location.search);
-    const tagFilter = searchParams.get('tag');
-    
-    const filteredProducts = products.filter(p => {
-    if (tagFilter && (!p.tags || !p.tags[language] || !p.tags[language].split(',').map(t => t.trim()).includes(tagFilter))) return false;
+  // Фильтрация продуктов
+  const filteredProducts = products.filter(p => {
+    if (tagFilter && (!p.tags || !p.tags[language] || !p.tags[language].split(',').map((t: string) => t.trim()).includes(tagFilter))) return false;
     if (category === 'sale') return p.oldPrice && p.oldPrice > p.price20;
     if (category && p.category !== category) return false;
     if (subcategory && p.subcategory !== subcategory) return false;
@@ -325,6 +334,47 @@ function CategoryPage() {
     if (priceFilter === '200+') return p.price20 > 200;
     return true;
   });
+
+  // Пагинация
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedProducts = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
+
+  // Функция для рендера пагинации
+  const renderPagination = () => {
+    if (totalPages <= 1) return null;
+    return (
+      <div className="flex justify-center items-center gap-2">
+        <button
+          onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+          disabled={currentPage === 1}
+          className="px-4 py-2 rounded-lg bg-white border border-gray-300 text-sm font-medium disabled:opacity-50 hover:bg-gray-50"
+        >
+          ←
+        </button>
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            className={`px-4 py-2 rounded-lg text-sm font-medium border ${
+              currentPage === page
+                ? 'bg-[#ff0000] text-white border-[#ff0000]'
+                : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            {page}
+          </button>
+        ))}
+        <button
+          onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 rounded-lg bg-white border border-gray-300 text-sm font-medium disabled:opacity-50 hover:bg-gray-50"
+        >
+          →
+        </button>
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
@@ -380,47 +430,52 @@ function CategoryPage() {
             </select>
           )}
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {filteredProducts.length > 0 ? filteredProducts.map(product => (
+
+        {/* Пагинация сверху */}
+        {renderPagination()}
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-4">
+          {paginatedProducts.length > 0 ? paginatedProducts.map(product => (
             <div key={product.id} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg">
-            <div className="aspect-square overflow-hidden cursor-pointer" onClick={() => setSelectedProduct(product)}>
-              <img src={product.photos?.[0] || ''} alt="" className="w-full h-full object-cover" />
-            </div>
-            <div className="p-2">
-              <div className="flex items-center justify-between gap-1">
-                <h3 className="font-medium text-xs truncate flex-1 cursor-pointer" onClick={() => setSelectedProduct(product)}>
-                  {typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name}
-                </h3>
-                {product.code && <span className="text-[10px] font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
+              <div className="aspect-square overflow-hidden cursor-pointer" onClick={() => setSelectedProduct(product)}>
+                <img src={product.photos?.[0] || ''} alt="" className="w-full h-full object-cover" />
               </div>
-              {product.tags && product.tags[language] && (
-  <div className="flex flex-wrap gap-1 mt-1 justify-end">
-    {product.tags[language].split(',').slice(0, 2).map((tag: string) => (
-      <span 
-        key={tag} 
-        className="text-[8px] text-black font-medium hover:text-[#ff0000] cursor-pointer transition-colors"
-        onClick={(e) => {
-          e.stopPropagation();
-          window.location.href = `/${language}/cakes?tag=${encodeURIComponent(tag.trim())}`;
-        }}
-      >#{tag.trim()}</span>
-    ))}
-  </div>
-)}
-              {product.oldPrice && product.oldPrice > product.price20 ? (
-                <div className="flex items-center gap-1.5 mt-1">
-                  <span className="text-[10px] text-gray-400 line-through">₾{product.oldPrice}</span>
-                  <span className="text-[#ff0000] font-bold text-sm">₾{product.price20}</span>
+              <div className="p-2">
+                <div className="flex items-center justify-between gap-1">
+                  <h3 className="font-medium text-xs truncate flex-1 cursor-pointer" onClick={() => setSelectedProduct(product)}>{typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name}</h3>
+                  {product.code && <span className="text-[10px] font-bold text-[#ff0000] flex-shrink-0">#{product.code}</span>}
                 </div>
-              ) : (
-                <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price20}</p>
-              )}
+                {product.tags && product.tags[language] && (
+                  <div className="flex flex-wrap gap-1 mt-1 justify-end">
+                    {product.tags[language].split(',').slice(0, 2).map((tag: string) => (
+                      <span 
+                        key={tag} 
+                        className="text-[8px] text-black font-medium hover:text-[#ff0000] cursor-pointer transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          window.location.href = `/${language}/cakes?tag=${encodeURIComponent(tag.trim())}`;
+                        }}
+                      >#{tag.trim()}</span>
+                    ))}
+                  </div>
+                )}
+                {product.oldPrice && product.oldPrice > product.price20 ? (
+                  <div className="flex items-center gap-1.5 mt-1">
+                    <span className="text-[10px] text-gray-400 line-through">₾{product.oldPrice}</span>
+                    <span className="text-[#ff0000] font-bold text-sm">₾{product.price20}</span>
+                  </div>
+                ) : (
+                  <p className="text-[#ff0000] font-bold text-sm mt-1">₾{product.price20}</p>
+                )}
+              </div>
             </div>
-          </div>
           )) : (
             <p className="text-gray-500 col-span-full text-center py-10">იტვირთება...</p>
           )}
         </div>
+
+        {/* Пагинация снизу */}
+        {renderPagination()}
       </main>
 
       <Footer language={language} />
