@@ -114,7 +114,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
     
     if (!form.name || !form.phone) { alert(t.required); return; }
     const body = buildOrderText();
-    window.location.href = `mailto:info@grant.ge?subject=${encodeURIComponent('ახალი შეკვეთა - Grant Bakery')}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:photomagiamailru@gmail.com?subject=${encodeURIComponent('ახალი შეკვეთა - Grant Bakery')}&body=${encodeURIComponent(body)}`;
   };
 
   const handleSendWhatsApp = () => {
