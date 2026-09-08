@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext, useEffect } from 'react';
+import React, { useState, createContext, useContext, useEffect, useRef } from 'react';
 import { Routes, Route, useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js';
 import { Header } from './components/Header';
@@ -192,7 +192,7 @@ function HomePage() {
             <Link to={`/${language}/cakes`} className="text-[#ff0000] text-sm">{t.viewAll}</Link>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-             {products.length > 0 ? products.slice(0, 8).map(product => (
+            {products.length > 0 ? products.slice(0, 8).map(product => (
               <div key={product.id} onClick={() => setSelectedProduct(product)} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg cursor-pointer">
                 <div className="aspect-square overflow-hidden">
                   <img src={product.photos?.[0] || ''} alt="" className="w-full h-full object-cover" />
@@ -263,12 +263,11 @@ function CategoryPage() {
   const { items } = useCart();
   const navigate = useNavigate();
   const { lang } = useParams();
+  const carouselRef = useRef<HTMLDivElement>(null);
 
-  // Получение tag из URL
   const searchParams = new URLSearchParams(window.location.search);
   const tagFilter = searchParams.get('tag');
 
-  // Сброс страницы при изменении фильтров
   useEffect(() => {
     setCurrentPage(1);
   }, [category, subcategory, priceFilter, tagFilter]);
@@ -289,6 +288,16 @@ function CategoryPage() {
     setLanguage(newLang);
     const pathWithoutLang = window.location.pathname.replace(/^\/(ka|en|ru|tr)/, '');
     navigate(`/${newLang}${pathWithoutLang || ''}`);
+  };
+
+  const scrollCarousel = (direction: 'left' | 'right') => {
+    if (carouselRef.current) {
+      const scrollAmount = 300;
+      carouselRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth',
+      });
+    }
   };
 
   const categoryNames: Record<string, Record<string, string>> = {
@@ -321,7 +330,6 @@ function CategoryPage() {
     ? subcategoryNames[subcategory]?.[language] || subcategory 
     : categoryNames[category || '']?.[language] || category || 'Category';
 
-  // Фильтрация продуктов
   const filteredProducts = products.filter(p => {
     if (tagFilter && (!p.tags || !p.tags[language] || !p.tags[language].split(',').map((t: string) => t.trim()).includes(tagFilter))) return false;
     if (category === 'sale') return p.oldPrice && p.oldPrice > p.price20;
@@ -335,12 +343,10 @@ function CategoryPage() {
     return true;
   });
 
-  // Пагинация
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedProducts = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
 
-  // Функция для рендера пагинации
   const renderPagination = () => {
     if (totalPages <= 1) return null;
     return (
@@ -382,10 +388,23 @@ function CategoryPage() {
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} language={language} />
 
       <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 w-full">
-        {/* КАРУСЕЛЬ ПОДКАТЕГОРИЙ */}
+        {/* КАРУСЕЛЬ ПОДКАТЕГОРИЙ (с стрелками) */}
         {category === 'cakes' && !subcategory && (
-          <div className="mb-6">
-            <div className="flex gap-3 overflow-x-auto pb-4 hide-scrollbar">
+          <div className="mb-6 relative">
+            <button
+              onClick={() => scrollCarousel('left')}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-2 shadow-lg hidden sm:flex items-center justify-center"
+              aria-label="Прокрутить влево"
+            >
+              <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            <div
+              ref={carouselRef}
+              className="flex gap-3 overflow-x-auto pb-4 hide-scrollbar scroll-smooth"
+            >
               {[
                 { slug: 'corporate', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/1korporatiuli.png', names: { ka: 'კორპორატიული', en: 'Corporate', ru: 'Корпоративные', tr: 'Kurumsal' } },
                 { slug: 'wedding', photo: 'https://jmsafpmxjmcnhejkbbgr.supabase.co/storage/v1/object/public/Subcategories/2saqorwilo.png', names: { ka: 'საქორწილო', en: 'Wedding', ru: 'Свадебные', tr: 'Düğün' } },
@@ -415,6 +434,16 @@ function CategoryPage() {
                 </Link>
               ))}
             </div>
+
+            <button
+              onClick={() => scrollCarousel('right')}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white rounded-full p-2 shadow-lg hidden sm:flex items-center justify-center"
+              aria-label="Прокрутить вправо"
+            >
+              <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
         )}
 
