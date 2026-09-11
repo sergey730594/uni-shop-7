@@ -1,6 +1,5 @@
 import React, { useState, createContext, useContext, useEffect, useRef } from 'react';
 import { Routes, Route, useParams, Link, useNavigate, useLocation } from 'react-router-dom';
-import { createClient } from '@supabase/supabase-js';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { MobileMenu } from './components/MobileMenu';
@@ -18,10 +17,7 @@ import { CartProvider, useCart } from './CartContext';
 import './index.css';
 
 // ==================== SUPABASE ====================
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { supabase } from './supabaseClient';
 
 const fetchProductsFromAPI = async () => {
   try {
