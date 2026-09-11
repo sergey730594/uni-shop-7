@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- ГЛАВНАЯ -->
+  <url>
+    <loc>https://www.tortebi.com/ka</loc>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://www.tortebi.com/ka"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.tortebi.com/en"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://www.tortebi.com/ru"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://www.tortebi.com/tr"/>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.tortebi.com/en</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.tortebi.com/ru</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.tortebi.com/tr</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- КАТАЛОГ ТОРТОВ -->
+  <url><loc>https://www.tortebi.com/ka/cakes</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.tortebi.com/en/cakes</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.tortebi.com/ru/cakes</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.tortebi.com/tr/cakes</loc><changefreq>daily</changefreq><priority>0.8</priority></url>
+
+  <!-- ПОДКАТЕГОРИИ ТОРТОВ (13 штук × 4 языка = 52) -->
+  <!-- ka -->
+  <url><loc>https://www.tortebi.com/ka/cakes/corporate</loc><priority>0.7</priority></url>
+  <url><loc>https://www.tortebi.com/ka/cakes/wedding</loc><priority>0.7</priority></url>
+  <url><loc>https://www.tortebi.com/ka/cakes/kids</loc><priority>0.7</priority></url>
+  <url><loc>https://www.tortebi.com/ka/cakes/photo</loc><priority>0.7</priority></url>
+  <url><loc>https://www.tortebi.com/ka/cakes/car</loc><priority>0.7</priority></url>
+  <url><loc>https://www.tortebi.com/ka/cakes/sports</loc><priority>0.7</priority></url>
+  <url><loc>https://www.tortebi.com/ka/cakes/heart</loc><priority>0.7</priority></url>
+  <url><loc>https://www.tortebi.com/ka/cakes/marzipan</loc><priority>0.7</priority></url>
+  <url><loc>https://www.tortebi.com/ka/cakes/baptism</loc><priority>0.7</priority></url>
+  <url><loc>https://www.tortebi.com/ka/cakes/round</loc><priority>0.7</priority></url>
+  <url><loc>https://www.tortebi.com/ka/cakes/adults</loc><priority>0.7</priority></url>
+  <url><loc>https://www.tortebi.com/ka/cakes/square</loc><priority>0.7</priority></url>
+  <url><loc>https://www.tortebi.com/ka/cakes/new-year</loc><priority>0.7</priority></url>
+  <!-- en -->
+  <url><loc>https://www.tortebi.com/en/cakes/corporate</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/en/cakes/wedding</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/en/cakes/kids</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/en/cakes/photo</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/en/cakes/car</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/en/cakes/sports</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/en/cakes/heart</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/en/cakes/marzipan</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/en/cakes/baptism</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/en/cakes/round</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/en/cakes/adults</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/en/cakes/square</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/en/cakes/new-year</loc><priority>0.6</priority></url>
+  <!-- ru -->
+  <url><loc>https://www.tortebi.com/ru/cakes/corporate</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/ru/cakes/wedding</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/ru/cakes/kids</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/ru/cakes/photo</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/ru/cakes/car</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/ru/cakes/sports</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/ru/cakes/heart</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/ru/cakes/marzipan</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/ru/cakes/baptism</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/ru/cakes/round</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/ru/cakes/adults</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/ru/cakes/square</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/ru/cakes/new-year</loc><priority>0.6</priority></url>
+  <!-- tr -->
+  <url><loc>https://www.tortebi.com/tr/cakes/corporate</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/tr/cakes/wedding</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/tr/cakes/kids</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/tr/cakes/photo</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/tr/cakes/car</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/tr/cakes/sports</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/tr/cakes/heart</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/tr/cakes/marzipan</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/tr/cakes/baptism</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/tr/cakes/round</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/tr/cakes/adults</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/tr/cakes/square</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/tr/cakes/new-year</loc><priority>0.6</priority></url>
+
+  <!-- ОСТАЛЬНЫЕ РАЗДЕЛЫ -->
+  <url><loc>https://www.tortebi.com/ka/fillings</loc><priority>0.5</priority></url>
+  <url><loc>https://www.tortebi.com/ka/accessories</loc><priority>0.5</priority></url>
+  <url><loc>https://www.tortebi.com/ka/flowers</loc><priority>0.5</priority></url>
+  <url><loc>https://www.tortebi.com/ka/sale</loc><priority>0.7</priority></url>
+  <url><loc>https://www.tortebi.com/ka/delivery</loc><priority>0.5</priority></url>
+  <url><loc>https://www.tortebi.com/ka/contact</loc><priority>0.5</priority></url>
+
+  <url><loc>https://www.tortebi.com/en/fillings</loc><priority>0.5</priority></url>
+  <url><loc>https://www.tortebi.com/en/accessories</loc><priority>0.5</priority></url>
+  <url><loc>https://www.tortebi.com/en/flowers</loc><priority>0.5</priority></url>
+  <url><loc>https://www.tortebi.com/en/sale</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/en/delivery</loc><priority>0.5</priority></url>
+  <url><loc>https://www.tortebi.com/en/contact</loc><priority>0.5</priority></url>
+
+  <url><loc>https://www.tortebi.com/ru/fillings</loc><priority>0.5</priority></url>
+  <url><loc>https://www.tortebi.com/ru/accessories</loc><priority>0.5</priority></url>
+  <url><loc>https://www.tortebi.com/ru/flowers</loc><priority>0.5</priority></url>
+  <url><loc>https://www.tortebi.com/ru/sale</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/ru/delivery</loc><priority>0.5</priority></url>
+  <url><loc>https://www.tortebi.com/ru/contact</loc><priority>0.5</priority></url>
+
+  <url><loc>https://www.tortebi.com/tr/fillings</loc><priority>0.5</priority></url>
+  <url><loc>https://www.tortebi.com/tr/accessories</loc><priority>0.5</priority></url>
+  <url><loc>https://www.tortebi.com/tr/flowers</loc><priority>0.5</priority></url>
+  <url><loc>https://www.tortebi.com/tr/sale</loc><priority>0.6</priority></url>
+  <url><loc>https://www.tortebi.com/tr/delivery</loc><priority>0.5</priority></url>
+  <url><loc>https://www.tortebi.com/tr/contact</loc><priority>0.5</priority></url>
+
+</urlset>
