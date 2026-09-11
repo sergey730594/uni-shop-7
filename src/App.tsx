@@ -16,7 +16,6 @@ import { ProductModal } from './components/ProductModal';
 import { CartModal } from './components/CartModal';
 import { CartProvider, useCart } from './CartContext';
 import './index.css';
-import { AdminPage } from './pages/AdminPage';
 
 // ==================== SUPABASE ====================
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -527,8 +526,6 @@ function App() {
           <Route path="/:lang" element={<HomePage />} />
           <Route path="/:lang/:category" element={<CategoryPage />} />
           <Route path="/:lang/:category/:subcategory" element={<CategoryPage />} />
-          <Route path="/tortis_damateba" element={<AdminPage />} />
-          <Route path="/:lang/tortis_damateba" element={<AdminPage />} />
         </Routes>
       </CartProvider>
     </LanguageProvider>
