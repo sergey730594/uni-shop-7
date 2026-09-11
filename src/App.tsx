@@ -19,10 +19,10 @@ import './index.css';
 import { AdminPage } from './pages/AdminPage';
 
 // ==================== SUPABASE ====================
-const supabase = createClient(
-  'https://jmsafpmxjmcnhejkbbgr.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imptc2FmcG14am1jbmhlamtiYmdyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc4MjQxNDgsImV4cCI6MjEwMzQwMDE0OH0.iGwAhWr47N_xfpkj4Da2vj5E0hEMTgLuZa-X3KKnKDI'
-);
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 const fetchProductsFromAPI = async () => {
   try {
