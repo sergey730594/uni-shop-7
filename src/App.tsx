@@ -1,29 +1,27 @@
 import React, { useState, createContext, useContext, useEffect, useRef, lazy, Suspense } from 'react';
 import { Routes, Route, useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 
-// ===== Критичные компоненты — грузятся сразу =====
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import { MobileMenu } from './components/MobileMenu';
+import { WhatsAppButton } from './components/WhatsAppButton';
+import { ScrollToTopButton } from './components/ScrollToTopButton';
+import { WhyUs } from './components/WhyUs';
+import { HowToOrder } from './components/HowToOrder';
+import { PromoBanner } from './components/PromoBanner';
+import { Testimonials } from './components/Testimonials';
+import { StatsCounter } from './components/StatsCounter';
+import { InstagramFeed } from './components/InstagramFeed';
 import { CartProvider, useCart } from './CartContext';
 
-// ===== Ленивые компоненты — грузятся по требованию =====
-const MobileMenu = lazy(() => import('./components/MobileMenu').then(m => ({ default: m.MobileMenu })));
-const WhatsAppButton = lazy(() => import('./components/WhatsAppButton').then(m => ({ default: m.WhatsAppButton })));
-const ScrollToTopButton = lazy(() => import('./components/ScrollToTopButton').then(m => ({ default: m.ScrollToTopButton })));
-const WhyUs = lazy(() => import('./components/WhyUs').then(m => ({ default: m.WhyUs })));
-const HowToOrder = lazy(() => import('./components/HowToOrder').then(m => ({ default: m.HowToOrder })));
-const PromoBanner = lazy(() => import('./components/PromoBanner').then(m => ({ default: m.PromoBanner })));
-const Testimonials = lazy(() => import('./components/Testimonials').then(m => ({ default: m.Testimonials })));
-const StatsCounter = lazy(() => import('./components/StatsCounter').then(m => ({ default: m.StatsCounter })));
-const InstagramFeed = lazy(() => import('./components/InstagramFeed').then(m => ({ default: m.InstagramFeed })));
+// Ленивые — только две тяжёлые модалки
 const ProductModal = lazy(() => import('./components/ProductModal').then(m => ({ default: m.ProductModal })));
 const CartModal = lazy(() => import('./components/CartModal').then(m => ({ default: m.CartModal })));
 
+import { supabase } from './supabaseClient';
 import './index.css';
 
 // ==================== SUPABASE ====================
-import { supabase } from './supabaseClient';
-
 const fetchProductsFromAPI = async () => {
   try {
     const { data, error } = await supabase
@@ -114,6 +112,14 @@ function ScrollToTopOnNavigate() {
   return null;
 }
 
+function LangSetter() {
+  const { language } = useLanguage();
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+  return null;
+}
+
 // ==================== ГЛАВНАЯ СТРАНИЦА ====================
 function HomePage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -161,9 +167,7 @@ function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header language={language} onLanguageChange={handleLanguageChange} onMenuOpen={() => setIsMenuOpen(true)} onCartOpen={() => setIsCartOpen(true)} cartCount={items.length} onProductClick={(p) => setSelectedProduct(p)} />
-      <Suspense fallback={null}>
-        <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} language={language} />
-      </Suspense>
+      <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} language={language} />
 
       <main className="flex-1">
         <section className="relative bg-[#f5e6e6] text-gray-800 overflow-hidden min-h-[180px] sm:min-h-[220px] md:min-h-[260px]">
@@ -197,7 +201,13 @@ function HomePage() {
             {products.length > 0 ? products.slice(0, 8).map(product => (
               <div key={product.id} onClick={() => setSelectedProduct(product)} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg cursor-pointer">
                 <div className="aspect-square overflow-hidden">
-                  <img src={product.photos?.[0] || ''} alt="" className="w-full h-full object-cover" />
+                  <img 
+                    src={product.photos?.[0] || ''} 
+                    alt={`${typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name} — Tortebi.com`}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover" 
+                  />
                 </div>
                 <div className="p-2">
                   <div className="flex items-center justify-between gap-1">
@@ -234,20 +244,18 @@ function HomePage() {
           </div>
         </section>
 
-        <Suspense fallback={null}>
-          <WhyUs language={language} />
-          <HowToOrder language={language} />
-          <PromoBanner language={language} />
-          <Testimonials language={language} />
-          <StatsCounter language={language} />
-          <InstagramFeed language={language} />
-        </Suspense>
+        <WhyUs language={language} />
+        <HowToOrder language={language} />
+        <PromoBanner language={language} />
+        <Testimonials language={language} />
+        <StatsCounter language={language} />
+        <InstagramFeed language={language} />
       </main>
 
       <Footer language={language} />
+      <WhatsAppButton />
+      <ScrollToTopButton />
       <Suspense fallback={null}>
-        <WhatsAppButton />
-        <ScrollToTopButton />
         {selectedProduct && <ProductModal product={selectedProduct} language={language} onClose={() => setSelectedProduct(null)} />}
         <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} language={language} />
       </Suspense>
@@ -394,7 +402,6 @@ function CategoryPage() {
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} language={language} />
 
       <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 w-full">
-        {/* КАРУСЕЛЬ ПОДКАТЕГОРИЙ (с стрелками) */}
         {category === 'cakes' && !subcategory && (
           <div className="mb-6 relative">
             <button
@@ -432,7 +439,7 @@ function CategoryPage() {
                   className="flex flex-col items-center gap-2 flex-shrink-0 w-24 group"
                 >
                   <div className="w-20 h-20 rounded-xl overflow-hidden border-2 border-transparent group-hover:border-[#ff0000] transition-all shadow-sm">
-                    <img src={cat.photo} alt={cat.names[language] || cat.names.ka} className="w-full h-full object-cover" />
+                    <img src={cat.photo} alt={cat.names[language] || cat.names.ka} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                   </div>
                   <span className="text-[10px] font-bold text-gray-700 text-center leading-tight group-hover:text-[#ff0000]">
                     {cat.names[language] || cat.names.ka}
@@ -466,17 +473,21 @@ function CategoryPage() {
           )}
         </div>
 
-        {/* Пагинация сверху */}
         {renderPagination()}
 
-        {/* H2 для SEO */}
         <h2 className="sr-only">{pageTitle} — Tortebi.com</h2>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-4">
           {paginatedProducts.length > 0 ? paginatedProducts.map(product => (
             <div key={product.id} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg">
               <div className="aspect-square overflow-hidden cursor-pointer" onClick={() => setSelectedProduct(product)}>
-                <img src={product.photos?.[0] || ''} alt="" className="w-full h-full object-cover" />
+                <img 
+                  src={product.photos?.[0] || ''} 
+                  alt={`${typeof product.name === 'object' ? product.name[language] || product.name.ka : product.name} — Tortebi.com`}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover" 
+                />
               </div>
               <div className="p-2">
                 <div className="flex items-center justify-between gap-1">
@@ -512,14 +523,13 @@ function CategoryPage() {
           )}
         </div>
 
-        {/* Пагинация снизу */}
         {renderPagination()}
       </main>
 
       <Footer language={language} />
+      <WhatsAppButton />
+      <ScrollToTopButton />
       <Suspense fallback={null}>
-        <WhatsAppButton />
-        <ScrollToTopButton />
         {selectedProduct && <ProductModal product={selectedProduct} language={language} onClose={() => setSelectedProduct(null)} />}
         <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} language={language} />
       </Suspense>
@@ -532,6 +542,7 @@ function App() {
   return (
     <LanguageProvider>
       <CartProvider>
+        <LangSetter />
         <ScrollToTopOnNavigate />
         <Routes>
           <Route path="/" element={<HomePage />} />
