@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logoImage from '../assets/Logo-grant.png';
 
 // ==================== ИКОНКИ ====================
@@ -64,51 +64,63 @@ const YouTubeIcon = () => (
   </svg>
 );
 
+const MapPinIcon = () => (
+  <svg className="w-8 h-8 text-[#ff0000]" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M12 0C7.31 0 3.5 3.81 3.5 8.5c0 6.38 8.5 15.5 8.5 15.5s8.5-9.12 8.5-15.5C20.5 3.81 16.69 0 12 0zm0 11.5a3 3 0 110-6 3 3 0 010 6z"/>
+  </svg>
+);
+
 interface FooterProps {
   language?: string;
 }
 
 export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
+  const [showMap, setShowMap] = useState(false);
+
   const texts = {
     ka: {
       description: 'ტორტის შეკვეთა ადგილზე მიტანით',
       address: 'თბილისი, ნოდარ დუმბაძის გამზ. №4',
       phone: '+995 593 756 700',
-      email: 'info@grant.ge',
-      website: 'www.grant.ge',
+      email: 'info@tortebi.com',
+      website: 'www.tortebi.com',
       followUs: 'გამოგვყევით',
       rights: 'ყველა უფლება დაცულია',
       location: 'ჩვენს მისამართზე',
+      showMap: 'რუკის ჩვენება',
     },
     en: {
       description: 'Order cake with delivery',
       address: 'Tbilisi, Nodar Dumbadze Ave. №4',
-      phone: '+995 555 000 000',
-      email: 'info@grant.ge',
-      website: 'www.grant.ge',
+      phone: '+995 593 756 700',
+      email: 'info@tortebi.com',
+      website: 'www.tortebi.com',
       followUs: 'Follow us',
       rights: 'All rights reserved',
       location: 'Our location',
+      showMap: 'Show map',
     },
     ru: {
       description: 'Заказ торта с доставкой',
       address: 'Тбилиси, просп. Нодара Думбадзе №4',
-      phone: '+995 555 000 000',
-      email: 'info@grant.ge',
-      website: 'www.grant.ge',
+      phone: '+995 593 756 700',
+      email: 'info@tortebi.com',
+      website: 'www.tortebi.com',
       followUs: 'Подпишитесь',
       rights: 'Все права защищены',
       location: 'Мы на карте',
+      showMap: 'Показать карту',
     },
     tr: {
       description: 'Yerinde teslim pasta siparişi',
       address: 'Tiflis, Nodar Dumbadze Cad. №4',
-      phone: '+995 555 000 000',
-      email: 'info@grant.ge',
-      website: 'www.grant.ge',
+      phone: '+995 593 756 700',
+      email: 'info@tortebi.com',
+      website: 'www.tortebi.com',
       followUs: 'Bizi takip edin',
       rights: 'Tüm hakları saklıdır',
       location: 'Konumumuz',
+      showMap: 'Haritayı göster',
     },
   };
 
@@ -120,7 +132,7 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
     { name: 'Messenger', icon: <MessengerIcon />, url: 'https://m.me/www.grant.ge', bg: 'bg-[#0084FF] hover:bg-[#0073df]' },
     { name: 'Facebook', icon: <FacebookIcon />, url: 'https://www.facebook.com/www.grant.ge', bg: 'bg-[#1877F2] hover:bg-[#1664d9]' },
     { name: 'Instagram', icon: <InstagramIcon />, url: 'https://www.instagram.com/grantis_torti', bg: 'bg-[#E4405F] hover:bg-[#c13554]' },
-    { name: 'YouTube', icon: <YouTubeIcon />, url: 'https://www.youtube.com//@GrantBakery', bg: 'bg-[#FF0000] hover:bg-[#cc0000]' },
+    { name: 'YouTube', icon: <YouTubeIcon />, url: 'https://www.youtube.com/@GrantBakery', bg: 'bg-[#FF0000] hover:bg-[#cc0000]' },
   ];
 
   return (
@@ -134,12 +146,16 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
               <div className="w-12 h-12 rounded-full overflow-hidden shadow-md flex-shrink-0">
                 <img 
                   src={logoImage} 
-                  alt="Grant Bakery" 
+                  alt="Tortebi.com logo" 
+                  width={48}
+                  height={48}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div>
-                <span className="font-bold text-xl text-gray-800">Grant Bakery</span>
+                <span className="font-bold text-xl text-gray-800">Tortebi.com</span>
                 <p className="text-sm text-gray-500">{t.description}</p>
               </div>
             </div>
@@ -163,7 +179,7 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
               </div>
               <div className="flex items-center gap-2 text-gray-600">
                 <GlobeIcon />
-                <a href="#" className="hover:text-[#ff0000] transition">
+                <a href="https://www.tortebi.com" className="hover:text-[#ff0000] transition">
                   {t.website}
                 </a>
               </div>
@@ -189,35 +205,37 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
             </div>
           </div>
 
-          {/* ====== ПРАВАЯ КОЛОНКА - КАРТА С ПУЛЬСИРУЮЩИМ ПИНОМ ====== */}
+          {/* ====== ПРАВАЯ КОЛОНКА - КАРТА (lazy) ====== */}
           <div className="space-y-3">
             <h3 className="font-semibold text-gray-800 text-lg text-center md:text-left">
               {t.location}
             </h3>
             
             <div className="relative bg-gray-100 rounded-xl overflow-hidden h-32 sm:h-36 md:h-40 w-full">
-              <iframe
-                src="https://www.google.com/maps?ll=41.784832,44.827172&z=16&output=embed"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Grant Bakery location"
-                className="absolute inset-0"
-              />
-              
-              {/* Пульсирующий пин */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="relative">
-                  <span className="absolute -inset-4 rounded-full bg-[#ff0000]/30 animate-ping"></span>
-                  <span className="absolute -inset-2 rounded-full bg-[#ff0000]/20 animate-ping" style={{ animationDelay: '0.5s' }}></span>
-                  <svg className="relative w-8 h-8 text-[#ff0000] drop-shadow-lg" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0C7.31 0 3.5 3.81 3.5 8.5c0 6.38 8.5 15.5 8.5 15.5s8.5-9.12 8.5-15.5C20.5 3.81 16.69 0 12 0zm0 11.5a3 3 0 110-6 3 3 0 010 6z"/>
-                  </svg>
-                </div>
-              </div>
+              {!showMap ? (
+                <button
+                  onClick={() => setShowMap(true)}
+                  className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 hover:bg-gray-200 transition-colors cursor-pointer w-full"
+                  aria-label={t.showMap}
+                >
+                  <MapPinIcon />
+                  <span className="text-xs text-gray-600 font-medium mt-2">
+                    {t.showMap}
+                  </span>
+                </button>
+              ) : (
+                <iframe
+                  src="https://www.google.com/maps?ll=41.784832,44.827172&z=16&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Tortebi.com location"
+                  className="absolute inset-0"
+                />
+              )}
             </div>
             
             <p className="text-sm text-gray-500 text-center">
@@ -229,7 +247,7 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
         {/* ====== КОПИРАЙТ ====== */}
         <div className="border-t border-gray-200 mt-8 pt-6 text-center">
           <p className="text-sm text-gray-500">
-            © 2026 Grant Bakery. Designed by *Sergo*. {t.rights}
+            © 2026 Tortebi.com. Designed by Sergo. {t.rights}
           </p>
         </div>
       </div>
