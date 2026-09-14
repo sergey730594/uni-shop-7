@@ -243,10 +243,12 @@ function HomePage() {
       </main>
 
       <Footer language={language} />
-      <WhatsAppButton />
-      <ScrollToTopButton />
-      {selectedProduct && <ProductModal product={selectedProduct} language={language} onClose={() => setSelectedProduct(null)} />}
-      <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} language={language} />
+      <Suspense fallback={null}>
+        <WhatsAppButton />
+        <ScrollToTopButton />
+        {selectedProduct && <ProductModal product={selectedProduct} language={language} onClose={() => setSelectedProduct(null)} />}
+        <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} language={language} />
+      </Suspense>
     </div>
   );
 }
@@ -513,10 +515,12 @@ function CategoryPage() {
       </main>
 
       <Footer language={language} />
-      <WhatsAppButton />
-      <ScrollToTopButton />
-      {selectedProduct && <ProductModal product={selectedProduct} language={language} onClose={() => setSelectedProduct(null)} />}
-      <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} language={language} />
+      <Suspense fallback={null}>
+        <WhatsAppButton />
+        <ScrollToTopButton />
+        {selectedProduct && <ProductModal product={selectedProduct} language={language} onClose={() => setSelectedProduct(null)} />}
+        <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} language={language} />
+      </Suspense>
     </div>
   );
 }
