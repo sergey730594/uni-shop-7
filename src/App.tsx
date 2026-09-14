@@ -455,8 +455,11 @@ function CategoryPage() {
           )}
         </div>
 
-        {/* Пагинация сверху */}
+        { {/* Пагинация сверху */}
         {renderPagination()}
+
+        {/* H2 для SEO */}
+        <h2 className="sr-only">{pageTitle} — Tortebi.com</h2>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-4">
           {paginatedProducts.length > 0 ? paginatedProducts.map(product => (
