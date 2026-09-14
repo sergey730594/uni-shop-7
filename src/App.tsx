@@ -1,19 +1,24 @@
-import React, { useState, createContext, useContext, useEffect, useRef } from 'react';
+import React, { useState, createContext, useContext, useEffect, useRef, lazy, Suspense } from 'react';
 import { Routes, Route, useParams, Link, useNavigate, useLocation } from 'react-router-dom';
+
+// ===== Критичные компоненты — грузятся сразу =====
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
-import { MobileMenu } from './components/MobileMenu';
-import { WhatsAppButton } from './components/WhatsAppButton';
-import { ScrollToTopButton } from './components/ScrollToTopButton';
-import { WhyUs } from './components/WhyUs';
-import { HowToOrder } from './components/HowToOrder';
-import { PromoBanner } from './components/PromoBanner';
-import { Testimonials } from './components/Testimonials';
-import { StatsCounter } from './components/StatsCounter';
-import { InstagramFeed } from './components/InstagramFeed';
-import { ProductModal } from './components/ProductModal';
-import { CartModal } from './components/CartModal';
 import { CartProvider, useCart } from './CartContext';
+
+// ===== Ленивые компоненты — грузятся по требованию =====
+const MobileMenu = lazy(() => import('./components/MobileMenu').then(m => ({ default: m.MobileMenu })));
+const WhatsAppButton = lazy(() => import('./components/WhatsAppButton').then(m => ({ default: m.WhatsAppButton })));
+const ScrollToTopButton = lazy(() => import('./components/ScrollToTopButton').then(m => ({ default: m.ScrollToTopButton })));
+const WhyUs = lazy(() => import('./components/WhyUs').then(m => ({ default: m.WhyUs })));
+const HowToOrder = lazy(() => import('./components/HowToOrder').then(m => ({ default: m.HowToOrder })));
+const PromoBanner = lazy(() => import('./components/PromoBanner').then(m => ({ default: m.PromoBanner })));
+const Testimonials = lazy(() => import('./components/Testimonials').then(m => ({ default: m.Testimonials })));
+const StatsCounter = lazy(() => import('./components/StatsCounter').then(m => ({ default: m.StatsCounter })));
+const InstagramFeed = lazy(() => import('./components/InstagramFeed').then(m => ({ default: m.InstagramFeed })));
+const ProductModal = lazy(() => import('./components/ProductModal').then(m => ({ default: m.ProductModal })));
+const CartModal = lazy(() => import('./components/CartModal').then(m => ({ default: m.CartModal })));
+
 import './index.css';
 
 // ==================== SUPABASE ====================
