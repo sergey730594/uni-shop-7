@@ -143,11 +143,18 @@ function HomePage() {
   }, []);
 
   useEffect(() => {
+    let cancelled = false;
     const loadProducts = async () => {
       const data = await fetchProductsFromAPI();
-      setProducts(data);
+      if (!cancelled) setProducts(data);
     };
-    loadProducts();
+    // Откладываем загрузку товаров, чтобы Hero отрисовался первым
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(() => loadProducts());
+    } else {
+      setTimeout(loadProducts, 100);
+    }
+    return () => { cancelled = true; };
   }, []);
 
   const handleLanguageChange = (newLang: string) => {
@@ -298,11 +305,18 @@ function CategoryPage() {
   }, [lang]);
 
   useEffect(() => {
+    let cancelled = false;
     const loadProducts = async () => {
       const data = await fetchProductsFromAPI();
-      setProducts(data);
+      if (!cancelled) setProducts(data);
     };
-    loadProducts();
+    // Откладываем загрузку товаров, чтобы Hero отрисовался первым
+    if ('requestIdleCallback' in window) {
+      (window as any).requestIdleCallback(() => loadProducts());
+    } else {
+      setTimeout(loadProducts, 100);
+    }
+    return () => { cancelled = true; };
   }, []);
 
   const handleLanguageChange = (newLang: string) => {
