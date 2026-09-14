@@ -181,7 +181,7 @@ function HomePage() {
   <img 
     src={bgImage} 
     alt=""
-    fetchpriority="high"
+    fetchPriority="high"
     loading="eager"
     decoding="async"
     className={`absolute inset-0 w-full h-full object-cover opacity-30 ${animationClass}`} 
@@ -201,7 +201,7 @@ function HomePage() {
         </section>
 
         <section className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8">
-          <div className="flex justify-between items-center mb-4">
+           <div className="flex justify-between items-center mb-4">
             <h2 className="flex items-center gap-2 text-lg sm:text-xl font-bold">
               <svg className="w-5 h-5 text-[#ff0000]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
@@ -211,8 +211,8 @@ function HomePage() {
             </h2>
             <Link to={`/${language}/cakes`} className="text-[#ff0000] text-sm">{t.viewAll}</Link>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-            {products.length > 0 ? products.slice(0, 8).map(product => (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 min-h-[800px] sm:min-h-[500px]">
+             {products.length > 0 ? products.slice(0, 8).map(product => (
               <div key={product.id} onClick={() => setSelectedProduct(product)} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg cursor-pointer">
                 <div className="aspect-square overflow-hidden">
                   <img 
@@ -498,8 +498,8 @@ function CategoryPage() {
 
         <h2 className="sr-only">{pageTitle} — Tortebi.com</h2>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-4">
-          {paginatedProducts.length > 0 ? paginatedProducts.map(product => (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-4 min-h-[800px] sm:min-h-[600px]">
+           {paginatedProducts.length > 0 ? paginatedProducts.map(product => (
             <div key={product.id} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg">
               <div className="aspect-square overflow-hidden cursor-pointer" onClick={() => setSelectedProduct(product)}>
                 <img 
