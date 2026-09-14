@@ -103,6 +103,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 const heroBackgrounds = [
   '/hero-1.webp',
   '/hero-3.webp',
+  '/hero-2.webp',
 ];
 
 function ScrollToTopOnNavigate() {
