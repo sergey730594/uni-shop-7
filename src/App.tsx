@@ -101,9 +101,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 };
 
 const heroBackgrounds = [
-  'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=1600&h=600&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=1600&h=600&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1542826438-bd32f43d626f?w=1600&h=600&fit=crop&q=80',
+  '/hero-1.webp',
+  '/hero-3.webp',
 ];
 
 function ScrollToTopOnNavigate() {
