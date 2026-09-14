@@ -161,7 +161,9 @@ function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <Header language={language} onLanguageChange={handleLanguageChange} onMenuOpen={() => setIsMenuOpen(true)} onCartOpen={() => setIsCartOpen(true)} cartCount={items.length} onProductClick={(p) => setSelectedProduct(p)} />
-      <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} language={language} />
+      <Suspense fallback={null}>
+        <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} language={language} />
+      </Suspense>
 
       <main className="flex-1">
         <section className="relative bg-[#f5e6e6] text-gray-800 overflow-hidden min-h-[180px] sm:min-h-[220px] md:min-h-[260px]">
