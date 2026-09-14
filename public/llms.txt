@@ -1,0 +1,48 @@
+# Tortebi.com
+
+> Tortebi.com — заказ декоративных тортов с доставкой по Тбилиси.
+> დეკორატიული ტორტები მიტანით თბილისში.
+> Decorative cakes with delivery in Tbilisi.
+> Tiflis'te teslimatlı dekoratif pastalar.
+
+Tortebi.com — кондитерская, специализирующаяся на декоративных тортах на заказ. Свадебные, детские, корпоративные, спортивные торты, торты с фотопечатью и другие. Доставка по Тбилиси. Работаем на 4 языках: ქართული (ka), English (en), Русский (ru), Türkçe (tr).
+
+## Каталог тортов
+
+- [Все торты (ka)](https://www.tortebi.com/ka/cakes): სრული კატალოგი დეკორატიული ტორტები.
+- [All cakes (en)](https://www.tortebi.com/en/cakes): Full catalog of decorative cakes.
+- [Все торты (ru)](https://www.tortebi.com/ru/cakes): Полный каталог декоративных тортов.
+- [Tüm pastalar (tr)](https://www.tortebi.com/tr/cakes): Dekoratif pastaların tam kataloğu.
+
+## Подкатегории тортов
+
+- [Корпоративные](https://www.tortebi.com/ka/cakes/corporate): Торты для бизнес-мероприятий.
+- [Свадебные](https://www.tortebi.com/ka/cakes/wedding): Торты для свадеб и торжеств.
+- [Детские](https://www.tortebi.com/ka/cakes/kids): Яркие торты для детей.
+- [Фото-торты](https://www.tortebi.com/ka/cakes/photo): Торты с фотопечатью.
+- [Торты-машины](https://www.tortebi.com/ka/cakes/car): Торты в виде машин.
+- [Спортивные](https://www.tortebi.com/ka/cakes/sports): Торты на спортивную тематику.
+- [Торты-сердца](https://www.tortebi.com/ka/cakes/heart): Романтические торты.
+- [Марципан](https://www.tortebi.com/ka/cakes/marzipan): Торты с марципаном.
+- [Крестины](https://www.tortebi.com/ka/cakes/baptism): Торты для крестин.
+- [Круглые](https://www.tortebi.com/ka/cakes/round): Круглые торты на заказ.
+- [Для взрослых](https://www.tortebi.com/ka/cakes/adults): Торты для взрослых.
+- [Квадратные](https://www.tortebi.com/ka/cakes/square): Квадратные торты на заказ.
+- [Новогодние](https://www.tortebi.com/ka/cakes/new-year): Праздничные новогодние торты.
+
+## Другие разделы
+
+- [Начинки](https://www.tortebi.com/ka/fillings): Описание начинок для тортов.
+- [Аксессуары](https://www.tortebi.com/ka/accessories): Дополнительные аксессуары.
+- [Цветы](https://www.tortebi.com/ka/flowers): Цветы для тортов.
+- [Скидки](https://www.tortebi.com/ka/sale): Текущие акции и скидки.
+- [Оплата и доставка](https://www.tortebi.com/ka/delivery): Условия оплаты и доставки.
+- [Контакты](https://www.tortebi.com/ka/contact): Как с нами связаться.
+
+## Информация о компании
+
+- Адрес: Тбилиси, просп. Нодара Думбадзе №4
+- Телефон: +995 593 756 700
+- Email: info@tortebi.com
+- Часы работы: Пн-Вс, 09:00–22:00
+- Соцсети: Instagram (@grantis_torti), Facebook (www.grant.ge), YouTube (@GrantBakery)
