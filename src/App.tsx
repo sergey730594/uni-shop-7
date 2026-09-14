@@ -170,8 +170,15 @@ function HomePage() {
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} language={language} />
 
       <main className="flex-1">
-        <section className="relative bg-[#f5e6e6] text-gray-800 overflow-hidden min-h-[180px] sm:min-h-[220px] md:min-h-[260px]">
-          <div className={`absolute inset-0 opacity-30 ${animationClass}`} style={{ backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+      <section className="relative bg-[#f5e6e6] text-gray-800 overflow-hidden min-h-[180px] sm:min-h-[220px] md:min-h-[260px]">
+  <img 
+    src={bgImage} 
+    alt=""
+    fetchpriority="high"
+    loading="eager"
+    decoding="async"
+    className={`absolute inset-0 w-full h-full object-cover opacity-30 ${animationClass}`} 
+  />
           <div className="absolute inset-0 bg-[#f5e6e6]/10" />
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-10">
             <div className="text-center max-w-3xl mx-auto">
