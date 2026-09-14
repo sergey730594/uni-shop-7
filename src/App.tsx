@@ -232,12 +232,14 @@ function HomePage() {
           </div>
         </section>
 
-        <WhyUs language={language} />
-        <HowToOrder language={language} />
-        <PromoBanner language={language} />
-        <Testimonials language={language} />
-        <StatsCounter language={language} />
-        <InstagramFeed language={language} />
+        <Suspense fallback={null}>
+          <WhyUs language={language} />
+          <HowToOrder language={language} />
+          <PromoBanner language={language} />
+          <Testimonials language={language} />
+          <StatsCounter language={language} />
+          <InstagramFeed language={language} />
+        </Suspense>
       </main>
 
       <Footer language={language} />
