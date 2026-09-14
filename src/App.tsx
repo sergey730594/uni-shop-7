@@ -455,7 +455,7 @@ function CategoryPage() {
           )}
         </div>
 
-        { {/* Пагинация сверху */}
+        {/* Пагинация сверху */}
         {renderPagination()}
 
         {/* H2 для SEO */}
