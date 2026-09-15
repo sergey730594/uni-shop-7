@@ -206,58 +206,44 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
           </div>
 
           {/* ====== ПРАВАЯ КОЛОНКА - КАРТА (lazy) ====== */}
-<div className="space-y-3">
-  <h3 className="font-semibold text-gray-800 text-lg text-center md:text-left">
-    {t.location}
-  </h3>
-
-  <div className="relative bg-gray-100 rounded-xl overflow-hidden h-32 sm:h-36 md:h-40 w-full">
-    {!showMap ? (
-      <button
-        onClick={() => setShowMap(true)}
-        className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 hover:bg-gray-200 transition-colors cursor-pointer w-full"
-        aria-label={t.showMap}
-      >
-        <MapPinIcon />
-        <span className="text-xs text-gray-600 font-medium mt-2">
-          {t.showMap}
-        </span>
-      </button>
-    ) : (
-      <>
-        {/* Карта */}
-        <iframe
-          src="https://www.google.com/maps?q=41.784832,44.827172&z=16&output=embed"
-          width="100%"
-          height="100%"
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          title="Tortebi.com location"
-          className="absolute inset-0"
-        />
-
-        {/* Подпрыгивающий пин поверх карты */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-full pointer-events-none z-10">
-          <div className="animate-bounce">
-            <svg
-              className="w-10 h-10 text-[#ff0000] drop-shadow-lg"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M12 0C7.31 0 3.5 3.81 3.5 8.5c0 6.38 8.5 15.5 8.5 15.5s8.5-9.12 8.5-15.5C20.5 3.81 16.69 0 12 0zm0 11.5a3 3 0 110-6 3 3 0 010 6z" />
-            </svg>
+          <div className="space-y-3">
+            <h3 className="font-semibold text-gray-800 text-lg text-center md:text-left">
+              {t.location}
+            </h3>
+            
+            <div className="relative bg-gray-100 rounded-xl overflow-hidden h-32 sm:h-36 md:h-40 w-full">
+              {!showMap ? (
+                <button
+                  onClick={() => setShowMap(true)}
+                  className="absolute inset-0 flex flex-col items-center justify-center bg-gray-100 hover:bg-gray-200 transition-colors cursor-pointer w-full"
+                  aria-label={t.showMap}
+                >
+                  <MapPinIcon />
+                  <span className="text-xs text-gray-600 font-medium mt-2">
+                    {t.showMap}
+                  </span>
+                </button>
+              ) : (
+                <iframe
+                  src="https://www.google.com/maps?ll=41.784832,44.827172&z=16&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Tortebi.com location"
+                  className="absolute inset-0"
+                />
+              )}
+            </div>
+            
+            <p className="text-sm text-gray-500 text-center">
+              📍 {t.address}
+            </p>
           </div>
         </div>
-      </>
-    )}
-  </div>
 
-  <p className="text-sm text-gray-500 text-center">
-    📍 {t.address}
-  </p>
-</div>
         {/* ====== КОПИРАЙТ ====== */}
         <div className="border-t border-gray-200 mt-8 pt-6 text-center">
           <p className="text-sm text-gray-500">
