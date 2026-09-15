@@ -225,7 +225,7 @@ export const Footer: React.FC<FooterProps> = ({ language = 'ka' }) => {
                 </button>
               ) : (
                 <iframe
-                  src="https://www.google.com/maps?ll=41.784832,44.827172&z=16&output=embed"
+                src="https://www.google.com/maps?q=41.784832,44.827172&z=16&output=embed"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
