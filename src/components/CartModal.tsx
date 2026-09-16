@@ -17,6 +17,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
   const [form, setForm] = useState({ name: '', phone: '', extraPhone: '', date: '', time: '', address: '', comment: '' });
   const [honeypot, setHoneypot] = useState('');
   const [startTime] = useState(Date.now());
+  const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -33,6 +34,10 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
       date: 'რომელ რიცხვში?', time: 'რომელ საათზე?', pickup: 'თვითგატანა', delivery: 'მიტანა (+10₾)', address: 'სრული მისამართი',
       comment: 'შენიშვნა', total: 'სულ', sendOrder: 'შეკვეთის გაგზავნა', required: 'შეავსეთ ველები', deliveryFee: 'მიტანა',
       tooFast: 'ძალიან სწრაფად შეავსეთ! სცადეთ თავიდან.',
+      sending: 'იგზავნება...',
+      sent: 'შეკვეთა გაიგზავნა!',
+      error: 'გაგზავნის შეცდომა. სცადეთ WhatsApp.',
+      networkError: 'ქსელის შეცდომა. სცადეთ WhatsApp.',
       months: ['იანვარი','თებერვალი','მარტი','აპრილი','მაისი','ივნისი','ივლისი','აგვისტო','სექტემბერი','ოქტომბერი','ნოემბერი','დეკემბერი'],
       days: ['კვ','ორ','სამ','ოთხ','ხუთ','პარ','შაბ'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -42,6 +47,10 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
       date: 'Date?', time: 'Time?', pickup: 'Pickup', delivery: 'Delivery (+10₾)', address: 'Full address',
       comment: 'Note', total: 'Total', sendOrder: 'Send Order', required: 'Fill fields', deliveryFee: 'Delivery',
       tooFast: 'Too fast! Try again.',
+      sending: 'Sending...',
+      sent: 'Order sent!',
+      error: 'Send error. Try WhatsApp.',
+      networkError: 'Network error. Try WhatsApp.',
       months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
       days: ['Mo','Tu','We','Th','Fr','Sa','Su'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -51,6 +60,10 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
       date: 'Дата?', time: 'Время?', pickup: 'Самовывоз', delivery: 'Доставка (+10₾)', address: 'Полный адрес',
       comment: 'Примечание', total: 'Итого', sendOrder: 'Отправить заказ', required: 'Заполните поля', deliveryFee: 'Доставка',
       tooFast: 'Слишком быстро! Попробуйте снова.',
+      sending: 'Отправка...',
+      sent: 'Заказ отправлен!',
+      error: 'Ошибка отправки. Попробуйте WhatsApp.',
+      networkError: 'Ошибка сети. Попробуйте WhatsApp.',
       months: ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],
       days: ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -60,6 +73,10 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
       date: 'Tarih?', time: 'Saat?', pickup: 'Teslim alma', delivery: 'Teslimat (+10₾)', address: 'Tam adres',
       comment: 'Not', total: 'Toplam', sendOrder: 'Siparişi Gönder', required: 'Alanları doldurun', deliveryFee: 'Teslimat',
       tooFast: 'Çok hızlı! Tekrar deneyin.',
+      sending: 'Gönderiliyor...',
+      sent: 'Sipariş gönderildi!',
+      error: 'Gönderme hatası. WhatsApp deneyin.',
+      networkError: 'Ağ hatası. WhatsApp deneyin.',
       months: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
       days: ['Pt','Sa','Ça','Pe','Cu','Ct','Pz'],
       timeSlots: ['9:00-10:00','10:00-11:00','11:00-12:00','12:00-13:00','13:00-14:00','14:00-15:00','15:00-16:00','16:00-17:00','17:00-18:00','18:00-19:00','19:00-20:00','20:00-21:00','21:00-22:00'],
@@ -85,10 +102,10 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
   };
 
   const buildOrderText = () => {
-    const orderDetails = items.map(item => 
+    const orderDetails = items.map(item =>
       `${item.name} - ${item.size} - ${item.filling}${item.cakeText ? ' - "' + item.cakeText + '"' : ''} - ₾${item.price} x${item.quantity}`
     ).join('\n');
-    
+
     return `ახალი შეკვეთა - Grant Bakery\n\n` +
       `სახელი: ${form.name}\n` +
       `ტელეფონი: ${form.phone}\n` +
@@ -102,19 +119,49 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
       `\nსულ: ₾${grandTotal}`;
   };
 
-  const handleSendEmail = () => {
+  const handleSendEmail = async () => {
     // Honeypot — бот заполнил скрытое поле
     if (honeypot !== '') return;
-    
+
     // Время — бот заполнил слишком быстро
     if (Date.now() - startTime < 3000) {
       alert(t.tooFast);
       return;
     }
-    
-    if (!form.name || !form.phone) { alert(t.required); return; }
+
+    if (!form.name || !form.phone) {
+      alert(t.required);
+      return;
+    }
+
+    if (isSending) return;
+    setIsSending(true);
+
     const body = buildOrderText();
-    window.location.href = `mailto:photomagiamailru@gmail.com?subject=${encodeURIComponent('ახალი შეკვეთა - Grant Bakery')}&body=${encodeURIComponent(body)}`;
+
+    try {
+      const res = await fetch('/api/send-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          phone: form.phone,
+          message: body,
+        }),
+      });
+
+      if (res.ok) {
+        alert(t.sent);
+        onClose();
+      } else {
+        alert(t.error);
+      }
+    } catch (e) {
+      console.error(e);
+      alert(t.networkError);
+    } finally {
+      setIsSending(false);
+    }
   };
 
   const handleSendWhatsApp = () => {
@@ -234,8 +281,12 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
               <div className="pt-2 pb-4">
                 <p className="text-center text-xs font-bold text-gray-700 mb-2">{t.sendOrder}</p>
                 <div className="grid grid-cols-2 gap-2">
-                  <button onClick={handleSendEmail} className="flex items-center justify-center gap-1 bg-[#ff0000] text-white py-2.5 rounded-lg text-xs font-bold hover:bg-[#cc0000]">
-                    <Mail className="w-4 h-4" /> Email
+                  <button
+                    onClick={handleSendEmail}
+                    disabled={isSending}
+                    className="flex items-center justify-center gap-1 bg-[#ff0000] text-white py-2.5 rounded-lg text-xs font-bold hover:bg-[#cc0000] disabled:opacity-60 disabled:cursor-not-allowed"
+                  >
+                    <Mail className="w-4 h-4" /> {isSending ? t.sending : 'Email'}
                   </button>
                   <button onClick={handleSendWhatsApp} className="flex items-center justify-center gap-1 bg-[#25D366] text-white py-2.5 rounded-lg text-xs font-bold hover:bg-[#20b85a]">
                     <Phone className="w-4 h-4" /> WhatsApp
