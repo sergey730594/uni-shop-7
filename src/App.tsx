@@ -346,19 +346,19 @@ function CategoryPage() {
   };
 
   const subcategoryNames: Record<string, Record<string, string>> = {
-    corporate: { ka: 'კორპორატიული', en: 'Corporate', ru: 'Корпоративные', tr: 'Kurumsal' },
-    wedding: { ka: 'საქორწილო', en: 'Wedding', ru: 'Свадебные', tr: 'Düğün' },
-    kids: { ka: 'საბავშვო', en: 'Kids', ru: 'Детские', tr: 'Çocuk' },
-    photo: { ka: 'ფოტო ტორტები', en: 'Photo Cakes', ru: 'Фото торты', tr: 'Fotoğraflı' },
-    car: { ka: 'მანქანა', en: 'Car Cakes', ru: 'Торты-машины', tr: 'Araba' },
-    sports: { ka: 'სპორტული', en: 'Sports', ru: 'Спортивные', tr: 'Spor' },
-    heart: { ka: 'გული', en: 'Heart', ru: 'Сердца', tr: 'Kalp' },
-    marzipan: { ka: 'მარცეპანი', en: 'Marzipan', ru: 'Марципан', tr: 'Badem Ezmesi' },
-    baptism: { ka: 'ნათლობა', en: 'Baptism', ru: 'Крестины', tr: 'Vaftiz' },
-    round: { ka: 'მრგვალი', en: 'Round', ru: 'Круглые', tr: 'Yuvarlak' },
-    adults: { ka: 'უფროსებისთვის', en: 'For Adults', ru: 'Для взрослых', tr: 'Yetişkinler' },
-    square: { ka: 'ოთხკუთხა', en: 'Square', ru: 'Квадратные', tr: 'Kare' },
-    'new-year': { ka: 'საახალწლო', en: 'New Year', ru: 'Новогодние', tr: 'Yılbaşı' },
+    corporate: { ka: 'კორპორატიული ტორტები', en: 'Corporate Cakes', ru: 'Корпоративные торты', tr: 'Kurumsal Pastalar' },
+    wedding: { ka: 'საქორწილო ტორტები', en: 'Wedding Cakes', ru: 'Свадебные торты', tr: 'Düğün Pastaları' },
+    kids: { ka: 'საბავშვო ტორტები', en: 'Kids Cakes', ru: 'Детские торты', tr: 'Çocuk Pastaları' },
+    photo: { ka: 'ფოტო ტორტები', en: 'Photo Cakes', ru: 'Фото торты', tr: 'Fotoğraflı Pastalar' },
+    car: { ka: 'მანქანის ტორტები', en: 'Car Cakes', ru: 'Торты-машины', tr: 'Araba Pastaları' },
+    sports: { ka: 'სპორტული ტორტები', en: 'Sports Cakes', ru: 'Спортивные торты', tr: 'Spor Pastaları' },
+    heart: { ka: 'გულის ტორტები', en: 'Heart Cakes', ru: 'Торты-сердца', tr: 'Kalp Pastaları' },
+    marzipan: { ka: 'მარცეპანის ტორტები', en: 'Marzipan Cakes', ru: 'Марципановые торты', tr: 'Badem Ezmesi Pastaları' },
+    baptism: { ka: 'ნათლობის ტორტები', en: 'Baptism Cakes', ru: 'Торты на крестины', tr: 'Vaftiz Pastaları' },
+    round: { ka: 'მრგვალი ტორტები', en: 'Round Cakes', ru: 'Круглые торты', tr: 'Yuvarlak Pastalar' },
+    adults: { ka: 'ტორტები უფროსებისთვის', en: 'Cakes for Adults', ru: 'Торты для взрослых', tr: 'Yetişkinler için Pastalar' },
+    square: { ka: 'ოთხკუთხა ტორტები', en: 'Square Cakes', ru: 'Квадратные торты', tr: 'Kare Pastalar' },
+    'new-year': { ka: 'საახალწლო ტორტები', en: 'New Year Cakes', ru: 'Новогодние торты', tr: 'Yılbaşı Pastaları' },
   };
 
   let pageTitle = subcategory 
