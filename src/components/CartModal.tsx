@@ -9,7 +9,7 @@ interface CartModalProps {
 }
 
 export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language }) => {
-  const { items, removeFromCart, totalPrice } = useCart();
+  const { items, removeFromCart, clearCart, totalPrice } = useCart();
   const [deliveryType, setDeliveryType] = useState<'pickup' | 'delivery'>('pickup');
   const [showCalendar, setShowCalendar] = useState(false);
   const [showTimeSlots, setShowTimeSlots] = useState(false);
@@ -152,6 +152,7 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
 
       if (res.ok) {
         alert(t.sent);
+        clearCart();
         onClose();
       } else {
         alert(t.error);
@@ -173,6 +174,8 @@ export const CartModal: React.FC<CartModalProps> = ({ isOpen, onClose, language 
     if (!form.name || !form.phone) { alert(t.required); return; }
     const body = buildOrderText();
     window.open(`https://wa.me/995593756700?text=${encodeURIComponent(body)}`, '_blank');
+    clearCart();
+    onClose();
   };
 
   if (!isOpen) return null;
