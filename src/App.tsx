@@ -29,6 +29,7 @@ const fetchProductsFromAPI = async () => {
       .select('*')
       .eq('published', true)
       .order('sort_order', { ascending: true });
+      .limit(2000);  // ← добавьте эту строку
     
     if (error) {
       console.error('Supabase ошибка:', error);
