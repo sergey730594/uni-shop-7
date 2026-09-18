@@ -384,34 +384,121 @@ function CategoryPage() {
 
   const renderPagination = () => {
     if (totalPages <= 1) return null;
+  
+    const getPageNumbers = () => {
+      const pages: (number | 'dots')[] = [];
+      const maxVisible = 5; // сколько номеров показывать вокруг текущей
+  
+      if (totalPages <= 7) {
+        // Если страниц мало — показываем все
+        for (let i = 1; i <= totalPages; i++) pages.push(i);
+        return pages;
+      }
+  
+      // Всегда показываем первую
+      pages.push(1);
+  
+      let start = Math.max(2, currentPage - 1);
+      let end = Math.min(totalPages - 1, currentPage + 1);
+  
+      // Сдвигаем окно, если мы у края
+      if (currentPage <= 3) {
+        start = 2;
+        end = maxVisible;
+      }
+      if (currentPage >= totalPages - 2) {
+        start = totalPages - maxVisible + 1;
+        end = totalPages - 1;
+      }
+  
+      if (start > 2) pages.push('dots');
+  
+      for (let i = start; i <= end; i++) pages.push(i);
+  
+      if (end < totalPages - 1) pages.push('dots');
+  
+      // Всегда показываем последнюю
+      pages.push(totalPages);
+  
+      return pages;
+    };
+  
+    const pageNumbers = getPageNumbers();
+  
+    const goToPage = (page: number) => {
+      setCurrentPage(page);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+  
     return (
-      <div className="flex justify-center items-center gap-2">
+      <div className="flex justify-center items-center gap-1 sm:gap-2 flex-wrap my-4">
+        {/* В начало */}
         <button
-          onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+          type="button"
+          onClick={() => goToPage(1)}
           disabled={currentPage === 1}
-          className="px-4 py-2 rounded-lg bg-white border border-gray-300 text-sm font-medium disabled:opacity-50 hover:bg-gray-50"
+          className="px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-white border border-gray-300 text-xs sm:text-sm font-medium disabled:opacity-40 hover:bg-gray-50 transition-colors"
+          aria-label="Первая страница"
+        >
+          «
+        </button>
+  
+        {/* Назад */}
+        <button
+          type="button"
+          onClick={() => goToPage(Math.max(1, currentPage - 1))}
+          disabled={currentPage === 1}
+          className="px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-white border border-gray-300 text-xs sm:text-sm font-medium disabled:opacity-40 hover:bg-gray-50 transition-colors"
+          aria-label="Предыдущая"
         >
           ←
         </button>
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-          <button
-            key={page}
-            onClick={() => setCurrentPage(page)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium border ${
-              currentPage === page
-                ? 'bg-[#ff0000] text-white border-[#ff0000]'
-                : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
-            }`}
-          >
-            {page}
-          </button>
-        ))}
+  
+        {/* Номера страниц */}
+        {pageNumbers.map((page, idx) =>
+          page === 'dots' ? (
+            <span
+              key={`dots-${idx}`}
+              className="px-1 sm:px-2 text-gray-400 text-xs sm:text-sm select-none"
+            >
+              …
+            </span>
+          ) : (
+            <button
+              type="button"
+              key={page}
+              onClick={() => goToPage(page)}
+              className={`min-w-[32px] sm:min-w-[40px] px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium border transition-colors ${
+                currentPage === page
+                  ? 'bg-[#ff0000] text-white border-[#ff0000]'
+                  : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
+              }`}
+            >
+              {page}
+            </button>
+          )
+        )}
+  
+        {/* Вперёд */}
         <button
-          onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+          type="button"
+          onClick={() => goToPage(Math.min(totalPages, currentPage + 1))}
           disabled={currentPage === totalPages}
-          className="px-4 py-2 rounded-lg bg-white border border-gray-300 text-sm font-medium disabled:opacity-50 hover:bg-gray-50"
+          className="px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-white border border-gray-300 text-xs sm:text-sm font-medium disabled:opacity-40 hover:bg-gray-50 transition-colors"
+          aria-label="Следующая"
         >
           →
+        </button>
+  
+        {/* В конец */}
+        <button
+          type="button"
+          onClick={() => goToPage(totalPages)}
+          disabled={currentPage === totalPages}
+          className="px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-white border border-gray-300 text-xs sm:text-sm font-medium disabled:opacity-40 hover:bg-gray-50 transition-colors"
+          aria-label="Последняя страница"
+        >
+          »
         </button>
       </div>
     );
