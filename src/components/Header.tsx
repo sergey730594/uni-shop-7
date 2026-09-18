@@ -238,12 +238,12 @@ export const Header: React.FC<HeaderProps> = ({
 
   const cakeCategories: Record<string, { name: string; slug: string }[]> = {
     ka: [
-      { name: 'კორპორატიული ტორტები', slug: 'corporate' }, { name: 'საქორწილო ტორტები', slug: 'wedding' },
+      { name: 'კორპორატიული', slug: 'corporate' }, { name: 'საქორწილო ტორტები', slug: 'wedding' },
       { name: 'საბავშვო ტორტები', slug: 'kids' }, { name: 'ფოტო ტორტები', slug: 'photo' },
       { name: 'მანქანის ტორტები', slug: 'car' }, { name: 'სპორტული ტორტები', slug: 'sports' },
       { name: 'გულის ტორტები', slug: 'heart' }, { name: 'მარცეპანის ტორტები', slug: 'marzipan' },
       { name: 'ნათლობის ტორტები', slug: 'baptism' }, { name: 'მრგვალი ტორტები', slug: 'round' },
-      { name: 'ტორტები უფროსებისთვის', slug: 'adults' }, { name: 'ოთხკუთხა ტორტები', slug: 'square' },
+      { name: 'უფროსებისთვის', slug: 'adults' }, { name: 'ოთხკუთხა ტორტები', slug: 'square' },
       { name: 'საახალწლო ტორტები', slug: 'new-year' },
     ],
     en: [
