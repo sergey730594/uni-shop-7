@@ -421,7 +421,7 @@ function CategoryPage() {
   
     const goToPage = (page: number) => {
       setCurrentPage(page);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo(0, 0);
     };
   
     return (
