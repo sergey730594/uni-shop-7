@@ -214,7 +214,7 @@ function HomePage() {
             <Link to={`/${language}/cakes`} className="text-[#ff0000] text-sm">{t.viewAll}</Link>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 min-h-[800px] sm:min-h-[500px]">
-             {products.length > 0 ? products.slice(0, 8).map(product => (
+            {products.length > 0 ? products.filter(p => p.popular).slice(0, 8).map(product => (
               <div key={product.id} onClick={() => setSelectedProduct(product)} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg cursor-pointer">
                 <div className="aspect-square overflow-hidden">
                   <img 
