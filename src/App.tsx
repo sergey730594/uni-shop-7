@@ -22,57 +22,91 @@ import { supabase } from './supabaseClient';
 import './index.css';
 
 // ==================== SUPABASE ====================
-const fetchProductsFromAPI = async () => {
-  try {
-    const { data, error } = await supabase
-      .from('cakes')
-      .select('*')
-      .eq('published', true)
-      .order('sort_order', { ascending: true })
-      .order('code', { ascending: true })
-      .limit(3000);
-    
-    if (error) {
-      console.error('Supabase ошибка:', error);
-      return [];
-    }
-    
-    return data.map((item: any) => ({
-      id: item.id,
-      name: {
-        ka: item.name_ka || '',
-        en: item.name_en || item.name_ka || '',
-        ru: item.name_ru || item.name_ka || '',
-        tr: item.name_tr || item.name_ka || '',
-      },
-      description: {
-        ka: item.description_ka || '',
-        en: item.description_en || item.description_ka || '',
-        ru: item.description_ru || item.description_ka || '',
-        tr: item.description_tr || item.description_ka || '',
-      },
-      tags: {
-        ka: item.tags_ka || '',
-        en: item.tags_en || item.tags_ka || '',
-        ru: item.tags_ru || item.tags_ka || '',
-        tr: item.tags_tr || item.tags_ka || '',
-      },
-      code: item.code || '',
-      price20: Number(item.price20 || 0),
-      price30: Number(item.price30 || 0),
-      price40: Number(item.price40 || 0),
-      oldPrice: Number(item.old_price || 0),
-      fillings: (item.fillings || '').split(',').map((f: string) => f.trim()).filter(Boolean),
-      category: item.category || 'cakes',
-      subcategory: item.subcategory || '',
-      photos: Array.isArray(item.photos) ? item.photos : item.photos ? [item.photos] : [],
-      popular: item.popular || false,
-      published: item.published !== false,
-    }));
-  } catch (error) {
-    console.error('Ошибка:', error);
-    return [];
+const mapProduct = (item: any) => ({
+  id: item.id,
+  name: {
+    ka: item.name_ka || '',
+    en: item.name_en || item.name_ka || '',
+    ru: item.name_ru || item.name_ka || '',
+    tr: item.name_tr || item.name_ka || '',
+  },
+  description: {
+    ka: item.description_ka || '',
+    en: item.description_en || item.description_ka || '',
+    ru: item.description_ru || item.description_ka || '',
+    tr: item.description_tr || item.description_ka || '',
+  },
+  tags: {
+    ka: item.tags_ka || '',
+    en: item.tags_en || item.tags_ka || '',
+    ru: item.tags_ru || item.tags_ka || '',
+    tr: item.tags_tr || item.tags_ka || '',
+  },
+  code: item.code || '',
+  price20: Number(item.price20 || 0),
+  price30: Number(item.price30 || 0),
+  price40: Number(item.price40 || 0),
+  oldPrice: Number(item.old_price || 0),
+  fillings: (item.fillings || '').split(',').map((f: string) => f.trim()).filter(Boolean),
+  category: item.category || 'cakes',
+  subcategory: item.subcategory || '',
+  photos: Array.isArray(item.photos) ? item.photos : item.photos ? [item.photos] : [],
+  popular: item.popular === true,
+  published: item.published !== false,
+});
+
+// Главная — только 8 популярных
+const fetchPopularProducts = async () => {
+  const { data, error } = await supabase
+    .from('cakes')
+    .select('*')
+    .eq('published', true)
+    .eq('popular', true)
+    .order('sort_order', { ascending: true })
+    .order('code', { ascending: true })
+    .limit(8);
+
+  if (error) { console.error('Supabase ошибка:', error); return []; }
+  return data.map(mapProduct);
+};
+
+// Категория — 16 товаров + общее количество
+const fetchCategoryProducts = async ({ category, subcategory, priceFilter, tag, page, pageSize }: {
+  category?: string; subcategory?: string; priceFilter?: string;
+  tag?: string; page: number; pageSize: number;
+}) => {
+  const from = (page - 1) * pageSize;
+  const to = from + pageSize - 1;
+
+  let query = supabase
+    .from('cakes')
+    .select('*', { count: 'exact' })
+    .eq('published', true);
+
+  if (category === 'sale') {
+    query = query.gt('old_price', 0);
+  } else if (category && !['fillings', 'delivery', 'contact'].includes(category)) {
+    query = query.eq('category', category);
   }
+
+  if (subcategory) query = query.eq('subcategory', subcategory);
+
+  if (priceFilter === '0-100') query = query.lte('price20', 100);
+  else if (priceFilter === '100-150') query = query.gt('price20', 100).lte('price20', 150);
+  else if (priceFilter === '150-200') query = query.gt('price20', 150).lte('price20', 200);
+  else if (priceFilter === '200+') query = query.gt('price20', 200);
+
+  if (tag) {
+    query = query.or(`tags_ka.ilike.%${tag}%,tags_ru.ilike.%${tag}%,tags_en.ilike.%${tag}%,tags_tr.ilike.%${tag}%`);
+  }
+
+  const { data, error, count } = await query
+    .order('sort_order', { ascending: true })
+    .order('code', { ascending: true })
+    .range(from, to);
+
+  if (error) { console.error('Supabase ошибка:', error); return { products: [], total: 0 }; }
+  return { products: data.map(mapProduct), total: count || 0 };
 };
 
 // ==================== КОНТЕКСТ ЯЗЫКА ====================
@@ -147,10 +181,9 @@ function HomePage() {
   useEffect(() => {
     let cancelled = false;
     const loadProducts = async () => {
-      const data = await fetchProductsFromAPI();
+      const data = await fetchPopularProducts();
       if (!cancelled) setProducts(data);
     };
-    // Откладываем загрузку товаров, чтобы Hero отрисовался первым
     if ('requestIdleCallback' in window) {
       (window as any).requestIdleCallback(() => loadProducts());
     } else {
@@ -214,7 +247,7 @@ function HomePage() {
             <Link to={`/${language}/cakes`} className="text-[#ff0000] text-sm">{t.viewAll}</Link>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 min-h-[800px] sm:min-h-[500px]">
-            {products.length > 0 ? products.filter(p => p.popular).slice(0, 8).map(product => (
+            {products.length > 0 ? products.slice(0, 8).map(product => (
               <div key={product.id} onClick={() => setSelectedProduct(product)} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg cursor-pointer">
                 <div className="aspect-square overflow-hidden">
                   <img 
@@ -289,6 +322,8 @@ function CategoryPage() {
   const [priceFilter, setPriceFilter] = useState('all');
   const [products, setProducts] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
   const itemsPerPage = 16;
   const { items } = useCart();
   const navigate = useNavigate();
@@ -308,18 +343,22 @@ function CategoryPage() {
 
   useEffect(() => {
     let cancelled = false;
-    const loadProducts = async () => {
-      const data = await fetchProductsFromAPI();
-      if (!cancelled) setProducts(data);
-    };
-    // Откладываем загрузку товаров, чтобы Hero отрисовался первым
-    if ('requestIdleCallback' in window) {
-      (window as any).requestIdleCallback(() => loadProducts());
-    } else {
-      setTimeout(loadProducts, 100);
-    }
+    setLoading(true);
+    fetchCategoryProducts({
+      category,
+      subcategory,
+      priceFilter,
+      tag: tagFilter || undefined,
+      page: currentPage,
+      pageSize: itemsPerPage,
+    }).then(({ products, total }) => {
+      if (cancelled) return;
+      setProducts(products);
+      setTotalPages(Math.max(1, Math.ceil(total / itemsPerPage)));
+      setLoading(false);
+    });
     return () => { cancelled = true; };
-  }, []);
+  }, [category, subcategory, priceFilter, tagFilter, currentPage]);
 
   const handleLanguageChange = (newLang: string) => {
     setLanguage(newLang);
@@ -357,7 +396,7 @@ function CategoryPage() {
     heart: { ka: 'გულის ტორტები', en: 'Heart Cakes', ru: 'Торты-сердца', tr: 'Kalp Pastaları' },
     marzipan: { ka: 'მარცეპანის ტორტები', en: 'Marzipan Cakes', ru: 'Марципановые торты', tr: 'Badem Ezmesi Pastaları' },
     baptism: { ka: 'ნათლობის ტორტები', en: 'Baptism Cakes', ru: 'Торты на крестины', tr: 'Vaftiz Pastaları' },
-    round: { ka: 'მრგვალი ტორტები', en: 'Round Cakes', ru: 'Круглые торты', tr: 'Yuvarlak Pastalar' },
+    round: { ka: 'მრგვალი ტორტები', en: 'Round Cakes', ru: 'Круглые торты, tr: 'Yuvarlak Pastalar' },
     adults: { ka: 'ტორტები უფროსებისთვის', en: 'Cakes for Adults', ru: 'Торты для взрослых', tr: 'Yetişkinler için Pastalar' },
     square: { ka: 'ოთხკუთხა ტორტები', en: 'Square Cakes', ru: 'Квадратные торты', tr: 'Kare Pastalar' },
     'new-year': { ka: 'საახალწლო ტორტები', en: 'New Year Cakes', ru: 'Новогодние торты', tr: 'Yılbaşı Pastaları' },
@@ -366,23 +405,6 @@ function CategoryPage() {
   let pageTitle = subcategory 
     ? subcategoryNames[subcategory]?.[language] || subcategory 
     : categoryNames[category || '']?.[language] || category || 'Category';
-
-  const filteredProducts = products.filter(p => {
-    if (tagFilter && (!p.tags || !p.tags[language] || !p.tags[language].split(',').map((t: string) => t.trim()).includes(tagFilter))) return false;
-    if (category === 'sale') return p.oldPrice && p.oldPrice > p.price20;
-    if (category && p.category !== category) return false;
-    if (subcategory && p.subcategory !== subcategory) return false;
-    if (priceFilter === 'all') return true;
-    if (priceFilter === '0-100') return p.price20 <= 100;
-    if (priceFilter === '100-150') return p.price20 > 100 && p.price20 <= 150;
-    if (priceFilter === '150-200') return p.price20 > 150 && p.price20 <= 200;
-    if (priceFilter === '200+') return p.price20 > 200;
-    return true;
-  });
-
-  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedProducts = filteredProducts.slice(startIndex, startIndex + itemsPerPage);
 
   const renderPagination = () => {
     if (totalPages <= 1) return null;
@@ -577,7 +599,9 @@ function CategoryPage() {
         <h2 className="sr-only">{pageTitle} — Tortebi.com</h2>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-4 min-h-[800px] sm:min-h-[600px]">
-           {paginatedProducts.length > 0 ? paginatedProducts.map(product => (
+           {loading ? (
+            <p className="text-gray-500 col-span-full text-center py-10">იტვირთება...</p>
+           ) : products.length > 0 ? products.map(product => (
             <div key={product.id} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg">
               <div className="aspect-square overflow-hidden cursor-pointer" onClick={() => setSelectedProduct(product)}>
                 <img 
@@ -618,7 +642,7 @@ function CategoryPage() {
               </div>
             </div>
           )) : (
-            <p className="text-gray-500 col-span-full text-center py-10">იტვირთება...</p>
+            <p className="text-gray-500 col-span-full text-center py-10">Ничего не найдено</p>
           )}
         </div>
 
