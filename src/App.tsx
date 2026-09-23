@@ -28,7 +28,9 @@ const fetchProductsFromAPI = async () => {
       .from('cakes')
       .select('*')
       .eq('published', true)
-      .order('sort_order', { ascending: true });
+      .order('sort_order', { ascending: true })
+      .order('code', { ascending: true })
+      .limit(3000);
     
     if (error) {
       console.error('Supabase ошибка:', error);
