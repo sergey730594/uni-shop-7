@@ -396,7 +396,7 @@ function CategoryPage() {
     heart: { ka: 'გულის ტორტები', en: 'Heart Cakes', ru: 'Торты-сердца', tr: 'Kalp Pastaları' },
     marzipan: { ka: 'მარცეპანის ტორტები', en: 'Marzipan Cakes', ru: 'Марципановые торты', tr: 'Badem Ezmesi Pastaları' },
     baptism: { ka: 'ნათლობის ტორტები', en: 'Baptism Cakes', ru: 'Торты на крестины', tr: 'Vaftiz Pastaları' },
-    round: { ka: 'მრგვალი ტორტები', en: 'Round Cakes', ru: 'Круглые торты, tr: 'Yuvarlak Pastalar' },
+    round: { ka: 'მრგვალი ტორტები', en: 'Round Cakes', ru: 'Круглые торты', tr: 'Yuvarlak Pastalar' },
     adults: { ka: 'ტორტები უფროსებისთვის', en: 'Cakes for Adults', ru: 'Торты для взрослых', tr: 'Yetişkinler için Pastalar' },
     square: { ka: 'ოთხკუთხა ტორტები', en: 'Square Cakes', ru: 'Квадратные торты', tr: 'Kare Pastalar' },
     'new-year': { ka: 'საახალწლო ტორტები', en: 'New Year Cakes', ru: 'Новогодние торты', tr: 'Yılbaşı Pastaları' },
